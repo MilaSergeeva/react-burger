@@ -5,21 +5,14 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import dataArray from "../../utils/data";
+import PropTypes from "prop-types";
+import ingridientData from "../../utils/data";
 
-function BurgerConstructor({ onCardClick }) {
+function BurgerConstructor({ onCardClick, ingridients }) {
   const [current, setCurrent] = React.useState("buns");
 
-  // нам надо пройти по массиву, найти все элементы с параметром (соус) и сохранить их в новый массив. Пройтись по новому массиву и отресовать данные на основе получнных данных
-
-  // const togglePopupWithProduct = (el) => {
-  //   console.log(el);
-
-  //   return <Popup product={el} />;
-  // };
-
   const gretProductCard = (type) => {
-    const filterdProductsArray = dataArray.filter((el) => el.type === type);
+    const filterdProductsArray = ingridients.filter((el) => el.type === type);
 
     return filterdProductsArray.map((el) => (
       <div
@@ -96,5 +89,10 @@ function BurgerConstructor({ onCardClick }) {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  ingridients: PropTypes.arrayOf(ingridientData.isRequired),
+  onCardClick: PropTypes.func,
+};
 
 export default BurgerConstructor;

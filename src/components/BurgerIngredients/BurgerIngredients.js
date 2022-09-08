@@ -7,12 +7,14 @@ import {
   DeleteIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
+import ingridientData from "../../utils/data";
 
-function BurgerIngredients() {
+function BurgerIngredients({ ingridients }) {
   return (
     <section className={BurgerIngredientsStyles.flexItem}>
       <ul className={BurgerIngredientsStyles.listContainier}>
-        {dataArray.map((el) => (
+        {ingridients.map((el) => (
           <li className={BurgerIngredientsStyles.grisList} key={el._id}>
             <DragIcon type="primary" />
             <div className={BurgerIngredientsStyles.grisListContent}>
@@ -51,5 +53,9 @@ function BurgerIngredients() {
     </section>
   );
 }
+
+BurgerIngredients.propTypes = {
+  ingridients: PropTypes.arrayOf(ingridientData.isRequired),
+};
 
 export default BurgerIngredients;
