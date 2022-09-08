@@ -2,7 +2,6 @@
   display: block;
   width: 600px;
   padding-top: 100px;
-  padding-left: 16px;
 }
 
 .price {
@@ -14,20 +13,45 @@
   justify-content: flex-end;
 }
 
-.flexList {
+.grisList {
+  display: grid;
+  flex-direction: row;
+  /* gap: 20px; */
+  padding: 0;
+  align-items: center;
+  flex-wrap: nowrap;
+  grid-template-columns: 24px 1fr;
+}
+
+/* .flexListContent {
   display: flex;
   flex-direction: row;
   gap: 20px;
-  padding: 16px 32px 16px 0;
+  padding: 16px 32px 16px 24px;
   align-items: center;
+  flex-wrap: nowrap;
+} */
+
+.grisListContent {
+  display: grid;
+  grid-template-columns: 2fr 5fr 2fr 1fr;
+  flex-direction: row;
+  gap: 20px;
+  padding: 16px 32px 16px 24px;
+  align-items: center;
+  flex-wrap: nowrap;
+  background: #1c1c21;
+  border-radius: 40px;
+  margin: 0 8px;
+  height: 80px;
 }
 
 .listContainier {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   padding-top: 16px;
-  height: 65vh;
+  height: 70vh;
   overflow-y: scroll;
   scrollbar-width: normal;
   scrollbar-color: #8585ad #2e3037;

@@ -8,9 +8,10 @@
   width: 100%;
   max-width: 1280px;
   gap: 20px; */
-  margin: 16px auto;
+  padding: 16px 0;
   justify-items: end;
   align-items: center;
+  background: #1c1c21;
 }
 
 .nav {

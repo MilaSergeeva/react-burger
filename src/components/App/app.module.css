@@ -1,5 +1,4 @@
 .appBlock {
-  padding: 40px;
   position: relative;
 }
 
@@ -9,4 +8,5 @@
   flex-direction: row;
   gap: 40px;
   justify-content: center;
+  padding-bottom: 40px;
 }

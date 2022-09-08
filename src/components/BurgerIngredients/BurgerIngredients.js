@@ -13,28 +13,27 @@ function BurgerIngredients() {
     <section className={BurgerIngredientsStyles.flexItem}>
       <ul className={BurgerIngredientsStyles.listContainier}>
         {dataArray.map((el) => (
-          <li className={BurgerIngredientsStyles.flexList} key={el._id}>
+          <li className={BurgerIngredientsStyles.grisList} key={el._id}>
             <DragIcon type="primary" />
-            <img
-              src={el.image}
-              style={{ width: 80, height: 40, marginLeft: 12 }}
-            />
-            <p
-              className="text text_type_main-default"
-              style={{ display: "flex", width: 254, alignItems: "center" }}
-            >
-              {el.name}
-            </p>
-            <div
-              className={BurgerIngredientsStyles.price}
-              style={{ width: 100 }}
-            >
-              <p className="text text_type_digits-default">{el.price}</p>
-              <div>
-                <CurrencyIcon type="primary" />
+            <div className={BurgerIngredientsStyles.grisListContent}>
+              <img src={el.image} style={{ width: 80, height: 40 }} />
+              <p
+                className="text text_type_main-default"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                {el.name}
+              </p>
+              <div
+                className={BurgerIngredientsStyles.price}
+                style={{ width: 100 }}
+              >
+                <p className="text text_type_digits-default">{el.price}</p>
+                <div>
+                  <CurrencyIcon type="primary" />
+                </div>
               </div>
+              <DeleteIcon type="primary" />
             </div>
-            <DeleteIcon type="primary" />
           </li>
         ))}
       </ul>

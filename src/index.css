@@ -11,4 +11,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   position: relative;
   display: block;
+  background: #131316;
 }
