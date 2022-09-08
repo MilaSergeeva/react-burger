@@ -1,6 +1,57 @@
 .headerFlex {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* flex-direction: row;
   flex-wrap: nowrap;
-  align-content: stretch;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  gap: 20px; */
+  margin: 16px auto;
+  justify-items: end;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 8px;
+  place-self: start;
+}
+
+.logoAlign {
+  display: block;
+  margin: 0 auto;
+}
+
+.button {
+  display: flex;
+  padding: 16px 20px;
+  border-radius: 40px;
+  border: none;
+  background: none;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.buttonText {
+  font-family: "JetBrains Mono", monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.textWhite {
+  color: #fff;
+}
+
+.textPurpul {
+  color: #8585ad;
 }

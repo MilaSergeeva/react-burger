@@ -1,0 +1,11 @@
+.appBlock {
+  padding: 40px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+}
