@@ -3,10 +3,8 @@ import appHeaderStyles from "./appHeader.module.css";
 import {
   Logo,
   BurgerIcon,
-  Typography,
   ListIcon,
   ProfileIcon,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 function AppHeader() {
