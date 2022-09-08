@@ -3,8 +3,8 @@ import AppHeader from "../AppHeader/AppHeader";
 import appStyles from "./app.module.css";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import PopupIngridients from "../PopupIngridients/PopupIngridients";
-import PopupOrderConfirmation from "../PopupOrderConfirmation/PopupOrderConfirmation";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import OrderDetails from "../OrderDetails/OrderDetails";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
@@ -102,13 +102,13 @@ function App() {
         />
       </main>
 
-      <PopupIngridients
+      <IngredientDetails
         product={selectedIngridientCard}
         popupOpened={ingridientPopupOpened}
         onClose={closeAllPopups}
         onClick={handleClickInside}
       />
-      <PopupOrderConfirmation
+      <OrderDetails
         popupOpened={checkoutPopupOpened}
         onClose={closeAllPopups}
         onClick={handleClickInside}

@@ -1,10 +1,10 @@
 import React from "react";
-import PopupIngridientsStyle from "./PopupIngridiends.module.css";
+import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import ingridientData from "../../utils/data";
 import PropTypes from "prop-types";
 
-function PopupIngridients({ popupOpened, product, onClose }) {
+function IngredientDetails({ popupOpened, product, onClose }) {
   return (
     <ModalOverlay
       isOpened={popupOpened}
@@ -46,4 +46,4 @@ ModalOverlay.propTypes = {
   product: PropTypes.objectOf(ingridientData),
 };
 
-export default PopupIngridients;
+export default IngredientDetails;

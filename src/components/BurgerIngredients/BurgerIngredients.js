@@ -6,6 +6,7 @@ import {
   CurrencyIcon,
   DeleteIcon,
   Button,
+  ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import ingridientData from "../../utils/data";
@@ -17,7 +18,20 @@ function BurgerIngredients({ ingridients, onButtonClick }) {
         {ingridients.map((el) => (
           <li className={BurgerIngredientsStyles.grisList} key={el._id}>
             <DragIcon type="primary" />
-            <div className={BurgerIngredientsStyles.grisListContent}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <ConstructorElement
+                text={el.name}
+                price={el.price}
+                thumbnail={el.image}
+              />
+              {/* 
+              <div className={BurgerIngredientsStyles.grisListContent}>
               <img src={el.image} style={{ width: 80, height: 40 }} />
               <p
                 className="text text_type_main-default"
@@ -34,7 +48,7 @@ function BurgerIngredients({ ingridients, onButtonClick }) {
                   <CurrencyIcon type="primary" />
                 </div>
               </div>
-              <DeleteIcon type="primary" />
+              <DeleteIcon type="primary" /> */}
             </div>
           </li>
         ))}

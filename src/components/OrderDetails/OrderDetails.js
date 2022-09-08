@@ -1,13 +1,13 @@
 import React from "react";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import PopupOrderConfirmationStyle from "./PopupOrderConfirmation.module.css";
+import PopupOrderDetailsStyle from "./OrderDetails.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
 
-function PopupOrderConfirmation({ popupOpened, onClose }) {
+function OrderDetails({ popupOpened, onClose }) {
   return (
     <ModalOverlay isOpened={popupOpened} header={""} onClose={onClose}>
-      <div className={PopupOrderConfirmationStyle.contantContainier}>
+      <div className={PopupOrderDetailsStyle.contantContainier}>
         <p className="text text_type_digits-large">034536</p>
         <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
           Order ID
@@ -29,4 +29,4 @@ ModalOverlay.propTypes = {
   onClose: PropTypes.func,
 };
 
-export default PopupOrderConfirmation;
+export default OrderDetails;
