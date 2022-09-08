@@ -4,20 +4,22 @@ import {
   Tab,
   Counter,
   CurrencyIcon,
-  Typography,
+  CloseIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import dataArray from "../../utils/data";
+import Popup from "../Popup/Popup";
 
-function BurgerConstructor() {
+function BurgerConstructor({ onCardClick }) {
   const [current, setCurrent] = React.useState("buns");
   const [toggleCard, setToggleCard] = React.useState("null");
 
   // нам надо пройти по массиву, найти все элементы с параметром (соус) и сохранить их в новый массив. Пройтись по новому массиву и отресовать данные на основе получнных данных
 
-  // const togglePopupWithProduct = (el) => {
-  //   setToggleCard(!toggleCard);
-  //   console.log(el);
-  // };
+  const togglePopupWithProduct = (el) => {
+    console.log(el);
+
+    return <Popup product={el} />;
+  };
 
   const gretProductCard = (type) => {
     const filterdProductsArray = dataArray.filter((el) => el.type === type);
@@ -26,7 +28,9 @@ function BurgerConstructor() {
       <div
         className={BurgerConstructorStyles.productCard}
         key={el._id}
-        // onClick={togglePopupWithProduct(el)}
+        // onClick={() => togglePopupWithProduct(el)}
+        ingridient={el}
+        onClick={() => onCardClick(el)}
       >
         <img src={el.image} />
         <Counter count={1} size="default" />
@@ -36,7 +40,6 @@ function BurgerConstructor() {
             <CurrencyIcon type="primary" />
           </div>
         </div>
-
         <p
           className="text text_type_main-default"
           style={{ textAlign: "center" }}
