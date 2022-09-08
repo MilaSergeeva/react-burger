@@ -1,21 +1,33 @@
 import React from "react";
 import Modal from "../Modal/Modal";
 import ModalOverlayStyle from "./ModalOverlay.module.css";
+import PropTypes from "prop-types";
+import PortalReactDOM from "react-dom";
 
-function ModalOverlay({ product, onClose }) {
-  return (
+const modalRoot = document.getElementById("modals");
+
+function ModalOverlay({ children, isOpened, onClick, header, onClose }) {
+  return PortalReactDOM.createPortal(
     <div
-      className={ModalOverlayStyle.overlay}
-      style={product && { display: "flex" }}
+      className={ModalOverlayStyle.overlay + " " + "popup"}
+      style={isOpened ? { display: "flex" } : { display: "none" }}
     >
-      <Modal product={product} onClose={onClose} />
-    </div>
+      <Modal
+        children={children}
+        onClick={onClick}
+        header={header}
+        onClose={onClose}
+      />
+    </div>,
+    modalRoot
   );
 }
 
 ModalOverlay.propTypes = {
-  product: ingridientData.isRequired,
   onClose: PropTypes.func,
+  isOpened: PropTypes.bool,
+  header: PropTypes.string,
+  children: PropTypes.any,
 };
 
 export default ModalOverlay;

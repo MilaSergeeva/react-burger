@@ -1,13 +1,6 @@
 .headerFlex {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1280px;
-  gap: 20px; */
   padding: 16px 0;
   justify-items: end;
   align-items: center;

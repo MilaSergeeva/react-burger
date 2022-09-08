@@ -1,29 +1,17 @@
 import React from "react";
 import PopupIngridientsStyle from "./PopupIngridiends.module.css";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import ingridientData from "../../utils/data";
+import PropTypes from "prop-types";
 
-function PopupIngridients({ product, onClose }) {
-  console.log("product", product);
-
-  if (!product) {
-    return;
-  }
-
+function PopupIngridients({ popupOpened, product, onClose }) {
   return (
-    <div
-      className={PopupIngridientsStyle.overlay}
-      style={product && { display: "flex" }}
+    <ModalOverlay
+      isOpened={popupOpened}
+      header={"Ingridient details"}
+      onClose={onClose}
     >
-      <div className={PopupIngridientsStyle.procuctCardContainier}>
-        <div className={PopupIngridientsStyle.popupHeader}>
-          <h1 className="text text_type_main-large">Ingredient details</h1>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none" }}
-          >
-            <CloseIcon type="primary" />
-          </button>
-        </div>
+      {product && (
         <div className={PopupIngridientsStyle.productInfo}>
           <img src={product.image_large} />
           <h2>{product.name}</h2>
@@ -47,9 +35,15 @@ function PopupIngridients({ product, onClose }) {
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </ModalOverlay>
   );
 }
+
+ModalOverlay.propTypes = {
+  popupOpened: PropTypes.func,
+  onClose: PropTypes.func,
+  product: PropTypes.objectOf(ingridientData),
+};
 
 export default PopupIngridients;

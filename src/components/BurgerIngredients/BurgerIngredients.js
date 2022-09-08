@@ -10,7 +10,7 @@ import {
 import PropTypes from "prop-types";
 import ingridientData from "../../utils/data";
 
-function BurgerIngredients({ ingridients }) {
+function BurgerIngredients({ ingridients, onButtonClick }) {
   return (
     <section className={BurgerIngredientsStyles.flexItem}>
       <ul className={BurgerIngredientsStyles.listContainier}>
@@ -46,7 +46,7 @@ function BurgerIngredients({ ingridients }) {
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={onButtonClick}>
           Place order
         </Button>
       </div>
@@ -56,6 +56,7 @@ function BurgerIngredients({ ingridients }) {
 
 BurgerIngredients.propTypes = {
   ingridients: PropTypes.arrayOf(ingridientData.isRequired),
+  onButtonClick: PropTypes.func,
 };
 
 export default BurgerIngredients;
