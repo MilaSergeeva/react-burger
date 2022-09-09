@@ -11,9 +11,6 @@ function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
   const [ingridientPopupOpened, setIngridientPopupOpened] = useState(false);
   const [checkoutPopupOpened, setCheckoutPopupOpened] = useState(false);
-  // const [clickedOutside, setClickedOutside] = useState(false);
-
-  // let clickedOutside = false;
 
   const [ingridients, setIngridients] = useState({
     isLoading: false,
