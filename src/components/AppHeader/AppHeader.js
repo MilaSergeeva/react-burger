@@ -15,13 +15,15 @@ function AppHeader() {
           className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
         >
           <BurgerIcon type="primary" />
-          Constructor
+          {/* Constructor */}
+          Конструктор
         </button>
         <button
           className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
         >
           <ListIcon type="secondary" />
-          Order list
+          {/* Order list */}
+          Лента заказа
         </button>
       </nav>
       <div className={appHeaderStyles.logoAlign}>
@@ -31,7 +33,8 @@ function AppHeader() {
         className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
       >
         <ProfileIcon type="secondary" />
-        Personal account
+        {/* Personal account */}
+        Личный кабинет
       </button>
     </header>
   );

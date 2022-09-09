@@ -30,25 +30,6 @@ function BurgerIngredients({ ingridients, onButtonClick }) {
                 price={el.price}
                 thumbnail={el.image}
               />
-              {/* 
-              <div className={BurgerIngredientsStyles.grisListContent}>
-              <img src={el.image} style={{ width: 80, height: 40 }} />
-              <p
-                className="text text_type_main-default"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                {el.name}
-              </p>
-              <div
-                className={BurgerIngredientsStyles.price}
-                style={{ width: 100 }}
-              >
-                <p className="text text_type_digits-default">{el.price}</p>
-                <div>
-                  <CurrencyIcon type="primary" />
-                </div>
-              </div>
-              <DeleteIcon type="primary" /> */}
             </div>
           </li>
         ))}
@@ -61,7 +42,8 @@ function BurgerIngredients({ ingridients, onButtonClick }) {
           </div>
         </div>
         <Button type="primary" size="large" onClick={onButtonClick}>
-          Place order
+          {/* Place order */}
+          Оформить заказ
         </Button>
       </div>
     </section>

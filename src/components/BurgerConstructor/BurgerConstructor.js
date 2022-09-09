@@ -18,7 +18,6 @@ function BurgerConstructor({ onCardClick, ingridients }) {
       <div
         className={BurgerConstructorStyles.productCard}
         key={el._id}
-        // ingridient={el}
         onClick={() => onCardClick(el)}
       >
         <img src={el.image} alt={el.name} />
@@ -42,7 +41,7 @@ function BurgerConstructor({ onCardClick, ingridients }) {
   return (
     <section className={BurgerConstructorStyles.flexSection}>
       <div>
-        <h1 className={BurgerConstructorStyles.title}>Assemble a burger</h1>
+        <h1 className={BurgerConstructorStyles.title}>Соберите бургер</h1>
 
         <div className={BurgerConstructorStyles.tabsBlock}>
           <Tab value="buns" active={current === "buns"} onClick={setCurrent}>

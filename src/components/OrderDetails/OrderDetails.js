@@ -11,7 +11,7 @@ function OrderDetails({ popupOpened, onClose }) {
       <div className={PopupOrderDetailsStyle.contantContainier}>
         <p className="text text_type_digits-large">034536</p>
         <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
-          Order ID
+          Идентификатор заказа
         </p>
         <img
           src={done}
@@ -19,10 +19,10 @@ function OrderDetails({ popupOpened, onClose }) {
           alt="done_icon"
         />
         <p className="text text_type_main-default" style={{ marginTop: 8 }}>
-          We have started to cook your order
+          Ваш заказ начали готовить
         </p>
         <p className="text text_type_main-default" style={{ color: "#8585AD" }}>
-          Wait for the order to be ready at the orbital station
+          Дождитесь готовности на орбитальной станции
         </p>
       </div>
     </Modal>

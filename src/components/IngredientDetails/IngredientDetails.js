@@ -9,7 +9,7 @@ function IngredientDetails({ popupOpened, product, onClose }) {
   return (
     <Modal
       isOpened={popupOpened}
-      header={"Ingridient details"}
+      header={"Детали ингридиента"}
       onClose={onClose}
     >
       {product && (
@@ -18,20 +18,23 @@ function IngredientDetails({ popupOpened, product, onClose }) {
           <h2>{product.name}</h2>
           <div className={PopupIngridientsStyle.productCompound}>
             <p className={PopupIngridientsStyle.productCompoundText}>
-              Calories, cal
+              Калории,калл
               <br />
               {product.calories}
             </p>
             <p className={PopupIngridientsStyle.productCompoundText}>
-              Proteins, g<br />
+              Белки, г
+              <br />
               {product.proteins}
             </p>
             <p className={PopupIngridientsStyle.productCompoundText}>
-              Fats, g<br />
+              Жиры, г
+              <br />
               {product.fat}
             </p>
             <p className={PopupIngridientsStyle.productCompoundText}>
-              Carbohydrates, g<br />
+              Углеводы, г
+              <br />
               {product.carbohydrates}
             </p>
           </div>
