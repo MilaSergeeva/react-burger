@@ -1,26 +1,31 @@
-import React from "react";
-import Modal from "../Modal/Modal";
+import React, { useEffect } from "react";
 import ModalOverlayStyle from "./ModalOverlay.module.css";
 import PropTypes from "prop-types";
-import PortalReactDOM from "react-dom";
 
-const modalRoot = document.getElementById("modals");
+function ModalOverlay({ onClose }) {
+  // закрытие модального окна по оверлей
+  const handleClickOutside = (e) => {
+    if (e.target.classList.contains("popup")) {
+      onClose();
+    }
+  };
 
-function ModalOverlay({ children, isOpened, onClick, header, onClose }) {
-  return PortalReactDOM.createPortal(
-    <div
-      className={ModalOverlayStyle.overlay + " " + "popup"}
-      style={isOpened ? { display: "flex" } : { display: "none" }}
-    >
-      <Modal
-        children={children}
-        onClick={onClick}
-        header={header}
-        onClose={onClose}
-      />
-    </div>,
-    modalRoot
-  );
+  useEffect(() => {
+    const elements = document.getElementsByClassName("popup");
+    console.log(elements);
+
+    for (const element of elements) {
+      element.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      for (const element of elements) {
+        element.removeEventListener("mousedown", handleClickOutside);
+      }
+    };
+  }, []);
+
+  return <div className={`${ModalOverlayStyle.overlay} popup`} />;
 }
 
 ModalOverlay.propTypes = {

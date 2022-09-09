@@ -5,12 +5,15 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import { ingridientsDataApi } from "../../utils/data";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
   const [ingridientPopupOpened, setIngridientPopupOpened] = useState(false);
   const [checkoutPopupOpened, setCheckoutPopupOpened] = useState(false);
-  const [clickedOutside, setClickedOutside] = useState(false);
+  // const [clickedOutside, setClickedOutside] = useState(false);
+
+  // let clickedOutside = false;
 
   const [ingridients, setIngridients] = useState({
     isLoading: false,
@@ -21,56 +24,16 @@ function App() {
   useEffect(() => {
     setIngridients({ ...ingridients, hasError: false, isLoading: true });
 
-    const ingridientsDataApi =
-      "https://norma.nomoreparties.space/api/ingredients";
-
     fetch(ingridientsDataApi)
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.ok);
         setIngridients({ ...ingridients, data: data.data, isLoading: false });
       })
       .catch((err) => {
         setIngridients({ ...ingridients, hasError: true, isLoading: false });
         console.log(err); // выведем ошибку в консоль
       });
-  }, []);
-
-  // закрытие модального окна по оверлей
-  const handleClickOutside = (e) => {
-    if (e.target.classList.contains("popup")) {
-      setClickedOutside(true);
-      closeAllPopups();
-    }
-  };
-  const handleClickInside = () => setClickedOutside(false);
-
-  useEffect(() => {
-    const elements = document.getElementsByClassName("popup");
-    console.log(elements);
-
-    for (const element of elements) {
-      element.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      for (const element of elements) {
-        element.removeEventListener("mousedown", handleClickOutside);
-      }
-    };
-  }, []);
-
-  //закрытие модального окна по esc
-  useEffect(() => {
-    function handleCloseByEsc(evt) {
-      if (evt.key === "Escape") {
-        closeAllPopups();
-      }
-    }
-
-    document.addEventListener("keydown", handleCloseByEsc);
-    return () => {
-      document.removeEventListener("keydown", handleCloseByEsc);
-    };
   }, []);
 
   const handleCardClick = (ingridient) => {
@@ -106,12 +69,10 @@ function App() {
         product={selectedIngridientCard}
         popupOpened={ingridientPopupOpened}
         onClose={closeAllPopups}
-        onClick={handleClickInside}
       />
       <OrderDetails
         popupOpened={checkoutPopupOpened}
         onClose={closeAllPopups}
-        onClick={handleClickInside}
       />
     </div>
   );

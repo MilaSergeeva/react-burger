@@ -12,36 +12,26 @@ function AppHeader() {
     <header className={appHeaderStyles.headerFlex}>
       <nav className={appHeaderStyles.nav}>
         <button
-          className={appHeaderStyles.button}
-          type="secondary"
-          size="large"
+          className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
         >
           <BurgerIcon type="primary" />
-          <p
-            className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText}`}
-          >
-            Constructor
-          </p>
+          Constructor
         </button>
-        <button className={appHeaderStyles.button}>
+        <button
+          className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+        >
           <ListIcon type="secondary" />
-          <p
-            className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText}`}
-          >
-            Order list
-          </p>
+          Order list
         </button>
       </nav>
       <div className={appHeaderStyles.logoAlign}>
         <Logo />
       </div>
-      <button className={appHeaderStyles.button}>
+      <button
+        className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+      >
         <ProfileIcon type="secondary" />
-        <p
-          className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText}`}
-        >
-          Personal account
-        </p>
+        Personal account
       </button>
     </header>
   );

@@ -1,19 +1,20 @@
 import React from "react";
 import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import ingridientData from "../../utils/data";
+import { ingridientData } from "../../utils/data";
 import PropTypes from "prop-types";
+import Modal from "../Modal/Modal";
 
 function IngredientDetails({ popupOpened, product, onClose }) {
   return (
-    <ModalOverlay
+    <Modal
       isOpened={popupOpened}
       header={"Ingridient details"}
       onClose={onClose}
     >
       {product && (
         <div className={PopupIngridientsStyle.productInfo}>
-          <img src={product.image_large} />
+          <img src={product.image_large} alt={product.name} />
           <h2>{product.name}</h2>
           <div className={PopupIngridientsStyle.productCompound}>
             <p className={PopupIngridientsStyle.productCompoundText}>
@@ -36,7 +37,7 @@ function IngredientDetails({ popupOpened, product, onClose }) {
           </div>
         </div>
       )}
-    </ModalOverlay>
+    </Modal>
   );
 }
 

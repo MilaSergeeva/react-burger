@@ -9,7 +9,7 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import ingridientData from "../../utils/data";
+import { ingridientData } from "../../utils/data";
 
 function BurgerIngredients({ ingridients, onButtonClick }) {
   return (

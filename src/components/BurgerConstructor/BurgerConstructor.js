@@ -6,7 +6,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import ingridientData from "../../utils/data";
+import { ingridientData } from "../../utils/data";
 
 function BurgerConstructor({ onCardClick, ingridients }) {
   const [current, setCurrent] = React.useState("buns");
@@ -18,11 +18,10 @@ function BurgerConstructor({ onCardClick, ingridients }) {
       <div
         className={BurgerConstructorStyles.productCard}
         key={el._id}
-        // onClick={() => togglePopupWithProduct(el)}
-        ingridient={el}
+        // ingridient={el}
         onClick={() => onCardClick(el)}
       >
-        <img src={el.image} />
+        <img src={el.image} alt={el.name} />
         <Counter count={1} size="default" />
         <div className={BurgerConstructorStyles.price}>
           <p className="text text_type_digits-default">{el.price}</p>

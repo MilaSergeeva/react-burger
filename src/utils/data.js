@@ -14,4 +14,6 @@ const ingridientData = PropTypes.shape({
   image_large: PropTypes.any,
 });
 
-export default ingridientData;
+const ingridientsDataApi = "https://norma.nomoreparties.space/api/ingredients";
+
+export { ingridientData, ingridientsDataApi };
