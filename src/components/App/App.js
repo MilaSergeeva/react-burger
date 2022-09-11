@@ -5,7 +5,7 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { ingridientsDataApi } from "../../utils/data";
+import { checkResponse, ingridientsDataApi } from "../../utils/data";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
@@ -22,9 +22,9 @@ function App() {
     setIngridients({ ...ingridients, hasError: false, isLoading: true });
 
     fetch(ingridientsDataApi)
+      .then(checkResponse)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.ok);
         setIngridients({ ...ingridients, data: data.data, isLoading: false });
       })
       .catch((err) => {

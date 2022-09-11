@@ -16,4 +16,12 @@ const ingridientData = PropTypes.shape({
 
 const ingridientsDataApi = "https://norma.nomoreparties.space/api/ingredients";
 
-export { ingridientData, ingridientsDataApi };
+function checkResponse(res) {
+  if (res.ok) {
+    return res;
+  } else {
+    throw Error(`Error during request`);
+  }
+}
+
+export { ingridientData, ingridientsDataApi, checkResponse };
