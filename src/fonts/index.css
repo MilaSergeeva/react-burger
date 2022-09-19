@@ -1,0 +1,15 @@
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./JetBrains Mono/JetBrainsMono-Regular.ttf?v=3.13") format("ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: bold;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./JetBrains Mono/JetBrainsMono-Bold.ttf?v=3.13") format("ttf");
+}
