@@ -1,0 +1,51 @@
+.headerFlex {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 16px 0;
+  justify-items: end;
+  align-items: center;
+  background: #1c1c21;
+}
+
+.nav {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 8px;
+  place-self: start;
+}
+
+.logoAlign {
+  display: block;
+  margin: 0 auto;
+}
+
+.button {
+  display: flex;
+  padding: 16px 20px;
+  border-radius: 40px;
+  border: none;
+  background: none;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.buttonText {
+  font-family: "JetBrains Mono", monospace;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.textWhite {
+  color: #fff;
+}
+
+.textPurpul {
+  color: #8585ad;
+}
