@@ -1,88 +1,113 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
+import dataArray from "../../utils/data";
 import {
-  Tab,
-  Counter,
+  DragIcon,
   CurrencyIcon,
+  DeleteIcon,
+  Button,
+  ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingridientData } from "../../utils/data";
+import { useSelector } from "react-redux";
+import { ingredients } from "../../utils/api";
+import { useDrop } from "react-dnd";
 
-function BurgerConstructor({ onCardClick, ingridients }) {
-  const [current, setCurrent] = React.useState("buns");
+function BurgerConstructor({ onButtonClick, onDropHandler }) {
+  const cartIngridients = useSelector((state) => state.burgerConstructorList);
 
-  const gretProductCard = (type) => {
-    const filterdProductsArray = ingridients.filter((el) => el.type === type);
+  // const bun = ingridients[0];
 
-    return filterdProductsArray.map((el) => (
-      <div
-        className={BurgerConstructorStyles.productCard}
-        key={el._id}
-        onClick={() => onCardClick(el)}
-      >
-        <img src={el.image} alt={el.name} />
-        <Counter count={1} size="default" />
+  // const burgerFillings = ingridients.slice(1, ingridients.length() - 1);
+  // console.log(burgerFillings);
+  const [{ item }, dropRef] = useDrop({
+    accept: "ingridients",
+    drop(item) {
+      console.log(item);
+      onDropHandler(item);
+    },
+    collect: (monitor) => {
+      return {
+        item: monitor.getItem(),
+      };
+    },
+  });
+
+  return (
+    <section className={BurgerConstructorStyles.flexItem}>
+      <ul className={BurgerConstructorStyles.burgerList} ref={dropRef}>
+        <li className={BurgerConstructorStyles.gridListBun}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <p></p>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              // text={item.name}
+              // price={item.price}
+              // thumbnail={item.image}
+            />
+          </div>
+        </li>
+        <ul className={BurgerConstructorStyles.listContainier}>
+          {cartIngridients.map((el) => (
+            <li className={BurgerConstructorStyles.gridList} key={el._id}>
+              <DragIcon type="primary" />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                <ConstructorElement
+                  text={el.name}
+                  price={el.price}
+                  thumbnail={el.image}
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
+        <li className={BurgerConstructorStyles.gridListBun}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              // text={ingridients[0].name}
+              // price={ingridients[0].price}
+              // thumbnail={ingridients[0].image}
+            />
+          </div>
+        </li>
+      </ul>
+      <div className={BurgerConstructorStyles.total}>
         <div className={BurgerConstructorStyles.price}>
-          <p className="text text_type_digits-default">{el.price}</p>
+          <p className="text text_type_digits-medium">630</p>
           <div>
             <CurrencyIcon type="primary" />
           </div>
         </div>
-        <p
-          className="text text_type_main-default"
-          style={{ textAlign: "center" }}
+        <Button
+          type="primary"
+          size="large"
+          onClick={() => onButtonClick(ingredients)}
         >
-          {el.name}
-        </p>
-      </div>
-    ));
-  };
-
-  return (
-    <section className={BurgerConstructorStyles.flexSection}>
-      <div>
-        <h1 className={BurgerConstructorStyles.title}>Соберите бургер</h1>
-
-        <div className={BurgerConstructorStyles.tabsBlock}>
-          <Tab value="buns" active={current === "buns"} onClick={setCurrent}>
-            Buns
-          </Tab>
-          <Tab
-            value="sauces"
-            active={current === "sauces"}
-            onClick={setCurrent}
-          >
-            Sauces
-          </Tab>
-          <Tab
-            value="fillings"
-            active={current === "fillings"}
-            onClick={setCurrent}
-          >
-            Fillings
-          </Tab>
-        </div>
-      </div>
-
-      <div className={BurgerConstructorStyles.productsMenu}>
-        <div>
-          <h2>Buns</h2>
-          <div className={BurgerConstructorStyles.typeProductSection}>
-            {gretProductCard("bun")}
-          </div>
-        </div>
-        <div>
-          <h2>Sauces</h2>
-          <div className={BurgerConstructorStyles.typeProductSection}>
-            {gretProductCard("sauce")}
-          </div>
-        </div>
-        <div>
-          <h2>Fillings</h2>
-          <div className={BurgerConstructorStyles.typeProductSection}>
-            {gretProductCard("main")}
-          </div>
-        </div>
+          {/* Place order */}
+          Оформить заказ
+        </Button>
       </div>
     </section>
   );
@@ -90,7 +115,7 @@ function BurgerConstructor({ onCardClick, ingridients }) {
 
 BurgerConstructor.propTypes = {
   ingridients: PropTypes.arrayOf(ingridientData.isRequired),
-  onCardClick: PropTypes.func,
+  onButtonClick: PropTypes.func,
 };
 
 export default BurgerConstructor;

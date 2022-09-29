@@ -5,40 +5,31 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { checkResponse, ingridientsDataApi } from "../../utils/data";
+import { ADD_TO_CART_LIST } from "../../services/actions/index";
+
+import { useDispatch } from "react-redux";
+import { makeOrder } from "../../services/actions/index";
+import { ingredients } from "../../utils/api";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
   const [ingridientPopupOpened, setIngridientPopupOpened] = useState(false);
   const [checkoutPopupOpened, setCheckoutPopupOpened] = useState(false);
 
-  const [ingridients, setIngridients] = useState({
-    isLoading: false,
-    hasError: false,
-    data: [],
-  });
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setIngridients({ ...ingridients, hasError: false, isLoading: true });
-
-    fetch(ingridientsDataApi)
-      .then(checkResponse)
-      .then((res) => res.json())
-      .then((data) => {
-        setIngridients({ ...ingridients, data: data.data, isLoading: false });
-      })
-      .catch((err) => {
-        setIngridients({ ...ingridients, hasError: true, isLoading: false });
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, []);
+    dispatch(makeOrder(ingredients));
+  }, [dispatch]);
 
   const handleCardClick = (ingridient) => {
     setSelectedIngridientCard(ingridient);
     setIngridientPopupOpened(true);
   };
 
-  const handleProceedOrder = () => {
+  const handleProceedOrder = (ingredients) => {
     setCheckoutPopupOpened(true);
   };
 
@@ -47,19 +38,27 @@ function App() {
     setCheckoutPopupOpened(false);
   }
 
+  const onDropHandler = (item) => {
+    dispatch({ type: ADD_TO_CART_LIST, item });
+  };
+
   return (
     <div className={appStyles.appBlock}>
       <AppHeader />
 
       <main className={appStyles.content}>
-        <BurgerConstructor
-          onCardClick={handleCardClick}
-          ingridients={ingridients.data}
-        />
-        <BurgerIngredients
-          ingridients={ingridients.data}
-          onButtonClick={handleProceedOrder}
-        />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients
+            // ingridients={ingridients.data}
+            onCardClick={handleCardClick}
+          />
+
+          <BurgerConstructor
+            onButtonClick={handleProceedOrder}
+            onDropHendler={onDropHandler}
+            // ingridients={ingridients.data}
+          />
+        </DndProvider>
       </main>
 
       <IngredientDetails

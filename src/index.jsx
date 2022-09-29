@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from './services/reducers/index.js'
-
+import { Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
 
 import thunk from 'redux-thunk';
@@ -22,7 +22,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

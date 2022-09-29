@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PopupOrderDetailsStyle from "./OrderDetails.module.css";
 import done from "../../images/done.png";
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
+// import { ingredients } from "../../utils/api";
+// import { makeOrder } from "../../services/actions/index";
+import { useSelector, useDispatch } from "react-redux";
 
 function OrderDetails({ popupOpened, onClose }) {
+  // const dispatch = useDispatch();
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+
+  // useEffect(() => dispatch(makeOrder(ingredients)), [dispatch]);
+
   return (
     <Modal isOpened={popupOpened} header={""} onClose={onClose}>
       <div className={PopupOrderDetailsStyle.contantContainier}>
-        <p className="text text_type_digits-large">034536</p>
+        <p className="text text_type_digits-large">
+          {/* {orderDetails === {} ? "" : orderDetails.order.number} */}
+        </p>
         <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
           Идентификатор заказа
         </p>
