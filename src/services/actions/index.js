@@ -1,4 +1,3 @@
-import { bindActionCreators } from "redux";
 import { ingridientsDataApi } from "../../utils/api";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
@@ -20,6 +19,8 @@ export const DELETE_CURRENT_INGRIDIENT_DETAILS =
 //Получение и обновление номера заказа в модальном окне OrderDetails.
 export const GET_ORDER_NUMBER = "GET_ORDER_NUMBER";
 export const UPDATE_ORDER_NUMBER = "UPDATE_ORDER_NUMBER";
+export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 
 //Обновление карзины
 
@@ -34,6 +35,11 @@ export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
 export function getItems() {
   return function (dispatch) {
     fetch(ingridientsDataApi)
+      .then(
+        dispatch({
+          type: GET_ITEMS_REQUEST,
+        })
+      )
       .then((res) => res.json())
       .then((res) => {
         if (res && res.success) {
@@ -59,12 +65,23 @@ export function makeOrder(ingredients) {
       },
       body: JSON.stringify({ ingredients: ingredients }),
     })
+      .then(
+        dispatch({
+          type: GET_ORDER_REQUEST,
+        })
+      )
       .then((res) => res.json())
       .then((res) => {
-        dispatch({
-          type: GET_ORDER_NUMBER,
-          orderDetails: res,
-        });
+        if (res && res.success) {
+          dispatch({
+            type: GET_ORDER_NUMBER,
+            orderDetails: res,
+          });
+        } else {
+          dispatch({
+            type: GET_ORDER_FAILED,
+          });
+        }
       });
   };
 }

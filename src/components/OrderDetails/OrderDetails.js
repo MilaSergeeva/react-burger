@@ -12,31 +12,43 @@ function OrderDetails({ popupOpened, onClose }) {
   // const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetails);
+  const orderReguestStatus = useSelector(
+    (state) => state.orderDetails.orderRequest
+  );
 
   // useEffect(() => dispatch(makeOrder(ingredients)), [dispatch]);
 
   return (
     <Modal isOpened={popupOpened} header={""} onClose={onClose}>
       <div className={PopupOrderDetailsStyle.contantContainier}>
-        <p className="text text_type_digits-large">
-          {orderDetails.success === true
-            ? orderDetails.orderNamber.order.number
-            : "kra"}
-        </p>
-        <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
-          Идентификатор заказа
-        </p>
-        <img
-          src={success}
-          style={{ marginTop: 60, marginBottom: 60 }}
-          alt="done_icon"
-        />
-        <p className="text text_type_main-default" style={{ marginTop: 8 }}>
-          Ваш заказ начали готовить
-        </p>
-        <p className="text text_type_main-default" style={{ color: "#8585AD" }}>
-          Дождитесь готовности на орбитальной станции
-        </p>
+        {orderReguestStatus ? (
+          <div className={PopupOrderDetailsStyle.loader}></div>
+        ) : (
+          <>
+            <p className="text text_type_digits-large">
+              {orderDetails.orderNumber.success === true
+                ? orderDetails.orderNumber.order.number
+                : ""}
+            </p>
+            <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
+              Идентификатор заказа
+            </p>
+            <img
+              src={success}
+              style={{ marginTop: 60, marginBottom: 60 }}
+              alt="done_icon"
+            />
+            <p className="text text_type_main-default" style={{ marginTop: 8 }}>
+              Ваш заказ начали готовить
+            </p>
+            <p
+              className="text text_type_main-default"
+              style={{ color: "#8585AD" }}
+            >
+              Дождитесь готовности на орбитальной станции
+            </p>
+          </>
+        )}
       </div>
     </Modal>
   );

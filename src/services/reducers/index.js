@@ -4,10 +4,6 @@
 // объект созданного заказа
 
 import {
-  // DELETE_ITEM,
-  // CANCEL_PROMO,
-  // DECREASE_ITEM,
-  // INCREASE_ITEM,
   GET_ITEMS_FAILED,
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
@@ -17,13 +13,8 @@ import {
   DELETE_FROM_CART_BUN,
   DELETE_FROM_CART_FILLING,
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
-  // APPLY_PROMO_FAILED,
-  // APPLY_PROMO_REQUEST,
-  // APPLY_PROMO_SUCCESS,
-  // TAB_SWITCH,
-  // GET_RECOMMENDED_ITEMS_FAILED,
-  // GET_RECOMMENDED_ITEMS_REQUEST,
-  // GET_RECOMMENDED_ITEMS_SUCCESS
+  GET_ORDER_FAILED,
+  GET_ORDER_REQUEST,
 } from "../actions/index";
 
 const initialState = {
@@ -38,6 +29,8 @@ const initialState = {
   currentIngredientDetails: {},
   orderDetails: {
     ingridients: [],
+    orderFailed: false,
+    orderRequest: false,
     orderNumber: "",
   },
 };
@@ -61,12 +54,33 @@ export const rootReducer = (state = initialState, action) => {
     case GET_ITEMS_FAILED: {
       return { ...state, itemsFailed: true, itemsRequest: false };
     }
+    case GET_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderDetails: {
+          ...state.orderDetails,
+          orderRequest: true,
+        },
+      };
+    }
     case GET_ORDER_NUMBER: {
       return {
         ...state,
         orderDetails: {
           ...state.orderDetails,
           orderNumber: action.orderDetails,
+          orderRequest: false,
+          orderFailed: false,
+        },
+      };
+    }
+    case GET_ORDER_FAILED: {
+      return {
+        ...state,
+        orderDetails: {
+          ...state.orderDetails,
+          orderRequest: false,
+          orderFailed: true,
         },
       };
     }
