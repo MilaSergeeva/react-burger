@@ -50,20 +50,23 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
     return elId + Math.random();
   };
 
-  const moveCard = useCallback(
-    (dragIndex, hoverIndex) => {
-      dispatch({
-        type: DRAG_CART_INGREDIENT,
-        dragIndex: dragIndex,
-        hoverIndex: hoverIndex,
-      });
-    },
-    [dispatch]
-  );
+  const moveCard = (dragIndex, hoverIndex) => {
+    dispatch({
+      type: DRAG_CART_INGREDIENT,
+      dragIndex: dragIndex,
+      hoverIndex: hoverIndex,
+    });
+  };
 
   const renderFilling = useCallback((el, i) => {
     return (
-      <FillingsCard key={randomNr(el._id)} index={i} el={el} id={el._id} />
+      <FillingsCard
+        key={randomNr(el._id)}
+        moveCard={moveCard}
+        index={i}
+        el={el}
+        id={el._id}
+      />
     );
   }, []);
 
@@ -87,7 +90,6 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
                 text={cartBurgerBan.name}
                 price={cartBurgerBan.price}
                 thumbnail={cartBurgerBan.image}
-                moveCard={moveCard}
               />
             )}
           </div>

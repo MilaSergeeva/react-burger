@@ -26,12 +26,12 @@ function FillingsCard({ index, el, moveCard, id }) {
 
   const [{ handlerId }, drop] = useDrop({
     accept: "fills",
-    collect(monitor) {
+    collect: (monitor) => {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover: (item, monitor) => {
       if (!ref.current) {
         return;
       }
