@@ -1,3 +1,4 @@
+import { bindActionCreators } from "redux";
 import { ingridientsDataApi } from "../../utils/api";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
@@ -22,7 +23,10 @@ export const UPDATE_ORDER_NUMBER = "UPDATE_ORDER_NUMBER";
 
 //Обновление карзины
 
-export const ADD_TO_CART_LIST = "ADD_TO_CART_LIST";
+export const ADD_TO_CART_FILLINGS = "ADD_TO_CART_FILLINGS";
+export const ADD_TO_CART_BUN = "ADD_TO_CART_BUN";
+export const DELETE_FROM_CART_BUN = "DELETE_FROM_CART_BUN";
+export const DELETE_FROM_CART_FILLING = "DELETE_FROM_CART_FILLING";
 
 export function getItems() {
   return function (dispatch) {
@@ -59,5 +63,24 @@ export function makeOrder(ingredients) {
           orderDetails: res,
         });
       });
+  };
+}
+
+export function updateCartList(item) {
+  return function (dispatch) {
+    if (item.type !== "bun") {
+      dispatch({
+        type: ADD_TO_CART_FILLINGS,
+        item,
+      });
+    } else {
+      dispatch({
+        type: DELETE_FROM_CART_BUN,
+      });
+      dispatch({
+        type: ADD_TO_CART_BUN,
+        item,
+      });
+    }
   };
 }

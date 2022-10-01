@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
-import dataArray from "../../utils/data";
 import {
   DragIcon,
   CurrencyIcon,
@@ -13,18 +12,25 @@ import { ingridientData } from "../../utils/data";
 import { useSelector } from "react-redux";
 import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
+import FillingsCard from "../FillingsCard/FillingsCard";
 
 function BurgerConstructor({ onButtonClick, onDropHandler }) {
-  const cartIngridients = useSelector((state) => state.burgerConstructorList);
+  const cartBurgerFillings = useSelector(
+    (state) => state.burgerConstructorList.fillings
+  );
 
-  // const bun = ingridients[0];
+  const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
+  //расчет общей стоимости
+  const priceTotalFillings = (arr) =>
+    arr.reduce((acc, el) => acc + el.price, 0);
 
-  // const burgerFillings = ingridients.slice(1, ingridients.length() - 1);
-  // console.log(burgerFillings);
+  const totalPrice =
+    priceTotalFillings(cartBurgerFillings) +
+    (cartBurgerBan === null ? 0 : cartBurgerBan.price * 2);
+
   const [{ item }, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
-      console.log(item);
       onDropHandler(item);
     },
     collect: (monitor) => {
@@ -33,6 +39,11 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
       };
     },
   });
+
+  //присвоение уникального номера
+  const randomNr = (elId) => {
+    return elId + Math.random();
+  };
 
   return (
     <section className={BurgerConstructorStyles.flexItem}>
@@ -43,59 +54,52 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
               display: "flex",
               flexDirection: "column",
               gap: "10px",
+              minHeight: "90px",
             }}
           >
             <p></p>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              // text={item.name}
-              // price={item.price}
-              // thumbnail={item.image}
-            />
+            {cartBurgerBan !== null && (
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={cartBurgerBan.name}
+                price={cartBurgerBan.price}
+                thumbnail={cartBurgerBan.image}
+              />
+            )}
           </div>
         </li>
+
         <ul className={BurgerConstructorStyles.listContainier}>
-          {cartIngridients.map((el) => (
-            <li className={BurgerConstructorStyles.gridList} key={el._id}>
-              <DragIcon type="primary" />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                <ConstructorElement
-                  text={el.name}
-                  price={el.price}
-                  thumbnail={el.image}
-                />
-              </div>
-            </li>
-          ))}
+          {cartBurgerFillings.map((el, i) => {
+            return <FillingsCard key={randomNr(el._id)} index={i} el={el} />;
+          })}
         </ul>
+
         <li className={BurgerConstructorStyles.gridListBun}>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               gap: "10px",
+              minHeight: "90px",
             }}
           >
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              // text={ingridients[0].name}
-              // price={ingridients[0].price}
-              // thumbnail={ingridients[0].image}
-            />
+            {cartBurgerBan !== null && (
+              <ConstructorElement
+                type="bottom"
+                isLocked={true}
+                text={cartBurgerBan.name}
+                price={cartBurgerBan.price}
+                thumbnail={cartBurgerBan.image}
+              />
+            )}
           </div>
         </li>
       </ul>
       <div className={BurgerConstructorStyles.total}>
         <div className={BurgerConstructorStyles.price}>
-          <p className="text text_type_digits-medium">630</p>
+          <p className="text text_type_digits-medium">{totalPrice}</p>
           <div>
             <CurrencyIcon type="primary" />
           </div>

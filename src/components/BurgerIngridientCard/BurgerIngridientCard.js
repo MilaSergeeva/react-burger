@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 import PropTypes from "prop-types";
 import { ingridientData } from "../../utils/data";
@@ -7,8 +7,20 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
+import { useEffect, useState } from "react";
 
 function BurgerIngridientCard({ onCardClick, el }) {
+  const [count, setCount] = useState("0");
+
+  const dispatch = useDispatch();
+
+  const cartBurgerFillings = useSelector(
+    (state) => state.burgerConstructorList.fillings
+  );
+  const cartBurgerBuns = useSelector(
+    (state) => state.burgerConstructorList.bun
+  );
+
   const [{ item }, dragRef] = useDrag({
     type: "ingridients",
     item: el,
@@ -18,6 +30,30 @@ function BurgerIngridientCard({ onCardClick, el }) {
     }),
   });
 
+  useEffect(() => {
+    if (cartBurgerFillings.length >= 1 && el.type !== "bun") {
+      setCount(cartBurgerFillings.filter((item) => item._id === el._id).length);
+    } else if (cartBurgerBuns !== null && cartBurgerBuns._id === el._id) {
+      setCount(2);
+    } else if (cartBurgerBuns !== null && el.type === "bun") {
+      setCount(0);
+      console.log("kra");
+    } else {
+      return;
+    }
+  }, [cartBurgerFillings, cartBurgerBuns]);
+
+  // useEffect(() => {
+  //   if (cartBurgerBuns !== null && cartBurgerBuns._id === el._id) {
+  //     setCount(2);
+  //   } else if (cartBurgerBuns !== null && el.type === "bun") {
+  //     setCount(0);
+  //     console.log("kra");
+  //   } else {
+  //     return;
+  //   }
+  // }, [cartBurgerBuns, cartBurgerFillings]);
+
   return (
     // !isDrag && (
     <div
@@ -26,7 +62,7 @@ function BurgerIngridientCard({ onCardClick, el }) {
       onClick={() => onCardClick(el)}
     >
       <img src={el.image} alt={el.name} />
-      <Counter count={1} size="default" />
+      {count > 0 && <Counter count={count} size="default" />}
       <div className={BurgerIngredientsStyles.price}>
         <p className="text text_type_digits-default">{el.price}</p>
         <div>

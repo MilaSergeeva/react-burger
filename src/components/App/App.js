@@ -5,9 +5,8 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import { ADD_TO_CART_LIST } from "../../services/actions/index";
-
-import { useDispatch } from "react-redux";
+import { updateCartList } from "../../services/actions/index";
+import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/index";
 import { ingredients } from "../../utils/api";
 import { DndProvider } from "react-dnd";
@@ -19,17 +18,39 @@ function App() {
   const [checkoutPopupOpened, setCheckoutPopupOpened] = useState(false);
 
   const dispatch = useDispatch();
+  const cartBurgerFillings = useSelector(
+    (state) => state.burgerConstructorList.fillings
+  );
 
-  useEffect(() => {
-    dispatch(makeOrder(ingredients));
-  }, [dispatch]);
+  const cartBurgerBuns = useSelector(
+    (state) => state.burgerConstructorList.bun
+  );
+
+  // useEffect(() => {
+  //   dispatch(makeOrder(ingredients));
+  // }, [dispatch]);
+
+  const burgerIngridients = () => {
+    const result = [];
+
+    cartBurgerBuns !== null && result.push(cartBurgerBuns._id);
+    if (cartBurgerFillings.length >= 1) {
+      cartBurgerFillings.forEach((element) => {
+        result.push(element._id);
+      });
+    }
+
+    return result;
+  };
 
   const handleCardClick = (ingridient) => {
     setSelectedIngridientCard(ingridient);
     setIngridientPopupOpened(true);
   };
 
-  const handleProceedOrder = (ingredients) => {
+  const handleProceedOrder = (burgerIngredients) => {
+    dispatch(makeOrder(burgerIngredients));
+
     setCheckoutPopupOpened(true);
   };
 
@@ -39,7 +60,7 @@ function App() {
   }
 
   const onDropHandler = (item) => {
-    dispatch({ type: ADD_TO_CART_LIST, item });
+    dispatch(updateCartList(item));
   };
 
   return (
@@ -54,8 +75,8 @@ function App() {
           />
 
           <BurgerConstructor
-            onButtonClick={handleProceedOrder}
-            onDropHendler={onDropHandler}
+            onButtonClick={() => handleProceedOrder(burgerIngridients)}
+            onDropHandler={onDropHandler}
             // ingridients={ingridients.data}
           />
         </DndProvider>
