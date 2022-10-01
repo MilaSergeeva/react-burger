@@ -15,6 +15,7 @@ import {
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
+  DRAG_CART_INGREDIENT,
 } from "../actions/index";
 
 const initialState = {
@@ -129,6 +130,18 @@ export const rootReducer = (state = initialState, action) => {
         orderDetails: {
           ...state.orderDetails,
           ingridients: action.ingridientsTotal,
+        },
+      };
+    }
+    case DRAG_CART_INGREDIENT: {
+      const newListIngredients = [...state.burgerConstructorList.fillings];
+      const dragIngredient = newListIngredients.splice(action.dragIndex, 1)[0];
+      newListIngredients.splice(action.hoverIndex, 0, dragIngredient);
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          fillings: newListIngredients,
         },
       };
     }

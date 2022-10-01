@@ -12,8 +12,6 @@ import { useEffect, useState } from "react";
 function BurgerIngridientCard({ onCardClick, el }) {
   const [count, setCount] = useState("0");
 
-  const dispatch = useDispatch();
-
   const cartBurgerFillings = useSelector(
     (state) => state.burgerConstructorList.fillings
   );
@@ -21,7 +19,7 @@ function BurgerIngridientCard({ onCardClick, el }) {
     (state) => state.burgerConstructorList.bun
   );
 
-  const [{ item }, dragRef] = useDrag({
+  const [, dragRef] = useDrag({
     type: "ingridients",
     item: el,
     collect: (monitor) => ({
@@ -42,17 +40,6 @@ function BurgerIngridientCard({ onCardClick, el }) {
       return;
     }
   }, [cartBurgerFillings, cartBurgerBuns]);
-
-  // useEffect(() => {
-  //   if (cartBurgerBuns !== null && cartBurgerBuns._id === el._id) {
-  //     setCount(2);
-  //   } else if (cartBurgerBuns !== null && el.type === "bun") {
-  //     setCount(0);
-  //     console.log("kra");
-  //   } else {
-  //     return;
-  //   }
-  // }, [cartBurgerBuns, cartBurgerFillings]);
 
   return (
     // !isDrag && (

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PopupOrderDetailsStyle from "./OrderDetails.module.css";
 import success from "../../images/success.png";
+import declined from "../../images/declined.png";
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 // import { ingredients } from "../../utils/api";
@@ -25,28 +26,57 @@ function OrderDetails({ popupOpened, onClose }) {
           <div className={PopupOrderDetailsStyle.loader}></div>
         ) : (
           <>
-            <p className="text text_type_digits-large">
-              {orderDetails.orderNumber.success === true
-                ? orderDetails.orderNumber.order.number
-                : ""}
-            </p>
-            <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
-              Идентификатор заказа
-            </p>
-            <img
-              src={success}
-              style={{ marginTop: 60, marginBottom: 60 }}
-              alt="done_icon"
-            />
-            <p className="text text_type_main-default" style={{ marginTop: 8 }}>
-              Ваш заказ начали готовить
-            </p>
-            <p
-              className="text text_type_main-default"
-              style={{ color: "#8585AD" }}
-            >
-              Дождитесь готовности на орбитальной станции
-            </p>
+            {orderDetails.orderNumber.success === true ? (
+              <>
+                <p className="text text_type_digits-large">
+                  {orderDetails.orderNumber.order.number}
+                </p>
+                <p
+                  className="text text_type_main-medium"
+                  style={{ marginTop: 32 }}
+                >
+                  Идентификатор заказа
+                </p>
+                <img
+                  src={success}
+                  style={{ marginTop: 60, marginBottom: 60 }}
+                  alt="done_icon"
+                />
+                <p
+                  className="text text_type_main-default"
+                  style={{ marginTop: 8 }}
+                >
+                  Ваш заказ начали готовить
+                </p>
+                <p
+                  className="text text_type_main-default"
+                  style={{ color: "#8585AD" }}
+                >
+                  Дождитесь готовности на орбитальной станции
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text text_type_digits-large"></p>
+                <p
+                  className="text text_type_main-medium"
+                  style={{ marginTop: 32 }}
+                >
+                  Что-то пошло не так.
+                </p>
+                <img
+                  src={declined}
+                  style={{ marginTop: 60, marginBottom: 60 }}
+                  alt="done_icon"
+                />
+                <p
+                  className="text text_type_main-default"
+                  style={{ marginTop: 8 }}
+                >
+                  Попробуйте еще раз чеерз несколько минут.
+                </p>
+              </>
+            )}
           </>
         )}
       </div>

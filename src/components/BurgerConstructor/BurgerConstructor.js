@@ -1,5 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import {
   DragIcon,
   CurrencyIcon,
@@ -9,16 +11,18 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingridientData } from "../../utils/data";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
+import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
 
 function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const cartBurgerFillings = useSelector(
     (state) => state.burgerConstructorList.fillings
   );
 
+  const dispatch = useDispatch();
   const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
   //расчет общей стоимости
   const priceTotalFillings = (arr) =>
@@ -28,14 +32,15 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
     priceTotalFillings(cartBurgerFillings) +
     (cartBurgerBan === null ? 0 : cartBurgerBan.price * 2);
 
-  const [{ item }, dropRef] = useDrop({
+  const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
       onDropHandler(item);
     },
     collect: (monitor) => {
       return {
-        item: monitor.getItem(),
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
       };
     },
   });
@@ -44,6 +49,23 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const randomNr = (elId) => {
     return elId + Math.random();
   };
+
+  const moveCard = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch({
+        type: DRAG_CART_INGREDIENT,
+        dragIndex: dragIndex,
+        hoverIndex: hoverIndex,
+      });
+    },
+    [dispatch]
+  );
+
+  const renderFilling = useCallback((el, i) => {
+    return (
+      <FillingsCard key={randomNr(el._id)} index={i} el={el} id={el._id} />
+    );
+  }, []);
 
   return (
     <section className={BurgerConstructorStyles.flexItem}>
@@ -65,17 +87,16 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
                 text={cartBurgerBan.name}
                 price={cartBurgerBan.price}
                 thumbnail={cartBurgerBan.image}
+                moveCard={moveCard}
               />
             )}
           </div>
         </li>
-
-        <ul className={BurgerConstructorStyles.listContainier}>
-          {cartBurgerFillings.map((el, i) => {
-            return <FillingsCard key={randomNr(el._id)} index={i} el={el} />;
-          })}
-        </ul>
-
+        <DndProvider backend={HTML5Backend}>
+          <ul className={BurgerConstructorStyles.listContainier}>
+            {cartBurgerFillings.map((el, i) => renderFilling(el, i))}
+          </ul>
+        </DndProvider>
         <li className={BurgerConstructorStyles.gridListBun}>
           <div
             style={{
