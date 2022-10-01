@@ -107,6 +107,11 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
         <Button
           type="primary"
           size="large"
+          disabled={
+            cartBurgerBan === null || cartBurgerFillings.length < 1
+              ? true
+              : false
+          }
           onClick={() => onButtonClick(ingredients)}
         >
           {/* Place order */}

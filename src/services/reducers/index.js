@@ -16,6 +16,7 @@ import {
   ADD_TO_CART_BUN,
   DELETE_FROM_CART_BUN,
   DELETE_FROM_CART_FILLING,
+  UPDATE_ORDER_INGRIDIENTS_DELAILS,
   // APPLY_PROMO_FAILED,
   // APPLY_PROMO_REQUEST,
   // APPLY_PROMO_SUCCESS,
@@ -105,6 +106,15 @@ export const rootReducer = (state = initialState, action) => {
             ...state.burgerConstructorList.fillings.slice(0, action.index),
             ...state.burgerConstructorList.fillings.slice(action.index + 1),
           ],
+        },
+      };
+    }
+    case UPDATE_ORDER_INGRIDIENTS_DELAILS: {
+      return {
+        ...state,
+        orderDetails: {
+          ...state.orderDetails,
+          ingridients: action.ingridientsTotal,
         },
       };
     }

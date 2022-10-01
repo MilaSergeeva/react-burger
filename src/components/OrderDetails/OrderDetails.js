@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PopupOrderDetailsStyle from "./OrderDetails.module.css";
-import done from "../../images/done.png";
+import success from "../../images/success.png";
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 // import { ingredients } from "../../utils/api";
@@ -19,13 +19,15 @@ function OrderDetails({ popupOpened, onClose }) {
     <Modal isOpened={popupOpened} header={""} onClose={onClose}>
       <div className={PopupOrderDetailsStyle.contantContainier}>
         <p className="text text_type_digits-large">
-          {/* {orderDetails === {} ? "" : orderDetails.order.number} */}
+          {orderDetails.success === true
+            ? orderDetails.orderNamber.order.number
+            : "kra"}
         </p>
         <p className="text text_type_main-medium" style={{ marginTop: 32 }}>
           Идентификатор заказа
         </p>
         <img
-          src={done}
+          src={success}
           style={{ marginTop: 60, marginBottom: 60 }}
           alt="done_icon"
         />

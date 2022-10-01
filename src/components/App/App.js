@@ -11,6 +11,7 @@ import { makeOrder } from "../../services/actions/index";
 import { ingredients } from "../../utils/api";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
@@ -31,16 +32,16 @@ function App() {
   // }, [dispatch]);
 
   const burgerIngridients = () => {
-    const result = [];
+    const ingridientsTotal = [];
 
-    cartBurgerBuns !== null && result.push(cartBurgerBuns._id);
+    cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
     if (cartBurgerFillings.length >= 1) {
       cartBurgerFillings.forEach((element) => {
-        result.push(element._id);
+        ingridientsTotal.push(element._id);
       });
     }
-
-    return result;
+    dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
+    return ingridientsTotal;
   };
 
   const handleCardClick = (ingridient) => {
@@ -49,7 +50,7 @@ function App() {
   };
 
   const handleProceedOrder = (burgerIngredients) => {
-    dispatch(makeOrder(burgerIngredients));
+    dispatch(makeOrder(burgerIngredients()));
 
     setCheckoutPopupOpened(true);
   };

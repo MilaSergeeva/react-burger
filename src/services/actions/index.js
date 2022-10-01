@@ -28,6 +28,9 @@ export const ADD_TO_CART_BUN = "ADD_TO_CART_BUN";
 export const DELETE_FROM_CART_BUN = "DELETE_FROM_CART_BUN";
 export const DELETE_FROM_CART_FILLING = "DELETE_FROM_CART_FILLING";
 
+export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
+  "UPDATE_ORDER_INGRIDIENTS_DELAILS";
+
 export function getItems() {
   return function (dispatch) {
     fetch(ingridientsDataApi)
@@ -54,7 +57,7 @@ export function makeOrder(ingredients) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ingredients }),
+      body: JSON.stringify({ ingredients: ingredients }),
     })
       .then((res) => res.json())
       .then((res) => {
