@@ -98,7 +98,7 @@ function FillingsCard({ index, el, moveCard, id }) {
 FillingsCard.propTypes = {
   el: ingridientData,
   moveCard: PropTypes.func,
-  index: PropTypes.string,
+  index: PropTypes.number,
   id: PropTypes.string,
 };
 
