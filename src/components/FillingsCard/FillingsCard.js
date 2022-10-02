@@ -77,13 +77,7 @@ function FillingsCard({ index, el, moveCard, id }) {
       ref={ref}
     >
       <DragIcon type="primary" />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
+      <div className={BurgerConstructorStyles.flexConstractorElement}>
         <ConstructorElement
           text={el.name}
           price={el.price}
@@ -96,10 +90,10 @@ function FillingsCard({ index, el, moveCard, id }) {
 }
 
 FillingsCard.propTypes = {
-  el: ingridientData,
+  el: ingridientData.isRequired,
   moveCard: PropTypes.func,
-  index: PropTypes.number,
-  id: PropTypes.string,
+  index: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default FillingsCard;

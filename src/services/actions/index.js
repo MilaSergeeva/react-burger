@@ -1,4 +1,4 @@
-import { ingridientsDataApi } from "../../utils/api";
+import { baseUrl, checkResponse } from "../../utils/api";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
@@ -34,14 +34,17 @@ export const DRAG_CART_INGREDIENT = "DRAG_CART_INGREDIENT";
 export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
 
+export const DELETE_FROM_CART_FILLINGS = "DELETE_FROM_CART_FILLINGS";
+
 export function getItems() {
   return function (dispatch) {
-    fetch(ingridientsDataApi)
+    fetch(`${baseUrl}/ingredients`)
       .then(
         dispatch({
           type: GET_ITEMS_REQUEST,
         })
       )
+      .then(checkResponse)
       .then((res) => res.json())
       .then((res) => {
         if (res && res.success) {
@@ -54,13 +57,16 @@ export function getItems() {
             type: GET_ITEMS_FAILED,
           });
         }
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
       });
   };
 }
 
 export function makeOrder(ingredients) {
   return function (dispatch) {
-    fetch("https://norma.nomoreparties.space/api/orders", {
+    fetch(`${baseUrl}/orders`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,6 +78,7 @@ export function makeOrder(ingredients) {
           type: GET_ORDER_REQUEST,
         })
       )
+      .then(checkResponse)
       .then((res) => res.json())
       .then((res) => {
         if (res && res.success) {
@@ -79,11 +86,20 @@ export function makeOrder(ingredients) {
             type: GET_ORDER_NUMBER,
             orderDetails: res,
           });
+          dispatch({
+            type: DELETE_FROM_CART_BUN,
+          });
+          dispatch({
+            type: DELETE_FROM_CART_FILLINGS,
+          });
         } else {
           dispatch({
             type: GET_ORDER_FAILED,
           });
         }
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
       });
   };
 }

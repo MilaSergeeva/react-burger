@@ -12,10 +12,7 @@ function ModalOverlay({ onClick }) {
 }
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func,
-  isOpened: PropTypes.bool,
-  header: PropTypes.string,
-  children: PropTypes.any,
+  onClick: PropTypes.func,
 };
 
 export default ModalOverlay;

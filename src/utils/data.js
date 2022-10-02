@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
 const ingridientData = PropTypes.shape({
-  _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   proteins: PropTypes.number.isRequired,
   fat: PropTypes.number.isRequired,

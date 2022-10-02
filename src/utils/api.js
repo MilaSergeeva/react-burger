@@ -1,5 +1,4 @@
-export const ingridientsDataApi =
-  "https://norma.nomoreparties.space/api/ingredients";
+export const baseUrl = "https://norma.nomoreparties.space/api";
 
 export function checkResponse(res) {
   if (res.ok) {
@@ -9,12 +8,12 @@ export function checkResponse(res) {
   }
 }
 
-export const ingredients = [
-  "60d3b41abdacab0026a733c6",
-  "609646e4dc916e00276b286e",
-  "609646e4dc916e00276b2870",
-  "60d3b41abdacab0026a733c6",
-];
+// export const ingredients = [
+//   "60d3b41abdacab0026a733c6",
+//   "609646e4dc916e00276b286e",
+//   "609646e4dc916e00276b2870",
+//   "60d3b41abdacab0026a733c6",
+// ];
 
 // export function makeOrder(ingredients) {
 //   fetch("https://norma.nomoreparties.space/api/orders", {

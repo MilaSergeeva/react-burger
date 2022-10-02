@@ -26,25 +26,22 @@ function OrderDetails({ popupOpened, onClose }) {
                   {orderDetails.orderNumber.order.number}
                 </p>
                 <p
-                  className="text text_type_main-medium"
-                  style={{ marginTop: 32 }}
+                  className={` ${PopupOrderDetailsStyle.textId} text text_type_main-medium`}
                 >
                   Идентификатор заказа
                 </p>
                 <img
                   src={success}
-                  style={{ marginTop: 60, marginBottom: 60 }}
+                  className={PopupOrderDetailsStyle.orderImg}
                   alt="done_icon"
                 />
                 <p
-                  className="text text_type_main-default"
-                  style={{ marginTop: 8 }}
+                  className={` ${PopupOrderDetailsStyle.textOrderStatus} text text_type_main-default`}
                 >
                   Ваш заказ начали готовить
                 </p>
                 <p
-                  className="text text_type_main-default"
-                  style={{ color: "#8585AD" }}
+                  className={` ${PopupOrderDetailsStyle.textInfo} text text_type_main-default`}
                 >
                   Дождитесь готовности на орбитальной станции
                 </p>
@@ -53,19 +50,17 @@ function OrderDetails({ popupOpened, onClose }) {
               <>
                 <p className="text text_type_digits-large"></p>
                 <p
-                  className="text text_type_main-medium"
-                  style={{ marginTop: 32 }}
+                  className={`${PopupOrderDetailsStyle.textId} text text_type_main-medium`}
                 >
                   Что-то пошло не так.
                 </p>
                 <img
                   src={declined}
-                  style={{ marginTop: 60, marginBottom: 60 }}
                   alt="done_icon"
+                  className={PopupOrderDetailsStyle.orderImg}
                 />
                 <p
-                  className="text text_type_main-default"
-                  style={{ marginTop: 8 }}
+                  className={` ${PopupOrderDetailsStyle.textOrderStatus} text text_type_main-default`}
                 >
                   Попробуйте еще раз чеерз несколько минут.
                 </p>

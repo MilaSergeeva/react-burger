@@ -50,3 +50,20 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.textId {
+  margin-top: 32
+}
+
+.orderImg{
+  margin-top: 60;
+  margin-bottom: 60
+}
+
+.textOrderStatus {
+  margin-top: 8 
+}
+
+.textInfo{
+  color: #8585AD;
+}

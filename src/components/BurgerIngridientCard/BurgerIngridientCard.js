@@ -35,7 +35,6 @@ function BurgerIngridientCard({ onCardClick, el }) {
       setCount(2);
     } else if (cartBurgerBuns !== null && el.type === "bun") {
       setCount(0);
-      console.log("kra");
     } else {
       return;
     }
@@ -57,8 +56,7 @@ function BurgerIngridientCard({ onCardClick, el }) {
         </div>
       </div>
       <p
-        className="text text_type_main-default"
-        style={{ textAlign: "center" }}
+        className={`${BurgerIngredientsStyles.name} text text_type_main-default`}
       >
         {el.name}
       </p>
@@ -68,7 +66,8 @@ function BurgerIngridientCard({ onCardClick, el }) {
 }
 
 BurgerIngridientCard.propTypes = {
-  ingridients: PropTypes.arrayOf(ingridientData.isRequired),
+  onCardClick: PropTypes.func,
+  el: ingridientData.isRequired,
 };
 
 export default BurgerIngridientCard;

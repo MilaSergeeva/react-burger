@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-// import { ingridientData } from "../../utils/data";
 import { getItems } from "../../services/actions/index";
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 function BurgerIngredients({ onCardClick }) {
   const [current, setCurrent] = React.useState("buns");
@@ -20,21 +20,15 @@ function BurgerIngredients({ onCardClick }) {
 
   const ingridients = useSelector((state) => state.items);
 
-  const gretProductCard = (type) => {
+  const getProductCard = (type) => {
     const filterdProductsArray = ingridients.filter((el) => el.type === type);
 
     return filterdProductsArray.map((el) => (
-      <div key={el._id}>
+      <div key={uuidv4()}>
         <BurgerIngridientCard el={el} onCardClick={onCardClick} />
       </div>
     ));
   };
-  // console.log(buns.getBoundingClientRect());
-  // console.log(
-  //   buns.getBoundingClientRect().top,
-  //   sauces.getBoundingClientRect().top,
-  //   fillings.getBoundingClientRect().top
-  // );
 
   const scrollHandler = () => {
     const containierPosition = containier.current.getBoundingClientRect().top;
@@ -80,50 +74,64 @@ function BurgerIngredients({ onCardClick }) {
     };
   }, []);
 
+  const handleSmoothScroll = (value) => {
+    if (value === "fillings") {
+      fillings.current.scrollIntoView({ behavior: "smooth" });
+    } else if (value === "sauces") {
+      sauces.current.scrollIntoView({ behavior: "smooth" });
+    } else {
+      buns.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className={BurgerIngredientsStyles.flexSection}>
       <div>
         <h1 className={BurgerIngredientsStyles.title}>Соберите бургер</h1>
 
         <div className={BurgerIngredientsStyles.tabsBlock}>
-          <Tab value="buns" active={current === "buns"} onClick={setCurrent}>
-            Buns
+          <Tab
+            value="buns"
+            active={current === "buns"}
+            onClick={() => handleSmoothScroll("buns")}
+          >
+            Булки
           </Tab>
           <Tab
             value="sauces"
             active={current === "sauces"}
-            onClick={setCurrent}
+            onClick={() => handleSmoothScroll("sauces")}
           >
-            Sauces
+            Соусы
           </Tab>
           <Tab
             value="fillings"
             active={current === "fillings"}
-            onClick={setCurrent}
+            onClick={() => handleSmoothScroll("fillings")}
           >
-            Fillings
+            Начинки
           </Tab>
         </div>
       </div>
 
       <div ref={containier} className={BurgerIngredientsStyles.productsMenu}>
         <div ref={buns}>
-          <h2>Buns</h2>
+          <h2>Булки</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
-            {gretProductCard("bun")}
+            {getProductCard("bun")}
           </div>
         </div>
 
         <div ref={sauces}>
-          <h2>Sauces</h2>
+          <h2>Соусы</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
-            {gretProductCard("sauce")}
+            {getProductCard("sauce")}
           </div>
         </div>
         <div ref={fillings}>
-          <h2>Fillings</h2>
+          <h2>Начинки</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
-            {gretProductCard("main")}
+            {getProductCard("main")}
           </div>
         </div>
       </div>

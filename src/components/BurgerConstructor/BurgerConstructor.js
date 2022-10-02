@@ -1,21 +1,18 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
-  DragIcon,
   CurrencyIcon,
-  DeleteIcon,
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { ingridientData } from "../../utils/data";
 import { useSelector, useDispatch } from "react-redux";
 import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
 import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
+import { v4 as uuidv4 } from "uuid";
 
 function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const cartBurgerFillings = useSelector(
@@ -35,7 +32,8 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
-      onDropHandler(item);
+      const itemWithId = { ...item, uniqueId: uuidv4() };
+      onDropHandler(itemWithId);
     },
     collect: (monitor) => {
       return {
@@ -44,11 +42,6 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
       };
     },
   });
-
-  //присвоение уникального номера
-  const randomNr = (elId) => {
-    return elId + Math.random();
-  };
 
   const moveCard = (dragIndex, hoverIndex) => {
     dispatch({
@@ -61,11 +54,11 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const renderFilling = useCallback((el, i) => {
     return (
       <FillingsCard
-        key={randomNr(el._id)}
+        key={uuidv4()}
         moveCard={moveCard}
         index={i}
         el={el}
-        id={el._id}
+        id={el.uniqueId}
       />
     );
   }, []);
@@ -74,20 +67,13 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
     <section className={BurgerConstructorStyles.flexItem}>
       <ul className={BurgerConstructorStyles.burgerList} ref={dropRef}>
         <li className={BurgerConstructorStyles.gridListBun}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              minHeight: "90px",
-            }}
-          >
+          <div className={BurgerConstructorStyles.flexContainier}>
             <p></p>
             {cartBurgerBan !== null && (
               <ConstructorElement
                 type="top"
                 isLocked={true}
-                text={cartBurgerBan.name}
+                text={`${cartBurgerBan.name} (верх)`}
                 price={cartBurgerBan.price}
                 thumbnail={cartBurgerBan.image}
               />
@@ -100,19 +86,12 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
           </ul>
         </DndProvider>
         <li className={BurgerConstructorStyles.gridListBun}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "10px",
-              minHeight: "90px",
-            }}
-          >
+          <div className={BurgerConstructorStyles.flexContainier}>
             {cartBurgerBan !== null && (
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
-                text={cartBurgerBan.name}
+                text={`${cartBurgerBan.name} (низ)`}
                 price={cartBurgerBan.price}
                 thumbnail={cartBurgerBan.image}
               />
@@ -135,7 +114,7 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
               ? true
               : false
           }
-          onClick={() => onButtonClick(ingredients)}
+          onClick={onButtonClick}
         >
           {/* Place order */}
           Оформить заказ
@@ -144,11 +123,5 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingridients: PropTypes.arrayOf(ingridientData.isRequired),
-  onButtonClick: PropTypes.func,
-  onDropHandler: PropTypes.func,
-};
 
 export default BurgerConstructor;

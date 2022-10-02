@@ -16,6 +16,7 @@ import {
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   DRAG_CART_INGREDIENT,
+  DELETE_FROM_CART_FILLINGS,
 } from "../actions/index";
 
 const initialState = {
@@ -100,6 +101,15 @@ export const rootReducer = (state = initialState, action) => {
         burgerConstructorList: {
           ...state.burgerConstructorList,
           bun: null,
+        },
+      };
+    }
+    case DELETE_FROM_CART_FILLINGS: {
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          fillings: [],
         },
       };
     }
