@@ -73,8 +73,8 @@ function OrderDetails({ popupOpened, onClose }) {
   );
 }
 
-ModalOverlay.propTypes = {
-  popupOpened: PropTypes.func.isRequired,
+OrderDetails.propTypes = {
+  popupOpened: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

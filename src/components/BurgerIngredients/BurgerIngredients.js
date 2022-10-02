@@ -47,8 +47,6 @@ function BurgerIngredients({ onCardClick }) {
           -1
         : fillings.current.getBoundingClientRect().top - containierPosition;
 
-    console.log(bunsPosition, saucesPosition, fillingsPosition);
-
     if (
       Math.abs(bunsPosition) < Math.abs(saucesPosition) &&
       Math.abs(bunsPosition) < Math.abs(fillingsPosition)

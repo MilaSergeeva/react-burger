@@ -10,8 +10,9 @@ const ingridientData = PropTypes.shape({
   calories: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   image: PropTypes.any.isRequired,
-  image_mobile: PropTypes.any,
-  image_large: PropTypes.any,
+  image_mobile: PropTypes.any.isRequired,
+  image_large: PropTypes.any.isRequired,
+  uniqueId: PropTypes.string,
 });
 
 export { ingridientData };
