@@ -148,6 +148,7 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
 BurgerConstructor.propTypes = {
   ingridients: PropTypes.arrayOf(ingridientData.isRequired),
   onButtonClick: PropTypes.func,
+  onDropHandler: PropTypes.func,
 };
 
 export default BurgerConstructor;

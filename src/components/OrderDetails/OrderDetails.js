@@ -5,19 +5,13 @@ import success from "../../images/success.png";
 import declined from "../../images/declined.png";
 import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
-// import { ingredients } from "../../utils/api";
-// import { makeOrder } from "../../services/actions/index";
 import { useSelector, useDispatch } from "react-redux";
 
 function OrderDetails({ popupOpened, onClose }) {
-  // const dispatch = useDispatch();
-
   const orderDetails = useSelector((state) => state.orderDetails);
   const orderReguestStatus = useSelector(
     (state) => state.orderDetails.orderRequest
   );
-
-  // useEffect(() => dispatch(makeOrder(ingredients)), [dispatch]);
 
   return (
     <Modal isOpened={popupOpened} header={""} onClose={onClose}>

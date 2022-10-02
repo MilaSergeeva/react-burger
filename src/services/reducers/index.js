@@ -135,7 +135,8 @@ export const rootReducer = (state = initialState, action) => {
     }
     case DRAG_CART_INGREDIENT: {
       const newListIngredients = [...state.burgerConstructorList.fillings];
-      const dragIngredient = newListIngredients.splice(action.dragIndex, 1)[0];
+      const dragIngredient = newListIngredients[action.dragIndex];
+      newListIngredients.splice(action.dragIndex, 1);
       newListIngredients.splice(action.hoverIndex, 0, dragIngredient);
       return {
         ...state,
