@@ -7,7 +7,7 @@ import PortalReactDOM from "react-dom";
 
 const modalRoot = document.getElementById("modals");
 
-function Modal({ isOpened, children, header, onClick, onClose }) {
+function Modal({ isOpened, children, header, onClose }) {
   const drawerRef = createRef();
 
   useEffect(() => {
@@ -33,12 +33,11 @@ function Modal({ isOpened, children, header, onClick, onClose }) {
     <div
       style={isOpened ? { display: "flex" } : { display: "none" }}
       className={`${ModalStyle.popupContainier} popup`}
-      onClick={onClick}
       ref={drawerRef}
       onKeyDown={handleCloseByEsc}
       tabIndex={-1}
     >
-      <div className={ModalStyle.procuctCardContainier} onClick={onClick}>
+      <div className={ModalStyle.procuctCardContainier}>
         <h1 className="text text_type_main-large">{header}</h1>
         <button onClick={onClose} className={ModalStyle.closeButton}>
           <CloseIcon type="primary" />
@@ -52,8 +51,7 @@ function Modal({ isOpened, children, header, onClick, onClose }) {
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func,
-  onClick: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
 };
