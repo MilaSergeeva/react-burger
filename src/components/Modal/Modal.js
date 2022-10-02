@@ -52,10 +52,10 @@ function Modal({ isOpened, children, header, onClick, onClose }) {
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func,
-  onClick: PropTypes.func,
-  header: PropTypes.string,
-  children: PropTypes.any,
+  onClose: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  header: PropTypes.string.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 export default Modal;

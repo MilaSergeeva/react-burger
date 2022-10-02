@@ -74,8 +74,8 @@ function OrderDetails({ popupOpened, onClose }) {
 }
 
 ModalOverlay.propTypes = {
-  popupOpened: PropTypes.func,
-  onClose: PropTypes.func,
+  popupOpened: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

@@ -2,10 +2,9 @@ export const baseUrl = "https://norma.nomoreparties.space/api";
 
 export function checkResponse(res) {
   if (res.ok) {
-    return res;
-  } else {
-    throw Error(`Error during request`);
+    return res.json();
   }
+  return Promise.reject(`Ошибка ${res.status}`);
 }
 
 // export const ingredients = [

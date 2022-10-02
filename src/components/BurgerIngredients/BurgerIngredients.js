@@ -24,7 +24,7 @@ function BurgerIngredients({ onCardClick }) {
     const filterdProductsArray = ingridients.filter((el) => el.type === type);
 
     return filterdProductsArray.map((el) => (
-      <div key={uuidv4()}>
+      <div key={el._id}>
         <BurgerIngridientCard el={el} onCardClick={onCardClick} />
       </div>
     ));
@@ -140,7 +140,7 @@ function BurgerIngredients({ onCardClick }) {
 }
 
 BurgerIngredients.propTypes = {
-  onCardClick: PropTypes.func,
+  onCardClick: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

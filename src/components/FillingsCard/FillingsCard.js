@@ -91,7 +91,7 @@ function FillingsCard({ index, el, moveCard, id }) {
 
 FillingsCard.propTypes = {
   el: ingridientData.isRequired,
-  moveCard: PropTypes.func,
+  moveCard: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
 };

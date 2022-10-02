@@ -9,7 +9,7 @@ const ingridientData = PropTypes.shape({
   carbohydrates: PropTypes.number.isRequired,
   calories: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
-  image: PropTypes.any,
+  image: PropTypes.any.isRequired,
   image_mobile: PropTypes.any,
   image_large: PropTypes.any,
 });

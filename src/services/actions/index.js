@@ -45,7 +45,6 @@ export function getItems() {
         })
       )
       .then(checkResponse)
-      .then((res) => res.json())
       .then((res) => {
         if (res && res.success) {
           dispatch({
@@ -79,7 +78,6 @@ export function makeOrder(ingredients) {
         })
       )
       .then(checkResponse)
-      .then((res) => res.json())
       .then((res) => {
         if (res && res.success) {
           dispatch({

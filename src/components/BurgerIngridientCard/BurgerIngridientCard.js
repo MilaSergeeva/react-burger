@@ -66,7 +66,7 @@ function BurgerIngridientCard({ onCardClick, el }) {
 }
 
 BurgerIngridientCard.propTypes = {
-  onCardClick: PropTypes.func,
+  onCardClick: PropTypes.func.isRequired,
   el: ingridientData.isRequired,
 };
 

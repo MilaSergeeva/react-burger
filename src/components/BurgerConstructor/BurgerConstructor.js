@@ -54,7 +54,7 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
   const renderFilling = useCallback((el, i) => {
     return (
       <FillingsCard
-        key={uuidv4()}
+        key={el.uniqueId}
         moveCard={moveCard}
         index={i}
         el={el}
