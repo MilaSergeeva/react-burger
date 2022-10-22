@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ModalOverlayStyle from "./ModalOverlay.module.css";
 import PropTypes from "prop-types";
 
@@ -12,10 +12,7 @@ function ModalOverlay({ onClick }) {
 }
 
 ModalOverlay.propTypes = {
-  onClose: PropTypes.func,
-  isOpened: PropTypes.bool,
-  header: PropTypes.string,
-  children: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default ModalOverlay;

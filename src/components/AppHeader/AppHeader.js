@@ -10,32 +10,34 @@ import {
 function AppHeader() {
   return (
     <header className={appHeaderStyles.headerFlex}>
-      <nav className={appHeaderStyles.nav}>
-        <button
-          className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
-        >
-          <BurgerIcon type="primary" />
-          {/* Constructor */}
-          Конструктор
-        </button>
+      <div className={appHeaderStyles.headerContainier}>
+        <nav className={appHeaderStyles.nav}>
+          <button
+            className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+          >
+            <BurgerIcon type="primary" />
+            {/* Constructor */}
+            Конструктор
+          </button>
+          <button
+            className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+          >
+            <ListIcon type="secondary" />
+            {/* Order list */}
+            Лента заказа
+          </button>
+        </nav>
+        <div className={appHeaderStyles.logoAlign}>
+          <Logo />
+        </div>
         <button
           className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
         >
-          <ListIcon type="secondary" />
-          {/* Order list */}
-          Лента заказа
+          <ProfileIcon type="secondary" />
+          {/* Personal account */}
+          Личный кабинет
         </button>
-      </nav>
-      <div className={appHeaderStyles.logoAlign}>
-        <Logo />
       </div>
-      <button
-        className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
-      >
-        <ProfileIcon type="secondary" />
-        {/* Personal account */}
-        Личный кабинет
-      </button>
     </header>
   );
 }

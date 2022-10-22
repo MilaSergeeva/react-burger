@@ -44,10 +44,9 @@ function IngredientDetails({ popupOpened, product, onClose }) {
   );
 }
 
-ModalOverlay.propTypes = {
-  popupOpened: PropTypes.func,
-  onClose: PropTypes.func,
-  product: PropTypes.objectOf(ingridientData),
+IngredientDetails.propTypes = {
+  popupOpened: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;
