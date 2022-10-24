@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  Redirect,
   Route,
   Switch,
-  useHistory,
   useLocation,
+  useHistory,
+  useParams,
 } from "react-router-dom";
+import Modal from "../Modal/Modal";
 // import * as userAuth from "../utils/authorization.js";
 import AppHeader from "../AppHeader/AppHeader";
 import appStyles from "./app.module.css";
@@ -23,7 +24,6 @@ import NotFound404 from "../NotFound404/NotFound404";
 import { updateCartList } from "../../services/actions/index";
 import { useDispatch, useSelector } from "react-redux";
 import { makeOrder } from "../../services/actions/index";
-import { ingredients } from "../../utils/api";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
@@ -35,9 +35,16 @@ function App() {
 
   const history = useHistory();
   const location = useLocation();
+  let { id } = useParams();
 
   const background = location.state && location.state.background;
-  console.log(location, background);
+
+  React.useEffect(() => {
+    console.log("location", location);
+    console.log("background", background);
+  }, [location]);
+
+  const handleModalClose = () => history.goBack();
 
   const dispatch = useDispatch();
   const cartBurgerFillings = useSelector(
@@ -68,10 +75,7 @@ function App() {
   const handleCardClick = (ingridient) => {
     setSelectedIngridientCard(ingridient);
     setIngridientPopupOpened(true);
-    console.log(ingridient);
   };
-
-  console.log(ingridientPopupOpened);
 
   const handleProceedOrder = (burgerIngredients) => {
     dispatch(makeOrder(burgerIngredients()));
@@ -86,12 +90,6 @@ function App() {
 
   const onDropHandler = (item) => {
     dispatch(updateCartList(item));
-  };
-
-  const closeAllPopups = () => {
-    history.goBack();
-    setIngridientPopupOpened(false);
-    setCheckoutPopupOpened(false);
   };
 
   return (
@@ -113,6 +111,12 @@ function App() {
         <ProtectedRoute path="/reset-password" exact>
           <ResetPassword />
         </ProtectedRoute>
+        <Route path="/ingridients/:id" exact>
+          <div className={appStyles.ingridientDetailsContainier}>
+            <h1>Детали ингридиента</h1>
+            <IngredientDetails />
+          </div>
+        </Route>
         <Route path="/" exact>
           <main className={appStyles.content}>
             <DndProvider backend={HTML5Backend}>
@@ -133,23 +137,31 @@ function App() {
           <NotFound404 />
         </Route>
       </Switch>
-      {/* {background && (
-        <> */}
-      <Route path="/ingridients/:id">
-        <IngredientDetails
-          product={selectedIngridientCard}
-          popupOpened={ingridientPopupOpened}
-          onClose={closeAllPopups}
-        />
-      </Route>
-      <Route path="/feed/:number">
-        <OrderDetails
-          popupOpened={checkoutPopupOpened}
-          onClose={closeAllPopups}
-        />
-      </Route>
-      {/* </>
-      )} */}
+      {background && (
+        <>
+          <Route path="/ingridients/:id" exact>
+            <Modal
+              isOpened={true}
+              onClose={handleModalClose}
+              header={"Детали ингридиента"}
+            >
+              <IngredientDetails
+              // product={selectedIngridientCard}
+              // popupOpened={true}
+              // onClose={closeAllPopups}
+              />
+            </Modal>
+            {/* <IngredientDetails
+              product={selectedIngridientCard}
+              popupOpened={true}
+              onClose={closeAllPopups}
+            /> */}
+          </Route>
+          {/* <Route path="/feed/:number">
+            <OrderDetails popupOpened={true} onClose={closeAllPopups} />
+          </Route> */}
+        </>
+      )}
     </div>
   );
 }

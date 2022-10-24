@@ -7,11 +7,12 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
-import { useEffect, useState, memo } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
-function BurgerIngridientCard({ onCardClick, el }) {
+function BurgerIngridientCard({ el }) {
   const [count, setCount] = useState("0");
+  const location = useLocation();
 
   const cartBurgerFillings = useSelector(
     (state) => state.burgerConstructorList.fillings
@@ -47,8 +48,10 @@ function BurgerIngridientCard({ onCardClick, el }) {
     <Link
       ref={dragRef}
       className={BurgerIngredientsStyles.productCard}
-      to={{ pathname: `/ingridients/${el._id}` }}
-      onClick={() => onCardClick(el)}
+      to={{
+        pathname: `/ingridients/${el._id}`,
+        state: { background: location },
+      }}
     >
       <img src={el.image} alt={el.name} />
       {count > 0 && <Counter count={count} size="default" />}
@@ -73,4 +76,4 @@ BurgerIngridientCard.propTypes = {
   el: ingridientData.isRequired,
 };
 
-export default memo(BurgerIngridientCard);
+export default BurgerIngridientCard;

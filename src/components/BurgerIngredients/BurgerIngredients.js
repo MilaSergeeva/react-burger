@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 import { getItems } from "../../services/actions/index";
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
 
 function BurgerIngredients({ onCardClick }) {
   const [current, setCurrent] = React.useState("buns");
