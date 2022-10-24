@@ -1,5 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import registrationStyle from "../auth_forms.module.css";
+import {
+  Button,
+  ShowIcon,
+  HideIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Register = (props) => {
   // const handleSubmit = (e) => {
@@ -14,67 +20,80 @@ const Register = (props) => {
   // };
 
   return (
-    <section className="registration">
-      <div className="registration__container">
-        <div className="registration__content">
-          <form
-            method="POST"
-            name="user-info"
-            className="registration__form"
-            // onSubmit={handleSubmit}
-            noValidate
-          >
-            <h3 className="registration__title">Registration</h3>
-            <div className="registration__input-container">
-              <input
-                // value={regUserData.email}
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="registration__input"
-                minLength="5"
-                maxLength="40"
-                autoComplete="off"
-                // onChange={onChange}
-                required
-              />
-              <span className="registration__error"></span>
-            </div>
-            <div className="registration__input-container">
-              <input
-                // value={regUserData.password}
-                type="password"
-                name="password"
-                placeholder="Password (only letters and numbers)"
-                className="registration__input"
-                minLength="2"
-                maxLength="20"
-                autoComplete="off"
-                // onChange={onChange}
-                required
-              />
-              <span className="registration__error"></span>
-            </div>
-            <p className="registration__form-error">{"messageOnRegister"}</p>
-            <button
-              type="submit"
-              className="registration__btn-save"
-              data-submitting-label="Registration..."
-              // onSubmit={handleSubmit}
-            >
-              Register
-            </button>
-          </form>
-          <div className="registration__logined">
-            <p className="registration__notification">
-              Are you already registred?{" "}
-            </p>
-            <Link to="/signin" className="registration__signup-link">
-              Login
-            </Link>
-          </div>
+    <section className={registrationStyle.section}>
+      {/* <div className="registration__container">
+        <div className="registration__content"> */}
+      <form
+        method="POST"
+        name="user-info"
+        className={registrationStyle.form}
+        // onSubmit={handleSubmit}
+        noValidate
+      >
+        <h1 className={registrationStyle.formTitle}>Регистрация</h1>
+        <div>
+          <input
+            // value={regUserData.password}
+            type="name"
+            name="name"
+            placeholder="Имя"
+            className={registrationStyle.inputFild}
+            minLength="2"
+            maxLength="20"
+            autoComplete="off"
+            // onChange={onChange}
+            required
+          />
+          <span></span>
         </div>
-      </div>
+        <div>
+          <input
+            // value={regUserData.email}
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            className={registrationStyle.inputFild}
+            minLength="5"
+            maxLength="40"
+            autoComplete="off"
+            // onChange={onChange}
+            required
+          />
+          <span></span>
+        </div>
+
+        <div className={registrationStyle.inputConteinier}>
+          <input
+            // value={regUserData.password}
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            className={registrationStyle.inputFild}
+            minLength="2"
+            maxLength="20"
+            autoComplete="off"
+            // onChange={onChange}
+            required
+          />
+          <div className={registrationStyle.inputIcon}>
+            <ShowIcon type="primary" />
+          </div>
+          <span></span>
+        </div>
+        {/* <p className="registration__form-error">{"messageOnRegister"}</p> */}
+        <Button type="primary" size="large" disabled={false}>
+          Зарегистрироватся
+        </Button>
+      </form>
+      <p className={registrationStyle.formText}>
+        Уже зарегистрированы?
+        <Link className={registrationStyle.link} to="/login">
+          {" "}
+          Войти
+        </Link>
+      </p>
+      {/* </div>
+      </div> */}
     </section>
   );
 };

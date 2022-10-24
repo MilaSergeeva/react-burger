@@ -17,7 +17,7 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import Profile from "../Profile/Profile";
 import Register from "../auth_components/Register/Register.js";
 import Login from "../auth_components/Login/Login.js";
-import ForgotPassword from "../ForgotPassword/ForgotPassword";
+import ForgotPassword from "../auth_components/ForgotPassword/ForgotPassword";
 import ResetPassword from "../auth_components/ResetPassword/ResetPassword";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import NotFound404 from "../NotFound404/NotFound404";

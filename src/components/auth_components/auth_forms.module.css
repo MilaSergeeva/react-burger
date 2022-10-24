@@ -60,3 +60,14 @@
   color: #4C4CFF;
   text-decoration: none
 }
+
+.inputConteinier{
+  position: relative;
+}
+
+.inputIcon{
+  position: absolute;
+  top: 24px;
+  right: 26px;
+  cursor: pointer;
+}

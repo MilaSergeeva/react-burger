@@ -6,6 +6,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink } from "react-router-dom";
 
 function AppHeader() {
   return (
@@ -27,16 +28,17 @@ function AppHeader() {
             Лента заказа
           </button>
         </nav>
-        <div className={appHeaderStyles.logoAlign}>
+        <NavLink to="/" className={appHeaderStyles.logoAlign}>
           <Logo />
-        </div>
-        <button
+        </NavLink>
+        <NavLink
+          to="/profile"
           className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
         >
           <ProfileIcon type="secondary" />
           {/* Personal account */}
           Личный кабинет
-        </button>
+        </NavLink>
       </div>
     </header>
   );
