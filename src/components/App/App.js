@@ -86,16 +86,16 @@ function App() {
         <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
-        <ProtectedRoute path="/register" exact>
+        <ProtectedRoute onlyForAuth={true} path="/register" exact>
           <Register />
         </ProtectedRoute>
-        <ProtectedRoute path="/login" exact>
+        <ProtectedRoute onlyForAuth={true} path="/login" exact>
           <Login />
         </ProtectedRoute>
-        <ProtectedRoute path="/forgot-password" exact>
+        <ProtectedRoute onlyForAuth={true} path="/forgot-password" exact>
           <ForgotPassword />
         </ProtectedRoute>
-        <ProtectedRoute path="/reset-password" exact>
+        <ProtectedRoute onlyForAuth={true} path="/reset-password" exact>
           <ResetPassword />
         </ProtectedRoute>
         <Route path="/ingridients/:id" exact>

@@ -1,63 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import loginStyle from "../auth_forms.module.css";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import {
+  Button,
+  Input,
+  PasswordInput,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const Login = ({ onLogin, onChange, loginData, messageOnLogin }) => {
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const { email, password } = loginData;
+const Login = () => {
+  const [inputValue, setInputValue] = useState({ email: "", password: "" });
 
-  //   if (!email || !password) {
-  //     return;
-  //   }
+  // const { logoutRequest } = useSelector(userSelectors.authData);
+  const refreshToken = localStorage.refreshToken;
+  const location = useLocation();
+  const dispatch = useDispatch();
 
-  //   onLogin(email, password);
-  // };
+  const handleChange = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(authorize(inputValue));
+  };
 
   return (
     <section className={loginStyle.section}>
-      {/* <div className="login__container">
-        <div className="login__content"> */}
       <form
         method="POST"
         name="user-info"
         className={loginStyle.form}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         noValidate
       >
         <h1 className={loginStyle.formTitle}>Вход</h1>
-        <div className="login__input-container">
-          <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            className={loginStyle.inputFild}
-            minLength="5"
-            maxLength="40"
-            autoComplete="off"
-            // value={loginData.email}
-            // onChange={onChange}
-            required
-          />
-          <span className="login__error"></span>
-        </div>
-        <div className="login__input-container">
-          <input
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            className={loginStyle.inputFild}
-            minLength="2"
-            maxLength="20"
-            autoComplete="off"
-            // value={loginData.password}
-            // onChange={onChange}
-            required
-          />
-          <span className="login__error"></span>
-        </div>
-        {/* <p className="login__form-error">{"messageOnLogin"}</p> */}
+        <Input
+          placeholder="E-mail"
+          type="email"
+          name="email"
+          value={inputValue.email || ""}
+          onChange={handleChange}
+        />
+        <PasswordInput
+          name="password"
+          value={inputValue.password || ""}
+          onChange={handleChange}
+        />
+
         <Button type="primary" size="large" disabled={false}>
           Войти
         </Button>
@@ -76,8 +69,6 @@ const Login = ({ onLogin, onChange, loginData, messageOnLogin }) => {
           Восстановить пароль
         </Link>
       </p>
-      {/* </div>
-      </div> */}
     </section>
   );
 };

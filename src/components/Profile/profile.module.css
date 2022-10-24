@@ -9,6 +9,11 @@
 }
 
 .form{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 80px;
   align-items: flex-start;
 }
 
@@ -55,6 +60,7 @@
   position: absolute;
   top: 22.48px;
   right: 26.48px;
+  cursor: pointer;
 }
 
 .sidebarMenu{

@@ -49,18 +49,17 @@ function BurgerConstructor({ handleProceedOrder, onDropHandler }) {
     return ingridientsTotal;
   };
 
-  function handleMakeAnOrder() {
-    dispatch(makeOrder(burgerIngredients()));
-    setTimeout(() => {
-      const orderNumber = orderDetails.orderNumber.order.number;
-      history.push({
-        pathname: `/feed/${orderNumber}`,
-        state: {
-          background: location,
-        },
-      });
-    }, 200);
-  }
+  const handleMakeAnOrder = async () => {
+    await dispatch(makeOrder(burgerIngredients()));
+
+    const orderNumber = orderDetails.orderNumber.order.number;
+    history.push({
+      pathname: `/feed/${orderNumber}`,
+      state: {
+        background: location,
+      },
+    });
+  };
 
   //расчет общей стоимости
   const priceTotalFillings = (arr) =>

@@ -42,7 +42,7 @@ const Profile = () => {
         <form
           method="POST"
           name="user-info"
-          className={`${profileFormStyle.form} ${profileStyle.form} `}
+          className={profileStyle.form}
           // onSubmit={handleSubmit}
           noValidate
         >

@@ -1,86 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import registrationStyle from "../auth_forms.module.css";
 import {
   Button,
   ShowIcon,
   HideIcon,
+  Input,
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
 
 const Register = (props) => {
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
+  const [inputValue, setInputValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  //   const { email, password } = regUserData;
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const refreshToken = localStorage.refreshToken;
 
-  //   onRegister(email, password);
+  // const { logoutRequest } = useSelector(userSelectors.authData);
 
-  //   regUserData.email = "";
-  //   regUserData.password = "";
-  // };
+  const handleChange = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(registerAction(inputValue));
+  };
 
   return (
     <section className={registrationStyle.section}>
-      {/* <div className="registration__container">
-        <div className="registration__content"> */}
       <form
         method="POST"
         name="user-info"
         className={registrationStyle.form}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         noValidate
       >
         <h1 className={registrationStyle.formTitle}>Регистрация</h1>
-        <div>
-          <input
-            // value={regUserData.password}
-            type="name"
-            name="name"
-            placeholder="Имя"
-            className={registrationStyle.inputFild}
-            minLength="2"
-            maxLength="20"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <span></span>
-        </div>
-        <div>
-          <input
-            // value={regUserData.email}
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            className={registrationStyle.inputFild}
-            minLength="5"
-            maxLength="40"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <span></span>
-        </div>
+        <Input
+          placeholder="Имя"
+          type="text"
+          name="name"
+          value={inputValue.name || ""}
+          onChange={handleChange}
+        />
+        <Input
+          placeholder="E-mail"
+          type="email"
+          name="email"
+          value={inputValue.email || ""}
+          onChange={handleChange}
+        />
+        <PasswordInput
+          name="password"
+          value={inputValue.password || ""}
+          onChange={handleChange}
+        />
 
-        <div className={registrationStyle.inputConteinier}>
-          <input
-            // value={regUserData.password}
-            type="password"
-            name="password"
-            placeholder="Пароль"
-            className={registrationStyle.inputFild}
-            minLength="2"
-            maxLength="20"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <div className={registrationStyle.inputIcon}>
-            <ShowIcon type="primary" />
-          </div>
-          <span></span>
-        </div>
-        {/* <p className="registration__form-error">{"messageOnRegister"}</p> */}
         <Button type="primary" size="large" disabled={false}>
           Зарегистрироватся
         </Button>
@@ -92,8 +76,6 @@ const Register = (props) => {
           Войти
         </Link>
       </p>
-      {/* </div>
-      </div> */}
     </section>
   );
 };

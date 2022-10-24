@@ -1,37 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import forgotPasswordStyle from "../auth_forms.module.css";
-import { Link } from "react-router-dom";
-import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useHistory } from "react-router-dom";
+import {
+  Button,
+  Input,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
 
 const ForgotPassword = () => {
+  const [inputValue, setInputValue] = useState({
+    email: "",
+  });
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  // const refreshToken = localStorage.refreshToken;
+  const handleChange = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+    setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const redirectToResetPassword = () => {
+    history.push("/reset-password");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch(forgotPassword(inputValue, redirectToResetPassword));
+  };
+
   return (
     <section className={forgotPasswordStyle.section}>
       <form
         method="POST"
         name="user-info"
         className={forgotPasswordStyle.form}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         noValidate
       >
         <h1 className={forgotPasswordStyle.formTitle}>Восстановление пароля</h1>
 
-        <div>
-          <input
-            // value={regUserData.email}
-            type="email"
-            name="email"
-            placeholder="Укажите e-mail"
-            className={forgotPasswordStyle.inputFild}
-            minLength="5"
-            maxLength="40"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <span></span>
-        </div>
+        <Input
+          placeholder="Укажите e-mail"
+          type="email"
+          name="email"
+          value={inputValue.email || ""}
+          onChange={handleChange}
+        />
 
-        {/* <p className="registration__form-error">{"messageOnRegister"}</p> */}
         <Button type="primary" size="large" disabled={false}>
           Зарегистрироватся
         </Button>

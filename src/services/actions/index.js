@@ -1,5 +1,7 @@
 import { baseUrl, checkResponse } from "../../utils/api";
 
+import { setCookie, getCookie } from "../../utils/data";
+
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
 export const GET_ITEMS_SUCCESS = "GET_ITEMS_SUCCESS";
@@ -35,6 +37,45 @@ export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
 
 export const DELETE_FROM_CART_FILLINGS = "DELETE_FROM_CART_FILLINGS";
+
+//Авторизация
+
+export const USER_REQUEST = "USER_REQUEST";
+export const USER_SUCCESS = "USER_SUCCESS";
+export const USER_ERROR = "USER_ERROR";
+
+export const USER_UPDATE_REQUEST = "USER_UPDATE_REQUEST";
+export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
+export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
+
+export const TOKEN_REQUEST = "TOKEN_REQUEST";
+export const TOKEN_SUCCESS = "TOKEN_SUCCESS";
+export const TOKEN_ERROR = "TOKEN_ERROR";
+
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_ERROR = "TOKEN_ERROR";
+
+export const REGISTER_REQUEST = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_ERROR = "REGISTER_ERROR";
+
+export const LOGIN_REQUEST = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
+
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
+
+const headers = {
+  Accept: "application/json",
+  "Content-Type": "application/json",
+};
 
 export function getItems() {
   return function (dispatch) {
@@ -122,3 +163,318 @@ export function updateCartList(item) {
     }
   };
 }
+
+///////////////////////////////////
+
+export const register = ({ email, password, name }, dispatch) => {
+  fetch(`${baseUrl}/auth/register`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ email, password, name }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: REGISTER_REQUEST,
+      })
+    )
+    .then((res) => {
+      // const accessToken = res.accessToken.split("Bearer ")[1];
+      const refreshToken = res.refreshToken;
+      setCookie("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+
+      if (res && res.success) {
+        dispatch({ type: REGISTER_SUCCESS, data: res });
+      } else {
+        dispatch({ type: REGISTER_ERROR });
+      }
+    })
+    .catch((err) => {
+      dispatch({ type: REGISTER_ERROR });
+      console.log(err, err.message);
+    });
+};
+
+export const login = ({ email, password }, dispatch) => {
+  fetch(`${baseUrl}/auth/login`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ email, password }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: LOGIN_REQUEST,
+      })
+    )
+    .then((res) => {
+      const refreshToken = res.refreshToken;
+      localStorage.setItem("refreshToken", refreshToken);
+      if (res && res.success) {
+        dispatch({ type: LOGIN_SUCCESS, data: res });
+      } else {
+        dispatch({ type: LOGIN_ERROR });
+      }
+    })
+    .catch((err) => {
+      dispatch({ type: LOGIN_ERROR });
+      console.log(err, err.message);
+    });
+};
+
+export const logOut = (redirectToLogin, dispatch) => {
+  fetch(`${baseUrl}/auth/logout`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ token: localStorage.refreshToken }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: LOGIN_REQUEST,
+      })
+    )
+    .then((res) => {
+      if (res && res.success) {
+        localStorage.removeItem("refreshToken");
+        dispatch({ type: LOGOUT_SUCCESS });
+        redirectToLogin();
+      } else {
+        dispatch({ type: LOGOUT_ERROR });
+      }
+    })
+    .catch((err) => {
+      dispatch({ type: LOGOUT_ERROR });
+      console.log(err, err.message);
+    });
+};
+
+export const getNewToken = (dispatch) => {
+  fetch(`${baseUrl}/auth/token`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ token: localStorage.refreshToken }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: TOKEN_REQUEST,
+      })
+    )
+    .then((res) => {
+      const refreshToken = res.refreshToken;
+      localStorage.setItem("refreshToken", refreshToken);
+      if (res && res.success) {
+        dispatch({ type: TOKEN_SUCCESS });
+      } else {
+        dispatch({ type: TOKEN_ERROR });
+      }
+    })
+    .catch((err) => {
+      if (
+        err.message === "jwt expired" ||
+        err.message === "Token is invalid" ||
+        err.message === "jwt malformed"
+      ) {
+        getNewToken(dispatch).then((res) => {
+          if (res.success) {
+            localStorage.setItem("refreshToken", res.refreshToken);
+            setCookie("accessTocken", res.accessToken);
+          }
+        });
+      } else console.log(err, err.message);
+      localStorage.removeItem("refreshToken");
+      dispatch({ type: TOKEN_ERROR });
+    });
+};
+
+export const getUserInfo = (dispatch) => {
+  fetch(`${baseUrl}/auth/user`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${getCookie("accessToken")}`,
+    },
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: TOKEN_REQUEST,
+      })
+    )
+    .then((res) => {
+      if (res && res.success) {
+        dispatch({ type: USER_SUCCESS, data: res });
+      } else {
+        dispatch({ type: USER_ERROR });
+      }
+    })
+    .catch((err) => {
+      if (
+        err.message === "jwt expired" ||
+        err.message === "Token is invalid" ||
+        err.message === "jwt malformed"
+      ) {
+        getNewToken(dispatch);
+        getUserInfo(dispatch);
+      } else console.log(err.message);
+      dispatch({ type: USER_ERROR });
+    });
+};
+
+export const updateUserInfo = ({ name, email, password }, dispatch) => {
+  fetch(`${baseUrl}/auth/user`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `${getCookie("accessToken")}`,
+    },
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ name, email, password }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: USER_UPDATE_REQUEST,
+      })
+    )
+    .then((res) => {
+      if (res && res.success) {
+        dispatch({ type: USER_UPDATE_SUCCESS, data: res });
+      } else {
+        dispatch({ type: USER_UPDATE_ERROR });
+      }
+    })
+    .catch((err) => {
+      if (
+        err.message === "jwt expired" ||
+        err.message === "Token is invalid" ||
+        err.message === "jwt malformed"
+      ) {
+        getNewToken(dispatch);
+        updateUserInfo({ name, email, password }, dispatch);
+      }
+
+      dispatch({ type: USER_UPDATE_ERROR });
+    });
+};
+
+export const getCodeToChangePassword = (
+  email,
+  dispatch,
+  redirectToResetPassword
+) => {
+  fetch(`${baseUrl}/password-reset`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify(email),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: FORGOT_PASSWORD_REQUEST,
+      })
+    )
+    .then((res) => {
+      if (res && res.success) {
+        dispatch({ type: FORGOT_PASSWORD_SUCCESS });
+        redirectToResetPassword();
+      } else {
+        dispatch({ type: FORGOT_PASSWORD_ERROR });
+      }
+    })
+    .catch((err) => {
+      console.log(err, err.message);
+      dispatch({ type: FORGOT_PASSWORD_ERROR });
+    });
+};
+
+export const saveNewPassword = (
+  { password, token },
+  dispatch,
+  redirectToMainPage
+) => {
+  fetch(`${baseUrl}/password-reset/reset`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+    body: JSON.stringify({ password, token }),
+  })
+    .then(checkResponse)
+    .then(
+      dispatch({
+        type: FORGOT_PASSWORD_REQUEST,
+      })
+    )
+    .then((res) => {
+      if (res && res.success) {
+        dispatch({ type: RESET_PASSWORD_SUCCESS });
+        redirectToMainPage();
+      } else {
+        dispatch({ type: RESET_PASSWORD_ERROR });
+      }
+    })
+    .catch((err) => {
+      console.log(err, err.message);
+      dispatch({ type: RESET_PASSWORD_ERROR });
+    });
+};

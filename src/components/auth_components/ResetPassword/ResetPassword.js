@@ -16,10 +16,12 @@ const ResetPassword = () => {
     token: "",
   });
 
+  const history = useHistory();
   const dispatch = useDispatch();
+
   // const { isResetPassword } = useSelector(userSelectors.authData);
   const refreshToken = localStorage.refreshToken;
-  const history = useHistory();
+
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
@@ -27,13 +29,13 @@ const ResetPassword = () => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const goMainPage = () => {
+  const redirectToMainPage = () => {
     history.push("/");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(savePassword(inputValue, goMainPage));
+    // dispatch(savePassword(inputValue, redirectToMainPage));
   };
 
   return (
@@ -42,7 +44,7 @@ const ResetPassword = () => {
         method="POST"
         name="user-info"
         className={resetPasswordStyle.form}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         noValidate
       >
         <h1 className={resetPasswordStyle.formTitle}>Восстановление пароля</h1>
@@ -62,41 +64,6 @@ const ResetPassword = () => {
           size={"default"}
         />
 
-        {/* <div className={resetPasswordStyle.inputConteinier}>
-          <input
-            // value={regUserData.password}
-            type="password"
-            name="password"
-            placeholder="Введите новый пароль"
-            className={resetPasswordStyle.inputFild}
-            minLength="2"
-            maxLength="20"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <div className={resetPasswordStyle.inputIcon}>
-            <ShowIcon type="primary" />
-          </div>
-          <span></span>
-        </div>
-        <div>
-          <input
-            // value={regUserData.password}
-            type="code"
-            name="code"
-            placeholder="Введите код из письма"
-            className={resetPasswordStyle.inputFild}
-            minLength="2"
-            maxLength="20"
-            autoComplete="off"
-            // onChange={onChange}
-            required
-          />
-          <span></span>
-        </div> */}
-
-        {/* <p className="registration__form-error">{"messageOnRegister"}</p> */}
         <Button type="primary" size="large" disabled={false}>
           Сохранить
         </Button>
