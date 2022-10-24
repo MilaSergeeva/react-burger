@@ -8,19 +8,60 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import { ingredients } from "../../utils/api";
+// import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
 import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory, useLocation } from "react-router-dom";
+import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
+import { makeOrder } from "../../services/actions/index";
 
-function BurgerConstructor({ onButtonClick, onDropHandler }) {
+function BurgerConstructor({ handleProceedOrder, onDropHandler }) {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  let history = useHistory();
+
   const cartBurgerFillings = useSelector(
     (state) => state.burgerConstructorList.fillings
   );
 
-  const dispatch = useDispatch();
+  const cartBurgerBuns = useSelector(
+    (state) => state.burgerConstructorList.bun
+  );
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+
   const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
+
+  ///////////////////////
+
+  const burgerIngredients = () => {
+    const ingridientsTotal = [];
+
+    cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
+    if (cartBurgerFillings.length >= 1) {
+      cartBurgerFillings.forEach((element) => {
+        ingridientsTotal.push(element._id);
+      });
+    }
+    dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
+    return ingridientsTotal;
+  };
+
+  function handleMakeAnOrder() {
+    dispatch(makeOrder(burgerIngredients()));
+    setTimeout(() => {
+      const orderNumber = orderDetails.orderNumber.order.number;
+      history.push({
+        pathname: `/feed/${orderNumber}`,
+        state: {
+          background: location,
+        },
+      });
+    }, 200);
+  }
+
   //расчет общей стоимости
   const priceTotalFillings = (arr) =>
     arr.reduce((acc, el) => acc + el.price, 0);
@@ -114,7 +155,7 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
               ? true
               : false
           }
-          onClick={onButtonClick}
+          onClick={handleMakeAnOrder}
         >
           {/* Place order */}
           Оформить заказ

@@ -3,12 +3,12 @@ import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import appStyles from "../App/app.module.css";
 // import Modal from "../Modal/Modal";
 
 function IngredientDetails() {
   let { id } = useParams();
   const allProducts = useSelector((state) => state.items);
-  console.log(allProducts);
 
   const currentProduct = allProducts.find((el) => el._id === id);
 
@@ -19,7 +19,7 @@ function IngredientDetails() {
     //   onClose={onClose}
     // >
     <>
-      {currentProduct && (
+      {currentProduct ? (
         <div className={PopupIngridientsStyle.currentProductInfo}>
           <img src={currentProduct.image_large} alt={currentProduct.name} />
           <h2>{currentProduct.name}</h2>
@@ -46,15 +46,16 @@ function IngredientDetails() {
             </p>
           </div>
         </div>
+      ) : (
+        <div className={appStyles.loader} />
       )}
     </>
     // </Modal>
   );
 }
 
-IngredientDetails.propTypes = {
-  popupOpened: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+// IngredientDetails.propTypes = {
+//   onClose: PropTypes.func.isRequired,
+// };
 
 export default IngredientDetails;

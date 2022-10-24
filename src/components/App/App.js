@@ -23,10 +23,11 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import NotFound404 from "../NotFound404/NotFound404";
 import { updateCartList } from "../../services/actions/index";
 import { useDispatch, useSelector } from "react-redux";
-import { makeOrder } from "../../services/actions/index";
+// import { makeOrder } from "../../services/actions/index";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
+import { getItems } from "../../services/actions/index";
 
 function App() {
   const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
@@ -35,7 +36,6 @@ function App() {
 
   const history = useHistory();
   const location = useLocation();
-  let { id } = useParams();
 
   const background = location.state && location.state.background;
 
@@ -55,9 +55,10 @@ function App() {
     (state) => state.burgerConstructorList.bun
   );
 
-  // useEffect(() => {
-  //   dispatch(makeOrder(ingredients));
-  // }, [dispatch]);
+  const handleCardClick = (ingridient) => {
+    setSelectedIngridientCard(ingridient);
+    setIngridientPopupOpened(true);
+  };
 
   const burgerIngridients = () => {
     const ingridientsTotal = [];
@@ -72,21 +73,7 @@ function App() {
     return ingridientsTotal;
   };
 
-  const handleCardClick = (ingridient) => {
-    setSelectedIngridientCard(ingridient);
-    setIngridientPopupOpened(true);
-  };
-
-  const handleProceedOrder = (burgerIngredients) => {
-    dispatch(makeOrder(burgerIngredients()));
-
-    setCheckoutPopupOpened(true);
-  };
-
-  // function closeAllPopups() {
-  //   setIngridientPopupOpened(false);
-  //   setCheckoutPopupOpened(false);
-  // }
+  useEffect(() => dispatch(getItems()), [dispatch]);
 
   const onDropHandler = (item) => {
     dispatch(updateCartList(item));
@@ -125,11 +112,7 @@ function App() {
                 onCardClick={handleCardClick}
               />
 
-              <BurgerConstructor
-                onButtonClick={() => handleProceedOrder(burgerIngridients)}
-                onDropHandler={onDropHandler}
-                // ingridients={ingridients.data}
-              />
+              <BurgerConstructor onDropHandler={onDropHandler} />
             </DndProvider>
           </main>
         </Route>
@@ -145,21 +128,14 @@ function App() {
               onClose={handleModalClose}
               header={"Детали ингридиента"}
             >
-              <IngredientDetails
-              // product={selectedIngridientCard}
-              // popupOpened={true}
-              // onClose={closeAllPopups}
-              />
+              <IngredientDetails />
             </Modal>
-            {/* <IngredientDetails
-              product={selectedIngridientCard}
-              popupOpened={true}
-              onClose={closeAllPopups}
-            /> */}
           </Route>
-          {/* <Route path="/feed/:number">
-            <OrderDetails popupOpened={true} onClose={closeAllPopups} />
-          </Route> */}
+          <Route path="/feed/:number">
+            <Modal isOpened={true} onClose={handleModalClose} header={""}>
+              <OrderDetails />
+            </Modal>
+          </Route>
         </>
       )}
     </div>

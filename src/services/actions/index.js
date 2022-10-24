@@ -90,6 +90,8 @@ export function makeOrder(ingredients) {
           dispatch({
             type: DELETE_FROM_CART_FILLINGS,
           });
+          console.log(res);
+          return res;
         } else {
           dispatch({
             type: GET_ORDER_FAILED,

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { getItems } from "../../services/actions/index";
+
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,8 +14,6 @@ function BurgerIngredients({ onCardClick }) {
   const containier = useRef();
 
   const dispatch = useDispatch();
-
-  useEffect(() => dispatch(getItems()), [dispatch]);
 
   const ingridients = useSelector((state) => state.items);
 
