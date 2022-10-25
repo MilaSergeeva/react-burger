@@ -9,6 +9,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
+import { register } from "../../../services/actions/index";
 
 const Register = (props) => {
   const [inputValue, setInputValue] = useState({
@@ -32,7 +33,7 @@ const Register = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(registerAction(inputValue));
+    dispatch(register(inputValue));
   };
 
   return (

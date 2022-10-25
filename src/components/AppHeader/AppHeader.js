@@ -7,6 +7,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useRouteMatch } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 
 function AppHeader() {
   const isFeed = useRouteMatch("/feed");
@@ -42,6 +43,7 @@ function AppHeader() {
         <NavLink to="/" className={appHeaderStyles.logoAlign}>
           <Logo />
         </NavLink>
+
         <NavLink
           to="/profile"
           className={` ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}

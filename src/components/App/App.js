@@ -83,13 +83,13 @@ function App() {
     <div className={appStyles.appBlock}>
       <AppHeader />
       <Switch location={background || location}>
-        <ProtectedRoute path="/profile" exact>
+        <ProtectedRoute onlyForAuth={true} path="/profile" exact>
           <Profile />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth={true} path="/register" exact>
+        <ProtectedRoute onlyForAuth={false} path="/register" exact>
           <Register />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth={true} path="/login" exact>
+        <ProtectedRoute onlyForAuth={false} path="/login" exact>
           <Login />
         </ProtectedRoute>
         <ProtectedRoute onlyForAuth={true} path="/forgot-password" exact>

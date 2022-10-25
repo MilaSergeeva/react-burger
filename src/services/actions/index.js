@@ -166,315 +166,329 @@ export function updateCartList(item) {
 
 ///////////////////////////////////
 
-export const register = ({ email, password, name }, dispatch) => {
-  fetch(`${baseUrl}/auth/register`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ email, password, name }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: REGISTER_REQUEST,
-      })
-    )
-    .then((res) => {
-      // const accessToken = res.accessToken.split("Bearer ")[1];
-      const refreshToken = res.refreshToken;
-      setCookie("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+export const register = ({ email, password, name }) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/register`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ email, password, name }),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: REGISTER_REQUEST,
+        })
+      )
+      .then((res) => {
+        // const accessToken = res.accessToken.split("Bearer ")[1];
+        const refreshToken = res.refreshToken;
+        setCookie("accessToken", res.accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
-      if (res && res.success) {
-        dispatch({ type: REGISTER_SUCCESS, data: res });
-      } else {
+        if (res && res.success) {
+          dispatch({ type: REGISTER_SUCCESS, data: res });
+        } else {
+          dispatch({ type: REGISTER_ERROR });
+        }
+      })
+      .catch((err) => {
         dispatch({ type: REGISTER_ERROR });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: REGISTER_ERROR });
-      console.log(err, err.message);
-    });
+        console.log(err, err.message);
+      });
+  };
 };
 
-export const login = ({ email, password }, dispatch) => {
-  fetch(`${baseUrl}/auth/login`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ email, password }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: LOGIN_REQUEST,
+export const login = ({ email, password }) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/login`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ email, password }),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch(
+          {
+            type: LOGIN_REQUEST,
+          },
+          console.log("LOGIN_REQUEST")
+        )
+      )
+      .then((res) => {
+        console.log(res, res.refreshToken);
+        const refreshToken = res.refreshToken;
+        localStorage.setItem("refreshToken", refreshToken);
+        if (res && res.success) {
+          dispatch({ type: LOGIN_SUCCESS, data: res });
+        } else {
+          dispatch({ type: LOGIN_ERROR });
+        }
       })
-    )
-    .then((res) => {
-      const refreshToken = res.refreshToken;
-      localStorage.setItem("refreshToken", refreshToken);
-      if (res && res.success) {
-        dispatch({ type: LOGIN_SUCCESS, data: res });
-      } else {
+      .catch((err) => {
         dispatch({ type: LOGIN_ERROR });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: LOGIN_ERROR });
-      console.log(err, err.message);
-    });
+        console.log(err, err.message);
+      });
+  };
 };
 
-export const logOut = (redirectToLogin, dispatch) => {
-  fetch(`${baseUrl}/auth/logout`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ token: localStorage.refreshToken }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: LOGIN_REQUEST,
+export const logOut = (redirectToLogin) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/logout`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ token: localStorage.refreshToken }),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: LOGIN_REQUEST,
+        })
+      )
+      .then((res) => {
+        if (res && res.success) {
+          localStorage.removeItem("refreshToken");
+          dispatch({ type: LOGOUT_SUCCESS });
+          redirectToLogin();
+          console.log("kra");
+        } else {
+          dispatch({ type: LOGOUT_ERROR });
+          console.log("miu");
+        }
       })
-    )
-    .then((res) => {
-      if (res && res.success) {
-        localStorage.removeItem("refreshToken");
-        dispatch({ type: LOGOUT_SUCCESS });
-        redirectToLogin();
-      } else {
+      .catch((err) => {
         dispatch({ type: LOGOUT_ERROR });
-      }
-    })
-    .catch((err) => {
-      dispatch({ type: LOGOUT_ERROR });
-      console.log(err, err.message);
-    });
+        console.log(err, err.message);
+      });
+  };
 };
 
-export const getNewToken = (dispatch) => {
-  fetch(`${baseUrl}/auth/token`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ token: localStorage.refreshToken }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: TOKEN_REQUEST,
+export const getNewToken = () => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/token`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ token: localStorage.refreshToken }),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: TOKEN_REQUEST,
+        })
+      )
+      .then((res) => {
+        const refreshToken = res.refreshToken;
+        localStorage.setItem("refreshToken", refreshToken);
+        if (res && res.success) {
+          dispatch({ type: TOKEN_SUCCESS });
+        } else {
+          dispatch({ type: TOKEN_ERROR });
+        }
       })
-    )
-    .then((res) => {
-      const refreshToken = res.refreshToken;
-      localStorage.setItem("refreshToken", refreshToken);
-      if (res && res.success) {
-        dispatch({ type: TOKEN_SUCCESS });
-      } else {
+      .catch((err) => {
+        if (
+          err.message === "jwt expired" ||
+          err.message === "Token is invalid" ||
+          err.message === "jwt malformed"
+        ) {
+          getNewToken(dispatch).then((res) => {
+            if (res.success) {
+              localStorage.setItem("refreshToken", res.refreshToken);
+              setCookie("accessTocken", res.accessToken);
+            }
+          });
+        } else console.log(err, err.message);
+        localStorage.removeItem("refreshToken");
         dispatch({ type: TOKEN_ERROR });
-      }
-    })
-    .catch((err) => {
-      if (
-        err.message === "jwt expired" ||
-        err.message === "Token is invalid" ||
-        err.message === "jwt malformed"
-      ) {
-        getNewToken(dispatch).then((res) => {
-          if (res.success) {
-            localStorage.setItem("refreshToken", res.refreshToken);
-            setCookie("accessTocken", res.accessToken);
-          }
-        });
-      } else console.log(err, err.message);
-      localStorage.removeItem("refreshToken");
-      dispatch({ type: TOKEN_ERROR });
-    });
+      });
+  };
 };
 
-export const getUserInfo = (dispatch) => {
-  fetch(`${baseUrl}/auth/user`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `${getCookie("accessToken")}`,
-    },
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: TOKEN_REQUEST,
+export const getUserInfo = () => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/user`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${getCookie("accessToken")}`,
+      },
+      method: "GET",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: TOKEN_REQUEST,
+        })
+      )
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({ type: USER_SUCCESS, data: res });
+        } else {
+          dispatch({ type: USER_ERROR });
+        }
       })
-    )
-    .then((res) => {
-      if (res && res.success) {
-        dispatch({ type: USER_SUCCESS, data: res });
-      } else {
+      .catch((err) => {
+        if (
+          err.message === "jwt expired" ||
+          err.message === "Token is invalid" ||
+          err.message === "jwt malformed"
+        ) {
+          getNewToken(dispatch);
+          getUserInfo(dispatch);
+        } else console.log(err.message);
         dispatch({ type: USER_ERROR });
-      }
-    })
-    .catch((err) => {
-      if (
-        err.message === "jwt expired" ||
-        err.message === "Token is invalid" ||
-        err.message === "jwt malformed"
-      ) {
-        getNewToken(dispatch);
-        getUserInfo(dispatch);
-      } else console.log(err.message);
-      dispatch({ type: USER_ERROR });
-    });
+      });
+  };
 };
 
-export const updateUserInfo = ({ name, email, password }, dispatch) => {
-  fetch(`${baseUrl}/auth/user`, {
-    method: "PATCH",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `${getCookie("accessToken")}`,
-    },
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ name, email, password }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: USER_UPDATE_REQUEST,
+export const updateUserInfo = ({ name, email, password }) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/auth/user`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `${getCookie("accessToken")}`,
+      },
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ name, email, password }),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: USER_UPDATE_REQUEST,
+        })
+      )
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({ type: USER_UPDATE_SUCCESS, data: res });
+        } else {
+          dispatch({ type: USER_UPDATE_ERROR });
+        }
       })
-    )
-    .then((res) => {
-      if (res && res.success) {
-        dispatch({ type: USER_UPDATE_SUCCESS, data: res });
-      } else {
+      .catch((err) => {
+        if (
+          err.message === "jwt expired" ||
+          err.message === "Token is invalid" ||
+          err.message === "jwt malformed"
+        ) {
+          getNewToken(dispatch);
+          updateUserInfo({ name, email, password }, dispatch);
+        }
+
         dispatch({ type: USER_UPDATE_ERROR });
-      }
-    })
-    .catch((err) => {
-      if (
-        err.message === "jwt expired" ||
-        err.message === "Token is invalid" ||
-        err.message === "jwt malformed"
-      ) {
-        getNewToken(dispatch);
-        updateUserInfo({ name, email, password }, dispatch);
-      }
-
-      dispatch({ type: USER_UPDATE_ERROR });
-    });
+      });
+  };
 };
 
-export const getCodeToChangePassword = (
-  email,
-  dispatch,
-  redirectToResetPassword
-) => {
-  fetch(`${baseUrl}/password-reset`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify(email),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: FORGOT_PASSWORD_REQUEST,
+export const getCodeToChangePassword = (email, redirectToResetPassword) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/password-reset`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify(email),
+    })
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: FORGOT_PASSWORD_REQUEST,
+        })
+      )
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({ type: FORGOT_PASSWORD_SUCCESS });
+          redirectToResetPassword();
+        } else {
+          dispatch({ type: FORGOT_PASSWORD_ERROR });
+        }
       })
-    )
-    .then((res) => {
-      if (res && res.success) {
-        dispatch({ type: FORGOT_PASSWORD_SUCCESS });
-        redirectToResetPassword();
-      } else {
+      .catch((err) => {
+        console.log(err, err.message);
         dispatch({ type: FORGOT_PASSWORD_ERROR });
-      }
-    })
-    .catch((err) => {
-      console.log(err, err.message);
-      dispatch({ type: FORGOT_PASSWORD_ERROR });
-    });
+      });
+  };
 };
 
-export const saveNewPassword = (
-  { password, token },
-  dispatch,
-  redirectToMainPage
-) => {
-  fetch(`${baseUrl}/password-reset/reset`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-    body: JSON.stringify({ password, token }),
-  })
-    .then(checkResponse)
-    .then(
-      dispatch({
-        type: FORGOT_PASSWORD_REQUEST,
-      })
-    )
-    .then((res) => {
-      if (res && res.success) {
-        dispatch({ type: RESET_PASSWORD_SUCCESS });
-        redirectToMainPage();
-      } else {
-        dispatch({ type: RESET_PASSWORD_ERROR });
-      }
+export const saveNewPassword = ({ password, token }, redirectToMainPage) => {
+  return function (dispatch) {
+    fetch(`${baseUrl}/password-reset/reset`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+      body: JSON.stringify({ password, token }),
     })
-    .catch((err) => {
-      console.log(err, err.message);
-      dispatch({ type: RESET_PASSWORD_ERROR });
-    });
+      .then(checkResponse)
+      .then(
+        dispatch({
+          type: FORGOT_PASSWORD_REQUEST,
+        })
+      )
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({ type: RESET_PASSWORD_SUCCESS });
+          redirectToMainPage();
+        } else {
+          dispatch({ type: RESET_PASSWORD_ERROR });
+        }
+      })
+      .catch((err) => {
+        console.log(err, err.message);
+        dispatch({ type: RESET_PASSWORD_ERROR });
+      });
+  };
 };

@@ -6,12 +6,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../../services/actions/index";
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
 
-  // const { logoutRequest } = useSelector(userSelectors.authData);
+  const logoutRequest = useSelector((state) => state.auth.logoutRequest);
   const refreshToken = localStorage.refreshToken;
   const location = useLocation();
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(authorize(inputValue));
+    dispatch(login(inputValue));
   };
 
   return (

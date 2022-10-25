@@ -6,8 +6,20 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../services/actions/index";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const redirectToLogin = () => {
+    history.push("/login");
+  };
+
+  const handleClick = () => {
+    dispatch(logOut(redirectToLogin));
+  };
   return (
     <section className={profileStyle.section}>
       <div className={profileStyle.sideBar}>
@@ -27,9 +39,10 @@ const Profile = () => {
             История заказов
           </NavLink>
           <NavLink
-            to="/profile"
+            to="/login"
             // className={isActive ? `${profileStyle.navLinkActiv}` :`${profileStyle.navLink}`}
             className={profileStyle.navLink}
+            onClick={handleClick}
           >
             Выход
           </NavLink>

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
+// import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PopupOrderDetailsStyle from "./OrderDetails.module.css";
 import success from "../../images/success.png";
 import declined from "../../images/declined.png";
 import PropTypes from "prop-types";
-import Modal from "../Modal/Modal";
+// import Modal from "../Modal/Modal";
 import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
 
-function OrderDetails({ popupOpened, onClose }) {
+function OrderDetails() {
   const orderDetails = useSelector((state) => state.orderDetails);
   const orderReguestStatus = useSelector(
     (state) => state.orderDetails.orderRequest
@@ -73,10 +73,5 @@ function OrderDetails({ popupOpened, onClose }) {
     // </Modal>
   );
 }
-
-OrderDetails.propTypes = {
-  popupOpened: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default OrderDetails;
