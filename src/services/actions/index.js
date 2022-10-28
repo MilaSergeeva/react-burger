@@ -26,7 +26,7 @@ export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 
 //Обновление карзины
 
-export const ADD_TO_CART_FILLINGS = "ADD_TO_CART_FILLINGS";
+export const ADD_TO_CART_FILLING = "ADD_TO_CART_FILLING";
 export const ADD_TO_CART_BUN = "ADD_TO_CART_BUN";
 export const DELETE_FROM_CART_BUN = "DELETE_FROM_CART_BUN";
 export const DELETE_FROM_CART_FILLING = "DELETE_FROM_CART_FILLING";
@@ -36,7 +36,7 @@ export const DRAG_CART_INGREDIENT = "DRAG_CART_INGREDIENT";
 export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
 
-export const DELETE_FROM_CART_FILLINGS = "DELETE_FROM_CART_FILLINGS";
+export const DELETE_FROM_CART_INGRIDIENTS = "DELETE_FROM_CART_INGRIDIENTS";
 
 //Авторизация
 
@@ -71,6 +71,14 @@ export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
 export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
+
+export const INCREASE_FILLINGS_COUNTER = "INCREASE_FILLINGS_COUNTER";
+export const DECREASE_FILLINGS_COUNTER = "DECREASE_FILLINGS_COUNTER";
+
+export const INCREASE_BUNS_COUNTER = "INCREASE_FILLINGS_COUNTER";
+export const DECREASE_BUNS_COUNTER = "DECREASE_FILLINGS_COUNTER";
+
+export const CLEAR_INGRIDIENTS_COUNTER = "CLEAR_INGRIDIENTS_COUNTER";
 
 const headers = {
   Accept: "application/json",
@@ -125,11 +133,11 @@ export function makeOrder(ingredients) {
             type: GET_ORDER_NUMBER,
             orderDetails: res,
           });
+          // dispatch({
+          //   type: DELETE_FROM_CART_BUN,
+          // });
           dispatch({
-            type: DELETE_FROM_CART_BUN,
-          });
-          dispatch({
-            type: DELETE_FROM_CART_FILLINGS,
+            type: DELETE_FROM_CART_INGRIDIENTS,
           });
           console.log(res);
           return res;
@@ -149,7 +157,11 @@ export function updateCartList(item) {
   return function (dispatch) {
     if (item.type !== "bun") {
       dispatch({
-        type: ADD_TO_CART_FILLINGS,
+        type: ADD_TO_CART_FILLING,
+        item,
+      });
+      dispatch({
+        type: INCREASE_FILLINGS_COUNTER,
         item,
       });
     } else {
@@ -158,6 +170,10 @@ export function updateCartList(item) {
       });
       dispatch({
         type: ADD_TO_CART_BUN,
+        item,
+      });
+      dispatch({
+        type: INCREASE_BUNS_COUNTER,
         item,
       });
     }

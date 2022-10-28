@@ -8,15 +8,16 @@ import {
   GET_ITEMS_REQUEST,
   GET_ITEMS_SUCCESS,
   GET_ORDER_NUMBER,
-  ADD_TO_CART_FILLINGS,
+  ADD_TO_CART_FILLING,
   ADD_TO_CART_BUN,
   DELETE_FROM_CART_BUN,
   DELETE_FROM_CART_FILLING,
+  INCREASE_FILLINGS_COUNTER,
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
   DRAG_CART_INGREDIENT,
-  DELETE_FROM_CART_FILLINGS,
+  DELETE_FROM_CART_INGRIDIENTS,
   USER_REQUEST,
   USER_SUCCESS,
   USER_ERROR,
@@ -51,6 +52,7 @@ const initialState = {
   burgerConstructorList: {
     bun: null,
     fillings: [],
+    counter: {},
   },
   currentIngredientDetails: {},
   orderDetails: {
@@ -142,7 +144,7 @@ export const rootReducer = (state = initialState, action) => {
         },
       };
     }
-    case ADD_TO_CART_FILLINGS: {
+    case ADD_TO_CART_FILLING: {
       return {
         ...state,
         burgerConstructorList: {
@@ -151,33 +153,7 @@ export const rootReducer = (state = initialState, action) => {
         },
       };
     }
-    case DELETE_FROM_CART_BUN: {
-      return {
-        ...state,
-        burgerConstructorList: {
-          ...state.burgerConstructorList,
-          bun: null,
-        },
-      };
-    }
-    case DELETE_FROM_CART_FILLINGS: {
-      return {
-        ...state,
-        burgerConstructorList: {
-          ...state.burgerConstructorList,
-          fillings: [],
-        },
-      };
-    }
-    case ADD_TO_CART_BUN: {
-      return {
-        ...state,
-        burgerConstructorList: {
-          ...state.burgerConstructorList,
-          bun: action.item,
-        },
-      };
-    }
+
     case DELETE_FROM_CART_FILLING: {
       return {
         ...state,
@@ -190,6 +166,48 @@ export const rootReducer = (state = initialState, action) => {
         },
       };
     }
+
+    case DELETE_FROM_CART_INGRIDIENTS: {
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          fillings: [],
+          bun: null,
+          counter: {},
+        },
+      };
+    }
+    case ADD_TO_CART_BUN: {
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          bun: action.item,
+        },
+      };
+    }
+    case DELETE_FROM_CART_BUN: {
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          bun: null,
+        },
+      };
+    }
+
+    case 
+    case INCREASE_FILLINGS_COUNTER: {
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          bun: null,
+        },
+      };
+    }
+
     case UPDATE_ORDER_INGRIDIENTS_DELAILS: {
       return {
         ...state,
