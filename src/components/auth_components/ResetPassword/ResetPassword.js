@@ -9,6 +9,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { saveNewPassword } from "../../../services/actions/index";
 
 const ResetPassword = () => {
   const [inputValue, setInputValue] = useState({
@@ -19,7 +20,7 @@ const ResetPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // const { isResetPassword } = useSelector(userSelectors.authData);
+  const isResetPassword = useSelector((state) => state.auth.isResetPassword);
   const refreshToken = localStorage.refreshToken;
 
   const handleChange = (e) => {
@@ -35,7 +36,7 @@ const ResetPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(savePassword(inputValue, redirectToMainPage));
+    dispatch(saveNewPassword(inputValue, redirectToMainPage));
   };
 
   return (

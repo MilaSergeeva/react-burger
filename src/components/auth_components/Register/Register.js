@@ -8,7 +8,7 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../../services/actions/index";
 
 const Register = (props) => {
@@ -22,7 +22,7 @@ const Register = (props) => {
   const dispatch = useDispatch();
   const refreshToken = localStorage.refreshToken;
 
-  // const { logoutRequest } = useSelector(userSelectors.authData);
+  const logoutRequest = useSelector((state) => state.auth.logoutRequest);
 
   const handleChange = (e) => {
     const target = e.target;

@@ -6,6 +6,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
+import { getCodeToChangePassword } from "../../../services/actions/index";
 
 const ForgotPassword = () => {
   const [inputValue, setInputValue] = useState({
@@ -14,7 +15,7 @@ const ForgotPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // const refreshToken = localStorage.refreshToken;
+  const refreshToken = localStorage.refreshToken;
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
@@ -28,7 +29,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(forgotPassword(inputValue, redirectToResetPassword));
+    dispatch(getCodeToChangePassword(inputValue, redirectToResetPassword));
   };
 
   return (
