@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import profileStyle from "./profile.module.css";
-import profileFormStyle from "../auth_components/auth_forms.module.css";
 import {
   EditIcon,
   PasswordInput,
@@ -80,9 +79,6 @@ const Profile = () => {
       name: name,
       email: email,
       password: "",
-      inputName: true,
-      inputEmail: true,
-      inputPassword: true,
     });
   };
 
@@ -93,7 +89,6 @@ const Profile = () => {
           <NavLink
             to="/profile"
             exact
-            // className={isActive ? `${profileStyle.navLinkActiv}` :`${profileStyle.navLink}`}
             className={`${profileStyle.navLink}`}
             activeClassName={profileStyle.navLinkActiv}
           >
@@ -102,7 +97,6 @@ const Profile = () => {
           <NavLink
             to="/profile/orders"
             exact
-            // className={isActive ? `${profileStyle.navLinkActiv}` :`${profileStyle.navLink}`}
             className={profileStyle.navLink}
             activeClassName={profileStyle.navLinkActiv}
           >
@@ -111,7 +105,6 @@ const Profile = () => {
           <NavLink
             to="/login"
             exact
-            // className={isActive ? `${profileStyle.navLinkActiv}` :`${profileStyle.navLink}`}
             className={profileStyle.navLink}
             onClick={handleClick}
             activeClassName={profileStyle.navLinkActiv}
@@ -137,7 +130,6 @@ const Profile = () => {
               method="POST"
               name="user-info"
               className={profileStyle.form}
-              // onSubmit={handleSubmit}
               noValidate
             >
               <Input

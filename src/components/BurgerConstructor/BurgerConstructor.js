@@ -7,8 +7,8 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-// import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
 import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
 import { makeOrder } from "../../services/actions/index";
 
-function BurgerConstructor({ handleProceedOrder, onDropHandler }) {
+function BurgerConstructor({ onDropHandler }) {
   const dispatch = useDispatch();
   const location = useLocation();
   let history = useHistory();
@@ -163,5 +163,9 @@ function BurgerConstructor({ handleProceedOrder, onDropHandler }) {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  onDropHandler: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

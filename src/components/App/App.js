@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Route,
-  Switch,
-  useLocation,
-  useHistory,
-  useParams,
-} from "react-router-dom";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import Modal from "../Modal/Modal";
 // import * as userAuth from "../utils/authorization.js";
 import AppHeader from "../AppHeader/AppHeader";
@@ -30,48 +24,14 @@ import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
 import { getItems } from "../../services/actions/index";
 
 function App() {
-  const [selectedIngridientCard, setSelectedIngridientCard] = useState(false);
-  const [ingridientPopupOpened, setIngridientPopupOpened] = useState(false);
-  const [checkoutPopupOpened, setCheckoutPopupOpened] = useState(false);
-
   const history = useHistory();
   const location = useLocation();
 
   const background = location.state && location.state.background;
 
-  // React.useEffect(() => {
-  //   console.log("location", location);
-  //   console.log("background", background);
-  // }, [location]);
-
   const handleModalClose = () => history.goBack();
 
   const dispatch = useDispatch();
-  const cartBurgerFillings = useSelector(
-    (state) => state.burgerConstructorList.fillings
-  );
-
-  const cartBurgerBuns = useSelector(
-    (state) => state.burgerConstructorList.bun
-  );
-
-  const handleCardClick = (ingridient) => {
-    setSelectedIngridientCard(ingridient);
-    setIngridientPopupOpened(true);
-  };
-
-  const burgerIngridients = () => {
-    const ingridientsTotal = [];
-
-    cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
-    if (cartBurgerFillings.length >= 1) {
-      cartBurgerFillings.forEach((element) => {
-        ingridientsTotal.push(element._id);
-      });
-    }
-    dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
-    return ingridientsTotal;
-  };
 
   useEffect(() => dispatch(getItems()), [dispatch]);
 
@@ -107,10 +67,7 @@ function App() {
         <Route path="/" exact>
           <main className={appStyles.content}>
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients
-                // ingridients={ingridients.data}
-                onCardClick={handleCardClick}
-              />
+              <BurgerIngredients />
 
               <BurgerConstructor onDropHandler={onDropHandler} />
             </DndProvider>

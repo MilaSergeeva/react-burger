@@ -76,7 +76,6 @@ const initialState = {
     updateUserFailed: false,
 
     tokenRequest: false,
-    tokenUpdate: false,
     tokenFailed: false,
 
     logoutRequest: false,
@@ -90,7 +89,7 @@ const initialState = {
 
     forgotRequest: false,
     forgotFailed: false,
-    isResetPassword: false,
+
     resetRequest: false,
     resetFailed: false,
   },
@@ -332,7 +331,6 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         auth: {
           ...state.auth,
-          tokenUpdate: true,
           tokenRequest: false,
           tokenFailed: false,
         },
@@ -344,7 +342,6 @@ export const rootReducer = (state = initialState, action) => {
         auth: {
           ...state.auth,
           tokenRequest: false,
-          tokenUpdate: false,
           tokenFailed: true,
         },
       };
@@ -458,7 +455,6 @@ export const rootReducer = (state = initialState, action) => {
         auth: {
           ...state.auth,
           forgotRequest: true,
-          isResetPassword: false,
         },
       };
     }
@@ -468,7 +464,6 @@ export const rootReducer = (state = initialState, action) => {
         auth: {
           ...state.auth,
           forgotRequest: false,
-          isResetPassword: true,
           forgotFailed: false,
         },
       };
@@ -479,7 +474,6 @@ export const rootReducer = (state = initialState, action) => {
         auth: {
           ...state.auth,
           forgotRequest: false,
-          isResetPassword: false,
           forgotFailed: true,
         },
       };

@@ -18,11 +18,8 @@ const Register = (props) => {
     password: "",
   });
 
-  const location = useLocation();
   const dispatch = useDispatch();
-  const refreshToken = localStorage.refreshToken;
 
-  const logoutRequest = useSelector((state) => state.auth.logoutRequest);
   const formSubmit = useSelector((state) => state.auth.registerFailed);
 
   const handleChange = (e) => {

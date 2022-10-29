@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
-// import Modal from "../Modal/Modal";
 
 function IngredientDetails() {
   let { id } = useParams();
@@ -13,11 +12,6 @@ function IngredientDetails() {
   const currentProduct = allProducts.find((el) => el._id === id);
 
   return (
-    // <Modal
-    //   isOpened={popupOpened}
-    //   header={"Детали ингридиента"}
-    //   onClose={onClose}
-    // >
     <>
       {currentProduct ? (
         <div className={PopupIngridientsStyle.currentProductInfo}>
@@ -50,12 +44,7 @@ function IngredientDetails() {
         <div className={appStyles.loader} />
       )}
     </>
-    // </Modal>
   );
 }
-
-// IngredientDetails.propTypes = {
-//   onClose: PropTypes.func.isRequired,
-// };
 
 export default IngredientDetails;

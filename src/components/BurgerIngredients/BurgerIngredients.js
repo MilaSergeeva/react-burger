@@ -13,8 +13,6 @@ function BurgerIngredients({ onCardClick }) {
   const fillings = useRef();
   const containier = useRef();
 
-  const dispatch = useDispatch();
-
   const ingridients = useSelector((state) => state.items);
 
   const getProductCard = (type) => {

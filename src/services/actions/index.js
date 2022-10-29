@@ -333,8 +333,6 @@ export const refreshAccessToken = (afterRefresh) => {
         })
       )
       .then((res) => {
-        console.log("refresh access token result", res);
-
         const { refreshToken, accessToken } = res;
 
         saveTokens(refreshToken, accessToken);

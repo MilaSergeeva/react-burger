@@ -22,7 +22,6 @@ const ResetPassword = () => {
   const formSubmit = useSelector((state) => state.auth.resetFailed);
 
   if (history.location.state === undefined) {
-    console.log("tuta ya");
     return <Redirect to="/forgot-password" />;
   } else if (history.location.state.from !== "forgot-password") {
     return <Redirect to="/forgot-password" />;

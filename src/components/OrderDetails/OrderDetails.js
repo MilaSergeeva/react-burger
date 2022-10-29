@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
-// import ModalOverlay from "../ModalOverlay/ModalOverlay";
+import React from "react";
 import PopupOrderDetailsStyle from "./OrderDetails.module.css";
 import success from "../../images/success.png";
 import declined from "../../images/declined.png";
-import PropTypes from "prop-types";
-// import Modal from "../Modal/Modal";
 import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
 
@@ -15,7 +12,6 @@ function OrderDetails() {
   );
 
   return (
-    // <Modal isOpened={popupOpened} header={""} onClose={onClose}>
     <div className={PopupOrderDetailsStyle.contantContainier}>
       {orderReguestStatus ? (
         <div className={appStyles.loader} />
@@ -70,7 +66,6 @@ function OrderDetails() {
         </>
       )}
     </div>
-    // </Modal>
   );
 }
 
