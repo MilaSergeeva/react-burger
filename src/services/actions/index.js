@@ -76,7 +76,7 @@ export const INCREASE_FILLINGS_COUNTER = "INCREASE_FILLINGS_COUNTER";
 export const DECREASE_FILLINGS_COUNTER = "DECREASE_FILLINGS_COUNTER";
 
 export const INCREASE_BUNS_COUNTER = "INCREASE_FILLINGS_COUNTER";
-export const DECREASE_BUNS_COUNTER = "DECREASE_FILLINGS_COUNTER";
+export const DECREASE_BUNS_COUNTER = "DECREASE_BUNS_COUNTER";
 
 export const CLEAR_INGRIDIENTS_COUNTER = "CLEAR_INGRIDIENTS_COUNTER";
 
@@ -164,6 +164,7 @@ export function updateCartList(item) {
         type: INCREASE_FILLINGS_COUNTER,
         item,
       });
+      console.log("im here");
     } else {
       dispatch({
         type: DELETE_FROM_CART_BUN,
@@ -172,10 +173,10 @@ export function updateCartList(item) {
         type: ADD_TO_CART_BUN,
         item,
       });
-      dispatch({
-        type: INCREASE_BUNS_COUNTER,
-        item,
-      });
+      // dispatch({
+      //   type: INCREASE_BUNS_COUNTER,
+      //   item,
+      // });
     }
   };
 }
@@ -289,10 +290,8 @@ export const logOut = (redirectToLogin) => {
           localStorage.removeItem("refreshToken");
           dispatch({ type: LOGOUT_SUCCESS });
           redirectToLogin();
-          console.log("kra");
         } else {
           dispatch({ type: LOGOUT_ERROR });
-          console.log("miu");
         }
       })
       .catch((err) => {

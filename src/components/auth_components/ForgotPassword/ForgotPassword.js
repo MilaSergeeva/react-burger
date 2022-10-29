@@ -52,7 +52,7 @@ const ForgotPassword = () => {
         />
 
         <Button type="primary" size="large" disabled={false}>
-          Зарегистрироватся
+          Восстановить
         </Button>
       </form>
       <p className={forgotPasswordStyle.formText}>

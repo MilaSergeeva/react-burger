@@ -7,7 +7,10 @@ import {
 import PropTypes from "prop-types";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { DELETE_FROM_CART_FILLING } from "../../services/actions/index";
+import {
+  DELETE_FROM_CART_FILLING,
+  DECREASE_FILLINGS_COUNTER,
+} from "../../services/actions/index";
 import { ingridientData } from "../../utils/data";
 
 function FillingsCard({ index, el, moveCard, id }) {
@@ -66,7 +69,8 @@ function FillingsCard({ index, el, moveCard, id }) {
 
   //удаление ингридиента
 
-  const handleDeleteFillingFromCart = (index) => {
+  const handleDeleteFillingFromCart = (index, id) => {
+    dispatch({ type: DECREASE_FILLINGS_COUNTER, id });
     dispatch({ type: DELETE_FROM_CART_FILLING, index });
   };
 
@@ -82,7 +86,7 @@ function FillingsCard({ index, el, moveCard, id }) {
           text={el.name}
           price={el.price}
           thumbnail={el.image}
-          handleClose={() => handleDeleteFillingFromCart(index)}
+          handleClose={() => handleDeleteFillingFromCart(index, el._id)}
         />
       </div>
     </li>

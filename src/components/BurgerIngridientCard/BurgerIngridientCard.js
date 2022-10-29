@@ -1,25 +1,17 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import PropTypes from "prop-types";
 import { ingridientData } from "../../utils/data";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
-import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 function BurgerIngridientCard({ el }) {
-  const [count, setCount] = useState("0");
   const location = useLocation();
 
-  const cartBurgerFillings = useSelector(
-    (state) => state.burgerConstructorList.fillings
-  );
-  const cartBurgerBuns = useSelector(
-    (state) => state.burgerConstructorList.bun
-  );
+  const { bun, counter } = useSelector((state) => state.burgerConstructorList);
 
   const [, dragRef] = useDrag({
     type: "ingridients",
@@ -30,17 +22,8 @@ function BurgerIngridientCard({ el }) {
     }),
   });
 
-  useEffect(() => {
-    if (cartBurgerFillings.length >= 1 && el.type !== "bun") {
-      setCount(cartBurgerFillings.filter((item) => item._id === el._id).length);
-    } else if (cartBurgerBuns !== null && cartBurgerBuns._id === el._id) {
-      setCount(2);
-    } else if (cartBurgerBuns !== null && el.type === "bun") {
-      setCount(0);
-    } else {
-      return;
-    }
-  }, [cartBurgerFillings, cartBurgerBuns]);
+  const quantity =
+    bun && bun._id === el._id ? "2" : counter[el._id] !== 0 && counter[el._id];
 
   return (
     // !isDrag && (
@@ -54,7 +37,7 @@ function BurgerIngridientCard({ el }) {
       }}
     >
       <img src={el.image} alt={el.name} />
-      {count > 0 && <Counter count={count} size="default" />}
+      {quantity && <Counter count={quantity} size="default" />}
       <div className={BurgerIngredientsStyles.price}>
         <p className="text text_type_digits-default">{el.price}</p>
         <div>
@@ -72,7 +55,6 @@ function BurgerIngridientCard({ el }) {
 }
 
 BurgerIngridientCard.propTypes = {
-  onCardClick: PropTypes.func.isRequired,
   el: ingridientData.isRequired,
 };
 

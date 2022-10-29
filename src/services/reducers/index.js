@@ -13,6 +13,7 @@ import {
   DELETE_FROM_CART_BUN,
   DELETE_FROM_CART_FILLING,
   INCREASE_FILLINGS_COUNTER,
+  DECREASE_FILLINGS_COUNTER,
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
@@ -155,6 +156,7 @@ export const rootReducer = (state = initialState, action) => {
     }
 
     case DELETE_FROM_CART_FILLING: {
+      console.log(action.index, "action.index");
       return {
         ...state,
         burgerConstructorList: {
@@ -197,13 +199,33 @@ export const rootReducer = (state = initialState, action) => {
       };
     }
 
-    case 
     case INCREASE_FILLINGS_COUNTER: {
       return {
         ...state,
         burgerConstructorList: {
           ...state.burgerConstructorList,
-          bun: null,
+          counter: {
+            ...state.burgerConstructorList.counter,
+            [action.item._id]: [...state.burgerConstructorList.fillings].filter(
+              (i) => {
+                return i._id === action.item._id;
+              }
+            ).length,
+          },
+        },
+      };
+    }
+
+    case DECREASE_FILLINGS_COUNTER: {
+      console.log(action.id, "что же это  такое?");
+      return {
+        ...state,
+        burgerConstructorList: {
+          ...state.burgerConstructorList,
+          counter: {
+            ...state.burgerConstructorList.counter,
+            [action.id]: state.burgerConstructorList.counter[action.id] - 1,
+          },
         },
       };
     }
@@ -217,6 +239,7 @@ export const rootReducer = (state = initialState, action) => {
         },
       };
     }
+
     case DRAG_CART_INGREDIENT: {
       const newListIngredients = [...state.burgerConstructorList.fillings];
       const dragIngredient = newListIngredients[action.dragIndex];
@@ -339,12 +362,11 @@ export const rootReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS: {
       return {
         ...state,
+        user: { name: "", email: "" },
         auth: {
           ...state.auth,
           logoutRequest: false,
           logoutFailed: false,
-          name: "",
-          email: "",
         },
       };
     }

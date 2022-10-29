@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import appStyles from "../App/app.module.css";
 
-const ProtectedRoute = ({ onlyForAuth = "false", children, ...rest }) => {
+const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
   // const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
   const user = useSelector((state) => state.user);
-  console.log(user, "bkhkj");
   const location = useLocation();
   const haveUser = user.name !== "" && user.email !== "" ? true : false;
   // if (!isAuthChecked) {
