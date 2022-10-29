@@ -238,8 +238,11 @@ export const login = ({ email, password }) => {
         })
       )
       .then((res) => {
-        const refreshToken = res.refreshToken;
+        const { refreshToken, accessToken } = res;
+
         localStorage.setItem("refreshToken", refreshToken);
+        setCookie("accessToken", accessToken);
+
         if (res && res.success) {
           dispatch({ type: LOGIN_SUCCESS, data: res });
         } else {
@@ -328,7 +331,7 @@ export const getNewToken = () => {
           getNewToken(dispatch).then((res) => {
             if (res.success) {
               localStorage.setItem("refreshToken", res.refreshToken);
-              setCookie("accessTocken", res.accessToken);
+              setCookie("accessToken", res.accessToken);
             }
           });
         } else {
@@ -381,14 +384,14 @@ export const getUserInfo = () => {
   };
 };
 
-export const updateUserInfo = ({ name, email, password }) => {
+export const updateUserInfo = (name, email, password) => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/user`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `${getCookie("accessToken")}`,
+        Authorization: getCookie("accessToken"),
       },
       mode: "cors",
       cache: "no-cache",
@@ -404,6 +407,7 @@ export const updateUserInfo = ({ name, email, password }) => {
         })
       )
       .then((res) => {
+        console.log();
         if (res && res.success) {
           dispatch({ type: USER_UPDATE_SUCCESS, data: res });
         } else {

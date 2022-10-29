@@ -39,10 +39,10 @@ function App() {
 
   const background = location.state && location.state.background;
 
-  React.useEffect(() => {
-    console.log("location", location);
-    console.log("background", background);
-  }, [location]);
+  // React.useEffect(() => {
+  //   console.log("location", location);
+  //   console.log("background", background);
+  // }, [location]);
 
   const handleModalClose = () => history.goBack();
 

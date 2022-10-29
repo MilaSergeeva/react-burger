@@ -14,7 +14,6 @@ const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
 
   if (!onlyForAuth && haveUser) {
     const { from } = location.state || { from: { pathname: "/" } };
-    console.log("1");
     return (
       <Route {...rest}>
         <Redirect to={from} />
@@ -23,7 +22,6 @@ const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
   }
 
   if (onlyForAuth && !haveUser) {
-    console.log("2");
     return (
       <Route {...rest}>
         <Redirect to={{ pathname: "/login", state: { from: location } }} />
