@@ -5,29 +5,33 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../services/actions/index";
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
+  const history = useHistory();
 
-  const logoutRequest = useSelector((state) => state.auth.logoutRequest);
   const formSubmit = useSelector((state) => state.auth.loginFailed);
-  const refreshToken = localStorage.refreshToken;
-  const location = useLocation();
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
+
     setInputValue({ ...inputValue, [name]: value });
+  };
+
+  const redirectToProfile = () => {
+    history.push("/");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(inputValue));
+    dispatch(login(inputValue, redirectToProfile));
   };
 
   return (

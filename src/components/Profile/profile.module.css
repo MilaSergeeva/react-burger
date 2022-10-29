@@ -63,6 +63,9 @@
   cursor: pointer;
 }
 
+.sideBar{
+  margin-left: 20px;
+}
 .sidebarMenu{
   display: flex;
   flex-direction: column;

@@ -1,6 +1,6 @@
 import { baseUrl, checkResponse } from "../../utils/api";
 
-import { setCookie, getCookie } from "../../utils/data";
+import { setCookie, getCookie, unsetCookie } from "../../utils/data";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
@@ -221,7 +221,7 @@ export const register = ({ email, password, name }) => {
   };
 };
 
-export const login = ({ email, password }) => {
+export const login = ({ email, password }, redirectToProfile) => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/login`, {
       headers: {
@@ -249,13 +249,13 @@ export const login = ({ email, password }) => {
         setCookie("accessToken", accessToken);
 
         if (res && res.success) {
-          console.log("login result", res);
           setUserInfoToLocalStore({
             name: res.user.name,
             email: res.user.email,
           });
 
           dispatch({ type: LOGIN_SUCCESS, data: res });
+          redirectToProfile();
         } else {
           dispatch({ type: LOGIN_ERROR });
         }
@@ -291,6 +291,8 @@ export const logOut = (redirectToLogin) => {
       .then((res) => {
         if (res && res.success) {
           localStorage.removeItem("refreshToken");
+          unsetCookie("accessToken");
+
           dispatch({ type: LOGOUT_SUCCESS });
           redirectToLogin();
         } else {

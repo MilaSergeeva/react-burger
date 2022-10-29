@@ -296,12 +296,14 @@ export const rootReducer = (state = initialState, action) => {
     case USER_SUCCESS: {
       return {
         ...state,
+        user: {
+          name: action.data.user.name,
+          email: action.data.user.email,
+        },
         auth: {
           ...state.auth,
           userRequest: false,
           userFailed: false,
-          name: action.data.user.name,
-          email: action.data.user.email,
         },
       };
     }
@@ -429,7 +431,6 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-
           name: action.data.user.name,
           email: action.data.user.email,
         },

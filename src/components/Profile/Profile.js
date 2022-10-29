@@ -15,7 +15,11 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, updateUserInfo } from "../../services/actions/index";
+import {
+  logOut,
+  updateUserInfo,
+  getUserInfo,
+} from "../../services/actions/index";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -56,6 +60,10 @@ const Profile = () => {
       password: "",
     });
   };
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, []);
 
   useEffect(() => {
     setInputValue((inputValue) => {

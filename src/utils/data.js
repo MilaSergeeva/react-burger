@@ -51,4 +51,8 @@ const setCookie = (name, value, props = {}) => {
   document.cookie = updatedCookie;
 };
 
-export { ingridientData, getCookie, setCookie };
+function unsetCookie(name) {
+  document.cookie = `${name}=; Max-Age=-99999999;`;
+}
+
+export { ingridientData, getCookie, setCookie, unsetCookie };

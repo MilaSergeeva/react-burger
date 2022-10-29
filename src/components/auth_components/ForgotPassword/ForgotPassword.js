@@ -6,7 +6,10 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getCodeToChangePassword } from "../../../services/actions/index";
+import {
+  getCodeToChangePassword,
+  FORGOT_PASSWORD_ERROR,
+} from "../../../services/actions/index";
 
 const ForgotPassword = () => {
   const [inputValue, setInputValue] = useState({
@@ -16,7 +19,6 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
   const formSubmit = useSelector((state) => state.auth.forgotFailed);
 
-  const refreshToken = localStorage.refreshToken;
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
@@ -25,12 +27,16 @@ const ForgotPassword = () => {
   };
 
   const redirectToResetPassword = () => {
-    history.push("/reset-password");
+    history.push("/reset-password", { from: "forgot-password" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getCodeToChangePassword(inputValue, redirectToResetPassword));
+    let reg = /^\S+@\S+\.\S+$/;
+
+    if (inputValue.email.match(reg)) {
+      dispatch(getCodeToChangePassword(inputValue, redirectToResetPassword));
+    } else dispatch({ type: FORGOT_PASSWORD_ERROR });
   };
 
   return (

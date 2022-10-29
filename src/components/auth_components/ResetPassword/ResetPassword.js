@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import resetPasswordStyle from "../auth_forms.module.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import {
   Button,
   ShowIcon,
@@ -21,8 +21,12 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const formSubmit = useSelector((state) => state.auth.resetFailed);
 
-  const isResetPassword = useSelector((state) => state.auth.isResetPassword);
-  const refreshToken = localStorage.refreshToken;
+  if (history.location.state === undefined) {
+    console.log("tuta ya");
+    return <Redirect to="/forgot-password" />;
+  } else if (history.location.state.from !== "forgot-password") {
+    return <Redirect to="/forgot-password" />;
+  }
 
   const handleChange = (e) => {
     const target = e.target;
