@@ -80,11 +80,6 @@ export const DECREASE_BUNS_COUNTER = "DECREASE_BUNS_COUNTER";
 
 export const CLEAR_INGRIDIENTS_COUNTER = "CLEAR_INGRIDIENTS_COUNTER";
 
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-};
-
 export function getItems() {
   return function (dispatch) {
     fetch(`${baseUrl}/ingredients`)
@@ -177,6 +172,16 @@ export function updateCartList(item) {
 
 ///////////////////////////////////
 
+function setUserInfoToLocalStore({ name, email }) {
+  localStorage.setItem(
+    "userInfo",
+    JSON.stringify({
+      name,
+      email,
+    })
+  );
+}
+
 export const register = ({ email, password, name }) => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/register`, {
@@ -199,9 +204,9 @@ export const register = ({ email, password, name }) => {
         })
       )
       .then((res) => {
-        const refreshToken = res.refreshToken;
-        setCookie("accessToken", res.accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        const { accessToken, refreshToken } = res;
+
+        saveTokens(refreshToken, accessToken);
 
         if (res && res.success) {
           dispatch({ type: REGISTER_SUCCESS, data: res });
@@ -244,6 +249,12 @@ export const login = ({ email, password }) => {
         setCookie("accessToken", accessToken);
 
         if (res && res.success) {
+          console.log("login result", res);
+          setUserInfoToLocalStore({
+            name: res.user.name,
+            email: res.user.email,
+          });
+
           dispatch({ type: LOGIN_SUCCESS, data: res });
         } else {
           dispatch({ type: LOGIN_ERROR });
@@ -293,7 +304,12 @@ export const logOut = (redirectToLogin) => {
   };
 };
 
-export const getNewToken = () => {
+const saveTokens = (refreshToken, accessToken) => {
+  setCookie("accessToken", accessToken);
+  localStorage.setItem("refreshToken", refreshToken);
+};
+
+export const refreshAccessToken = (afterRefresh) => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/token`, {
       headers: {
@@ -315,8 +331,14 @@ export const getNewToken = () => {
         })
       )
       .then((res) => {
-        const refreshToken = res.refreshToken;
-        localStorage.setItem("refreshToken", refreshToken);
+        console.log("refresh access token result", res);
+
+        const { refreshToken, accessToken } = res;
+
+        saveTokens(refreshToken, accessToken);
+
+        dispatch(afterRefresh);
+
         if (res && res.success) {
           dispatch({ type: TOKEN_SUCCESS });
         } else {
@@ -324,20 +346,8 @@ export const getNewToken = () => {
         }
       })
       .catch((err) => {
-        if (
-          err.message === "jwt expired" ||
-          err.message === "Token is invalid"
-        ) {
-          getNewToken(dispatch).then((res) => {
-            if (res.success) {
-              localStorage.setItem("refreshToken", res.refreshToken);
-              setCookie("accessToken", res.accessToken);
-            }
-          });
-        } else {
-          localStorage.removeItem("refreshToken");
-          dispatch({ type: TOKEN_ERROR });
-        }
+        localStorage.removeItem("refreshToken");
+        dispatch({ type: TOKEN_ERROR });
       });
   };
 };
@@ -348,7 +358,7 @@ export const getUserInfo = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `${getCookie("accessToken")}`,
+        Authorization: getCookie("accessToken"),
       },
       method: "GET",
       mode: "cors",
@@ -371,15 +381,12 @@ export const getUserInfo = () => {
         }
       })
       .catch((err) => {
-        if (
-          err.message === "jwt expired" ||
-          err.message === "Token is invalid" ||
-          err.message === "jwt malformed"
-        ) {
-          getNewToken(dispatch);
-          getUserInfo(dispatch);
-        } else console.log(err.message);
-        dispatch({ type: USER_ERROR });
+        if (err.message === "jwt expired") {
+          dispatch(refreshAccessToken(getUserInfo()));
+        } else {
+          console.log(err.message);
+          dispatch({ type: USER_ERROR });
+        }
       });
   };
 };
@@ -407,21 +414,25 @@ export const updateUserInfo = (name, email, password) => {
         })
       )
       .then((res) => {
-        console.log();
         if (res && res.success) {
+          setUserInfoToLocalStore({
+            name,
+            email,
+          });
+
           dispatch({ type: USER_UPDATE_SUCCESS, data: res });
         } else {
           dispatch({ type: USER_UPDATE_ERROR });
         }
       })
       .catch((err) => {
-        if (
-          err.message === "jwt expired" ||
-          err.message === "Token is invalid" ||
-          err.message === "jwt malformed"
-        ) {
-          getNewToken(dispatch);
-          updateUserInfo({ name, email, password }, dispatch);
+        if (err.message === "jwt expired") {
+          dispatch(
+            refreshAccessToken(
+              // updateUserInfo({ name, email, password }, dispatch)
+              updateUserInfo(name, email, password)
+            )
+          );
         }
 
         dispatch({ type: USER_UPDATE_ERROR });

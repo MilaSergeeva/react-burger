@@ -1,18 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Route, Redirect, useLocation } from "react-router-dom";
-import appStyles from "../App/app.module.css";
+import { getCookie } from "../../utils/data";
 
 const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
-  // const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
-  const user = useSelector((state) => state.user);
+  const hasUser = getCookie("accessToken");
   const location = useLocation();
-  const haveUser = user.name !== "" && user.email !== "" ? true : false;
-  // if (!isAuthChecked) {
-  //   return <div className={appStyles.loader} />;
-  // }
 
-  if (!onlyForAuth && haveUser) {
+  if (!onlyForAuth && hasUser) {
     const { from } = location.state || { from: { pathname: "/" } };
     return (
       <Route {...rest}>
@@ -21,7 +15,7 @@ const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
     );
   }
 
-  if (onlyForAuth && !haveUser) {
+  if (onlyForAuth && !hasUser) {
     return (
       <Route {...rest}>
         <Redirect to={{ pathname: "/login", state: { from: location } }} />
