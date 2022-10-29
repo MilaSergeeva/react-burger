@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
 import { useDispatch, useSelector } from "react-redux";
 
-function BurgerIngredients({ onCardClick }) {
+function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
   const buns = useRef();
   const sauces = useRef();
@@ -20,7 +20,7 @@ function BurgerIngredients({ onCardClick }) {
 
     return filterdProductsArray.map((el) => (
       <div key={el._id}>
-        <BurgerIngridientCard el={el} onCardClick={onCardClick} />
+        <BurgerIngridientCard el={el} />
       </div>
     ));
   };
@@ -131,9 +131,5 @@ function BurgerIngredients({ onCardClick }) {
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  onCardClick: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 import Modal from "../Modal/Modal";
-// import * as userAuth from "../utils/authorization.js";
 import AppHeader from "../AppHeader/AppHeader";
 import appStyles from "./app.module.css";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
@@ -15,12 +14,9 @@ import ForgotPassword from "../auth_components/ForgotPassword/ForgotPassword";
 import ResetPassword from "../auth_components/ResetPassword/ResetPassword";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import NotFound404 from "../NotFound404/NotFound404";
-import { updateCartList } from "../../services/actions/index";
-import { useDispatch, useSelector } from "react-redux";
-// import { makeOrder } from "../../services/actions/index";
+import { useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
 import { getItems } from "../../services/actions/index";
 
 function App() {
@@ -34,10 +30,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => dispatch(getItems()), [dispatch]);
-
-  const onDropHandler = (item) => {
-    dispatch(updateCartList(item));
-  };
 
   return (
     <div className={appStyles.appBlock}>
@@ -69,7 +61,7 @@ function App() {
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
 
-              <BurgerConstructor onDropHandler={onDropHandler} />
+              <BurgerConstructor />
             </DndProvider>
           </main>
         </Route>

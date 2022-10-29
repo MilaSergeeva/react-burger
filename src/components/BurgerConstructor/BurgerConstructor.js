@@ -15,9 +15,9 @@ import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory, useLocation } from "react-router-dom";
 import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
-import { makeOrder } from "../../services/actions/index";
+import { makeOrder, updateCartList } from "../../services/actions/index";
 
-function BurgerConstructor({ onDropHandler }) {
+function BurgerConstructor() {
   const dispatch = useDispatch();
   const location = useLocation();
   let history = useHistory();
@@ -59,6 +59,10 @@ function BurgerConstructor({ onDropHandler }) {
         background: location,
       },
     });
+  };
+
+  const onDropHandler = (item) => {
+    dispatch(updateCartList(item));
   };
 
   //расчет общей стоимости
@@ -163,9 +167,5 @@ function BurgerConstructor({ onDropHandler }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  onDropHandler: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;
