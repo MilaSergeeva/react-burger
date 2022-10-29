@@ -13,6 +13,7 @@ const Login = () => {
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
 
   const logoutRequest = useSelector((state) => state.auth.logoutRequest);
+  const formSubmit = useSelector((state) => state.auth.loginFailed);
   const refreshToken = localStorage.refreshToken;
   const location = useLocation();
   const dispatch = useDispatch();
@@ -51,6 +52,12 @@ const Login = () => {
           value={inputValue.password || ""}
           onChange={handleChange}
         />
+
+        {formSubmit && (
+          <p className={loginStyle.formError}>
+            Что-то пошло не так, попробуйте еще раз.
+          </p>
+        )}
 
         <Button type="primary" size="large" disabled={false}>
           Войти

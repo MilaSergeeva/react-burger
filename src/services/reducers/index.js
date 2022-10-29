@@ -156,7 +156,6 @@ export const rootReducer = (state = initialState, action) => {
     }
 
     case DELETE_FROM_CART_FILLING: {
-      console.log(action.index, "action.index");
       return {
         ...state,
         burgerConstructorList: {
@@ -217,7 +216,6 @@ export const rootReducer = (state = initialState, action) => {
     }
 
     case DECREASE_FILLINGS_COUNTER: {
-      console.log(action.id, "что же это  такое?");
       return {
         ...state,
         burgerConstructorList: {

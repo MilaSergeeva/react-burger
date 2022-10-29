@@ -19,6 +19,7 @@ const ResetPassword = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
+  const formSubmit = useSelector((state) => state.auth.resetFailed);
 
   const isResetPassword = useSelector((state) => state.auth.isResetPassword);
   const refreshToken = localStorage.refreshToken;
@@ -64,6 +65,12 @@ const ResetPassword = () => {
           onChange={handleChange}
           size={"default"}
         />
+
+        {formSubmit && (
+          <p className={resetPasswordStyle.formError}>
+            Что-то пошло не так, попробуйте еще раз.
+          </p>
+        )}
 
         <Button type="primary" size="large" disabled={false}>
           Сохранить

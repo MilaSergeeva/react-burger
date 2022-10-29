@@ -71,3 +71,9 @@
   right: 26px;
   cursor: pointer;
 }
+
+.formError{
+  color: #4c4cff;
+  font-size: 14px;
+  margin-left: 20px;
+}

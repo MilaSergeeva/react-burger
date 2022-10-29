@@ -90,3 +90,9 @@
   color: #8585AD;
   opacity: 0.4;
 }
+
+.formError{
+  color: #4c4cff;
+  font-size: 14px;
+  margin-left: 20px;
+}

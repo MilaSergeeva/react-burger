@@ -139,7 +139,6 @@ export function makeOrder(ingredients) {
           dispatch({
             type: DELETE_FROM_CART_INGRIDIENTS,
           });
-          console.log(res);
           return res;
         } else {
           dispatch({
@@ -164,7 +163,6 @@ export function updateCartList(item) {
         type: INCREASE_FILLINGS_COUNTER,
         item,
       });
-      console.log("im here");
     } else {
       dispatch({
         type: DELETE_FROM_CART_BUN,
@@ -173,10 +171,6 @@ export function updateCartList(item) {
         type: ADD_TO_CART_BUN,
         item,
       });
-      // dispatch({
-      //   type: INCREASE_BUNS_COUNTER,
-      //   item,
-      // });
     }
   };
 }
@@ -205,7 +199,6 @@ export const register = ({ email, password, name }) => {
         })
       )
       .then((res) => {
-        // const accessToken = res.accessToken.split("Bearer ")[1];
         const refreshToken = res.refreshToken;
         setCookie("accessToken", res.accessToken);
         localStorage.setItem("refreshToken", refreshToken);
@@ -240,15 +233,11 @@ export const login = ({ email, password }) => {
     })
       .then(checkResponse)
       .then(
-        dispatch(
-          {
-            type: LOGIN_REQUEST,
-          },
-          console.log("LOGIN_REQUEST")
-        )
+        dispatch({
+          type: LOGIN_REQUEST,
+        })
       )
       .then((res) => {
-        console.log(res, res.refreshToken);
         const refreshToken = res.refreshToken;
         localStorage.setItem("refreshToken", refreshToken);
         if (res && res.success) {
@@ -314,7 +303,7 @@ export const getNewToken = () => {
       credentials: "same-origin",
       redirect: "follow",
       referrerPolicy: "no-referrer",
-      body: JSON.stringify({ token: localStorage.refreshToken }),
+      body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
     })
       .then(checkResponse)
       .then(
@@ -334,8 +323,7 @@ export const getNewToken = () => {
       .catch((err) => {
         if (
           err.message === "jwt expired" ||
-          err.message === "Token is invalid" ||
-          err.message === "jwt malformed"
+          err.message === "Token is invalid"
         ) {
           getNewToken(dispatch).then((res) => {
             if (res.success) {
@@ -343,9 +331,10 @@ export const getNewToken = () => {
               setCookie("accessTocken", res.accessToken);
             }
           });
-        } else console.log(err, err.message);
-        localStorage.removeItem("refreshToken");
-        dispatch({ type: TOKEN_ERROR });
+        } else {
+          localStorage.removeItem("refreshToken");
+          dispatch({ type: TOKEN_ERROR });
+        }
       });
   };
 };

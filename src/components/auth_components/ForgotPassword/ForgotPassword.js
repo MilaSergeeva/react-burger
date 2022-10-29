@@ -14,6 +14,7 @@ const ForgotPassword = () => {
   });
   const history = useHistory();
   const dispatch = useDispatch();
+  const formSubmit = useSelector((state) => state.auth.forgotFailed);
 
   const refreshToken = localStorage.refreshToken;
   const handleChange = (e) => {
@@ -50,6 +51,12 @@ const ForgotPassword = () => {
           value={inputValue.email || ""}
           onChange={handleChange}
         />
+
+        {formSubmit && (
+          <p className={forgotPasswordStyle.formError}>
+            Что-то пошло не так, попробуйте еще раз.
+          </p>
+        )}
 
         <Button type="primary" size="large" disabled={false}>
           Восстановить

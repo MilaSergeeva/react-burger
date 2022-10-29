@@ -23,6 +23,7 @@ const Register = (props) => {
   const refreshToken = localStorage.refreshToken;
 
   const logoutRequest = useSelector((state) => state.auth.logoutRequest);
+  const formSubmit = useSelector((state) => state.auth.registerFailed);
 
   const handleChange = (e) => {
     const target = e.target;
@@ -65,6 +66,12 @@ const Register = (props) => {
           value={inputValue.password || ""}
           onChange={handleChange}
         />
+
+        {formSubmit && (
+          <p className={registrationStyle.formError}>
+            Что-то пошло не так, попробуйте еще раз.
+          </p>
+        )}
 
         <Button type="primary" size="large" disabled={false}>
           Зарегистрироватся
