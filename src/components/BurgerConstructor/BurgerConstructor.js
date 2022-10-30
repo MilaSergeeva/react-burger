@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -40,6 +40,31 @@ function BurgerConstructor() {
 
   const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
 
+  useEffect(() => {
+    console.log("order details changed", orderDetails);
+
+    // if (orderDetails.orderFailed) {
+    // on failure
+    // }
+    if (
+      orderDetails.orderNumber !== undefined &&
+      orderDetails.orderNumber !== ""
+    ) {
+      const orderNumber = orderDetails.orderNumber;
+
+      history.push({
+        pathname: `/feed/${orderNumber}`,
+        state: {
+          background: location,
+        },
+      });
+
+      dispatch({
+        type: DELETE_FROM_CART_INGRIDIENTS,
+      });
+    }
+  }, [orderDetails]);
+
   const cartBurgerBan = useSelector(
     (state) => state.ingredientReducer.burgerConstructorList.bun
   );
@@ -63,22 +88,7 @@ function BurgerConstructor() {
 
   const handleMakeAnOrder = async () => {
     if (hasUser) {
-      const makeOrderReq = () => {
-        dispatch(makeOrder(burgerIngredients()));
-      };
-      await makeOrderReq();
-      if (orderDetails.orderNumber.order !== undefined) {
-        const orderNumber = orderDetails.orderNumber.order.number;
-        await history.push({
-          pathname: `/feed/${orderNumber}`,
-          state: {
-            background: location,
-          },
-        });
-        dispatch({
-          type: DELETE_FROM_CART_INGRIDIENTS,
-        });
-      }
+      await dispatch(makeOrder(burgerIngredients()));
     } else {
       history.push("/login");
     }
