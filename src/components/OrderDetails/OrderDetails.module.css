@@ -41,16 +41,16 @@
 
 
 .textId {
-  margin-top: 32
+  margin-top: 32px;
 }
 
 .orderImg{
-  margin-top: 60;
-  margin-bottom: 60
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .textOrderStatus {
-  margin-top: 8 
+  margin-top: 8px; 
 }
 
 .textInfo{

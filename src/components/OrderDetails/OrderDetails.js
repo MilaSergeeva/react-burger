@@ -25,7 +25,7 @@ function OrderDetails() {
               <p
                 className={` ${PopupOrderDetailsStyle.textId} text text_type_main-medium`}
               >
-                Идентификатор заказа
+                идентификатор заказа
               </p>
               <img
                 src={success}

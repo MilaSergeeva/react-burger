@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import profileStyle from "./profile.module.css";
 import {
-  EditIcon,
-  PasswordInput,
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";

@@ -29,7 +29,7 @@ function FillingsCard({ index, el, moveCard, id }) {
     }),
   });
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{}, drop] = useDrop({
     accept: "fills",
     collect: (monitor) => {
       return {

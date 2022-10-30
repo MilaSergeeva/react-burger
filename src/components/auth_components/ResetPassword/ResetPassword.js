@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import resetPasswordStyle from "../auth_forms.module.css";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import {
   Button,
-  ShowIcon,
-  HideIcon,
   PasswordInput,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";

@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
@@ -26,38 +25,47 @@ function BurgerIngredients() {
   };
 
   const scrollHandler = () => {
-    const containierPosition = containier.current.getBoundingClientRect().top;
-
-    const bunsPosition =
-      buns.current.getBoundingClientRect().top - containierPosition < 0
-        ? (buns.current.getBoundingClientRect().top - containierPosition) * -1
-        : buns.current.getBoundingClientRect().top - containierPosition;
-    const saucesPosition =
-      sauces.current.getBoundingClientRect().top - containierPosition < 0
-        ? (sauces.current.getBoundingClientRect().top - containierPosition) * -1
-        : sauces.current.getBoundingClientRect().top - containierPosition;
-    const fillingsPosition =
-      fillings.current.getBoundingClientRect().top - containierPosition < 0
-        ? (fillings.current.getBoundingClientRect().top - containierPosition) *
-          -1
-        : fillings.current.getBoundingClientRect().top - containierPosition;
-
     if (
-      Math.abs(bunsPosition) < Math.abs(saucesPosition) &&
-      Math.abs(bunsPosition) < Math.abs(fillingsPosition)
+      buns.current &&
+      sauces.current &&
+      fillings.current &&
+      containier.current
     ) {
-      setCurrent("buns");
-    } else if (
-      Math.abs(fillingsPosition) < Math.abs(bunsPosition) &&
-      Math.abs(fillingsPosition) < Math.abs(saucesPosition)
-    ) {
-      setCurrent("fillings");
-    } else if (
-      Math.abs(saucesPosition) < Math.abs(bunsPosition) &&
-      Math.abs(saucesPosition) < Math.abs(fillingsPosition)
-    ) {
-      setCurrent("sauces");
-    } else setCurrent("buns");
+      const containierPosition = containier.current.getBoundingClientRect().top;
+
+      const bunsPosition =
+        buns.current.getBoundingClientRect().top - containierPosition < 0
+          ? (buns.current.getBoundingClientRect().top - containierPosition) * -1
+          : buns.current.getBoundingClientRect().top - containierPosition;
+      const saucesPosition =
+        sauces.current.getBoundingClientRect().top - containierPosition < 0
+          ? (sauces.current.getBoundingClientRect().top - containierPosition) *
+            -1
+          : sauces.current.getBoundingClientRect().top - containierPosition;
+      const fillingsPosition =
+        fillings.current.getBoundingClientRect().top - containierPosition < 0
+          ? (fillings.current.getBoundingClientRect().top -
+              containierPosition) *
+            -1
+          : fillings.current.getBoundingClientRect().top - containierPosition;
+
+      if (
+        Math.abs(bunsPosition) < Math.abs(saucesPosition) &&
+        Math.abs(bunsPosition) < Math.abs(fillingsPosition)
+      ) {
+        setCurrent("buns");
+      } else if (
+        Math.abs(fillingsPosition) < Math.abs(bunsPosition) &&
+        Math.abs(fillingsPosition) < Math.abs(saucesPosition)
+      ) {
+        setCurrent("fillings");
+      } else if (
+        Math.abs(saucesPosition) < Math.abs(bunsPosition) &&
+        Math.abs(saucesPosition) < Math.abs(fillingsPosition)
+      ) {
+        setCurrent("sauces");
+      } else setCurrent("buns");
+    }
   };
 
   useEffect(() => {

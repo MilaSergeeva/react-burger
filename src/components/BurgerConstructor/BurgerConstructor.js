@@ -7,7 +7,6 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
@@ -16,6 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useHistory, useLocation } from "react-router-dom";
 import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
 import { makeOrder, updateCartList } from "../../services/actions/index";
+import { getCookie } from "../../utils/data";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -34,6 +34,8 @@ function BurgerConstructor() {
 
   const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
 
+  const hasUser = getCookie("accessToken");
+
   ///////////////////////
 
   const burgerIngredients = () => {
@@ -49,16 +51,21 @@ function BurgerConstructor() {
     return ingridientsTotal;
   };
 
-  const handleMakeAnOrder = async () => {
-    await dispatch(makeOrder(burgerIngredients()));
-
-    const orderNumber = orderDetails.orderNumber.order.number;
-    history.push({
-      pathname: `/feed/${orderNumber}`,
-      state: {
-        background: location,
-      },
-    });
+  const handleMakeAnOrder = () => {
+    if (hasUser) {
+      dispatch(makeOrder(burgerIngredients()));
+      setTimeout(() => {
+        const orderNumber = orderDetails.orderNumber.order.number;
+        history.push({
+          pathname: `/feed/${orderNumber}`,
+          state: {
+            background: location,
+          },
+        });
+      }, 500);
+    } else {
+      history.push("/login");
+    }
   };
 
   const onDropHandler = (item) => {
@@ -73,7 +80,7 @@ function BurgerConstructor() {
     priceTotalFillings(cartBurgerFillings) +
     (cartBurgerBan === null ? 0 : cartBurgerBan.price * 2);
 
-  const [{ canDrop, isOver }, dropRef] = useDrop({
+  const [{}, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
       const itemWithId = { ...item, uniqueId: uuidv4() };

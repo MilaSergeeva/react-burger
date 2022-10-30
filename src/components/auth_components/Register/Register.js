@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import registrationStyle from "../auth_forms.module.css";
 import {
   Button,
-  ShowIcon,
-  HideIcon,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
