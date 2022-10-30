@@ -248,7 +248,6 @@ export const getUserInfo = () => {
         if (err.message === "jwt expired") {
           dispatch(refreshAccessToken(getUserInfo()));
         } else {
-          console.log(err.message);
           dispatch({ type: USER_ERROR });
         }
       });
