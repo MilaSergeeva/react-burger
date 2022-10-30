@@ -7,7 +7,7 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../../services/actions/index";
+import { register } from "../../../services/actions/auth";
 
 const Register = (props) => {
   const [inputValue, setInputValue] = useState({
@@ -18,7 +18,9 @@ const Register = (props) => {
 
   const dispatch = useDispatch();
 
-  const formSubmit = useSelector((state) => state.auth.registerFailed);
+  const formSubmit = useSelector(
+    (state) => state.authReducer.auth.registerFailed
+  );
 
   const handleChange = (e) => {
     const target = e.target;
@@ -68,7 +70,7 @@ const Register = (props) => {
           </p>
         )}
 
-        <Button type="primary" size="large" disabled={false}>
+        <Button type="primary" htmlType="button" size="large" disabled={false}>
           Зарегистрироватся
         </Button>
       </form>

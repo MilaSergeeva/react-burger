@@ -12,7 +12,7 @@ function BurgerIngredients() {
   const fillings = useRef();
   const containier = useRef();
 
-  const ingridients = useSelector((state) => state.items);
+  const ingridients = useSelector((state) => state.ingredientReducer.items);
 
   const getProductCard = (type) => {
     const filterdProductsArray = ingridients.filter((el) => el.type === type);

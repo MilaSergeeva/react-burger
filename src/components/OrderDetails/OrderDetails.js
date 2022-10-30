@@ -6,10 +6,11 @@ import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
 
 function OrderDetails() {
-  const orderDetails = useSelector((state) => state.orderDetails);
-  const orderReguestStatus = useSelector(
-    (state) => state.orderDetails.orderRequest
-  );
+  const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
+  // const orderReguestStatus = useSelector(
+  //   (state) => state.orderDetails.orderRequest
+  // );
+  const orderReguestStatus = orderDetails.orderRequest;
 
   return (
     <div className={PopupOrderDetailsStyle.contantContainier}>

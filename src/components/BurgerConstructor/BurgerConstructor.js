@@ -10,11 +10,19 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
-import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
 import { v4 as uuidv4 } from "uuid";
 import { useHistory, useLocation } from "react-router-dom";
-import { UPDATE_ORDER_INGRIDIENTS_DELAILS } from "../../services/actions/index";
-import { makeOrder, updateCartList } from "../../services/actions/index";
+import {
+  DRAG_CART_INGREDIENT,
+  DELETE_FROM_CART_INGRIDIENTS,
+  updateCartList,
+} from "../../services/actions/ingredients";
+
+import {
+  UPDATE_ORDER_INGRIDIENTS_DELAILS,
+  makeOrder,
+} from "../../services/actions/order";
+
 import { getCookie } from "../../utils/data";
 
 function BurgerConstructor() {
@@ -23,16 +31,18 @@ function BurgerConstructor() {
   let history = useHistory();
 
   const cartBurgerFillings = useSelector(
-    (state) => state.burgerConstructorList.fillings
+    (state) => state.ingredientReducer.burgerConstructorList.fillings
   );
 
   const cartBurgerBuns = useSelector(
-    (state) => state.burgerConstructorList.bun
+    (state) => state.ingredientReducer.burgerConstructorList.bun
   );
 
-  const orderDetails = useSelector((state) => state.orderDetails);
+  const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
 
-  const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
+  const cartBurgerBan = useSelector(
+    (state) => state.ingredientReducer.burgerConstructorList.bun
+  );
 
   const hasUser = getCookie("accessToken");
 
@@ -51,18 +61,24 @@ function BurgerConstructor() {
     return ingridientsTotal;
   };
 
-  const handleMakeAnOrder = () => {
+  const handleMakeAnOrder = async () => {
     if (hasUser) {
-      dispatch(makeOrder(burgerIngredients()));
-      setTimeout(() => {
+      const makeOrderReq = () => {
+        dispatch(makeOrder(burgerIngredients()));
+      };
+      await makeOrderReq();
+      if (orderDetails.orderNumber.order !== undefined) {
         const orderNumber = orderDetails.orderNumber.order.number;
-        history.push({
+        await history.push({
           pathname: `/feed/${orderNumber}`,
           state: {
             background: location,
           },
         });
-      }, 500);
+        dispatch({
+          type: DELETE_FROM_CART_INGRIDIENTS,
+        });
+      }
     } else {
       history.push("/login");
     }
@@ -80,7 +96,7 @@ function BurgerConstructor() {
     priceTotalFillings(cartBurgerFillings) +
     (cartBurgerBan === null ? 0 : cartBurgerBan.price * 2);
 
-  const [{}, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
       const itemWithId = { ...item, uniqueId: uuidv4() };
@@ -160,6 +176,7 @@ function BurgerConstructor() {
         <Button
           type="primary"
           size="large"
+          htmlType="submit"
           disabled={
             cartBurgerBan === null || cartBurgerFillings.length < 1
               ? true

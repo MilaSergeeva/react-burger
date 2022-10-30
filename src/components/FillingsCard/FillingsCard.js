@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import {
   DELETE_FROM_CART_FILLING,
   DECREASE_FILLINGS_COUNTER,
-} from "../../services/actions/index";
+} from "../../services/actions/ingredients";
 import { ingridientData } from "../../utils/data";
 
 function FillingsCard({ index, el, moveCard, id }) {
@@ -29,7 +29,7 @@ function FillingsCard({ index, el, moveCard, id }) {
     }),
   });
 
-  const [{}, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "fills",
     collect: (monitor) => {
       return {

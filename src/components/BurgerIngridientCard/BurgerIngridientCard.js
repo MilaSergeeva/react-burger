@@ -11,7 +11,9 @@ import { Link, useLocation } from "react-router-dom";
 function BurgerIngridientCard({ el }) {
   const location = useLocation();
 
-  const { bun, counter } = useSelector((state) => state.burgerConstructorList);
+  const { bun, counter } = useSelector(
+    (state) => state.ingredientReducer.burgerConstructorList
+  );
 
   const [, dragRef] = useDrag({
     type: "ingridients",

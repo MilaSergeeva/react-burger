@@ -17,7 +17,7 @@ import NotFound404 from "../NotFound404/NotFound404";
 import { useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { getItems } from "../../services/actions/index";
+import { getItems } from "../../services/actions/ingredients";
 
 function App() {
   const history = useHistory();

@@ -7,7 +7,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { saveNewPassword } from "../../../services/actions/index";
+import { saveNewPassword } from "../../../services/actions/auth";
 
 const ResetPassword = () => {
   const [inputValue, setInputValue] = useState({
@@ -17,7 +17,7 @@ const ResetPassword = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const formSubmit = useSelector((state) => state.auth.resetFailed);
+  const formSubmit = useSelector((state) => state.authReducer.auth.resetFailed);
 
   if (history.location.state === undefined) {
     return <Redirect to="/forgot-password" />;
@@ -73,7 +73,7 @@ const ResetPassword = () => {
           </p>
         )}
 
-        <Button type="primary" size="large" disabled={false}>
+        <Button type="primary" htmlType="button" size="large" disabled={false}>
           Сохранить
         </Button>
       </form>

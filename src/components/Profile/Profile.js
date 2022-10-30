@@ -16,7 +16,7 @@ import {
   logOut,
   updateUserInfo,
   getUserInfo,
-} from "../../services/actions/index";
+} from "../../services/actions/auth";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -26,8 +26,10 @@ const Profile = () => {
     history.push("/login");
   };
 
-  const { name, email } = useSelector((state) => state.user);
-  const userInfoUpdateErr = useSelector((state) => state.auth.updateUserFailed);
+  const { name, email } = useSelector((state) => state.authReducer.user);
+  const userInfoUpdateErr = useSelector(
+    (state) => state.authReducer.auth.updateUserFailed
+  );
 
   const [inputValue, setInputValue] = useState({
     name: "",
@@ -167,10 +169,20 @@ const Profile = () => {
 
             {(historyName || historyEmail || historyPassword) && (
               <div>
-                <Button onClick={handleDecline} type="secondary" size="medium">
+                <Button
+                  onClick={handleDecline}
+                  type="secondary"
+                  size="medium"
+                  htmlType="button"
+                >
                   Отмена
                 </Button>
-                <Button onClick={handleSubmit} type="primary" size="small">
+                <Button
+                  onClick={handleSubmit}
+                  type="primary"
+                  size="small"
+                  htmlType="button"
+                >
                   Сохранить
                 </Button>
               </div>

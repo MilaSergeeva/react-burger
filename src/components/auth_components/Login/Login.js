@@ -7,13 +7,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../services/actions/index";
+import { login } from "../../../services/actions/auth";
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({ email: "", password: "" });
   const history = useHistory();
 
-  const formSubmit = useSelector((state) => state.auth.loginFailed);
+  const formSubmit = useSelector((state) => state.authReducer.auth.loginFailed);
 
   const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ const Login = () => {
           </p>
         )}
 
-        <Button type="primary" size="large" disabled={false}>
+        <Button type="primary" htmlType="submit" size="large" disabled={false}>
           Войти
         </Button>
       </form>

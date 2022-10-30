@@ -6,7 +6,7 @@ import appStyles from "../App/app.module.css";
 
 function IngredientDetails() {
   let { id } = useParams();
-  const allProducts = useSelector((state) => state.items);
+  const allProducts = useSelector((state) => state.ingredientReducer.items);
 
   const currentProduct = allProducts.find((el) => el._id === id);
 

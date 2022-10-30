@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCodeToChangePassword,
   FORGOT_PASSWORD_ERROR,
-} from "../../../services/actions/index";
+} from "../../../services/actions/auth";
 
 const ForgotPassword = () => {
   const [inputValue, setInputValue] = useState({
@@ -17,7 +17,9 @@ const ForgotPassword = () => {
   });
   const history = useHistory();
   const dispatch = useDispatch();
-  const formSubmit = useSelector((state) => state.auth.forgotFailed);
+  const formSubmit = useSelector(
+    (state) => state.authReducer.auth.forgotFailed
+  );
 
   const handleChange = (e) => {
     const target = e.target;
@@ -64,7 +66,7 @@ const ForgotPassword = () => {
           </p>
         )}
 
-        <Button type="primary" size="large" disabled={false}>
+        <Button type="primary" htmlType="button" size="large" disabled={false}>
           Восстановить
         </Button>
       </form>
