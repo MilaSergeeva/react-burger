@@ -3,6 +3,7 @@ import {
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
   GET_ORDER_FAILED,
   GET_ORDER_REQUEST,
+  DELETE_ORDER_NUMBER,
 } from "../actions/order";
 
 const initialOrderState = {
@@ -46,6 +47,17 @@ export const orderReducer = (state = initialOrderState, action) => {
         },
       };
     }
+    case DELETE_ORDER_NUMBER: {
+      return {
+        ...state,
+        orderDetails: {
+          ...state.orderDetails,
+          orderNumber: "",
+          orderRequest: false,
+          orderFailed: false,
+        },
+      };
+    }
     case UPDATE_ORDER_INGRIDIENTS_DELAILS: {
       return {
         ...state,
@@ -55,6 +67,7 @@ export const orderReducer = (state = initialOrderState, action) => {
         },
       };
     }
+
     default: {
       return state;
     }

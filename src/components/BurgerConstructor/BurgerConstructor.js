@@ -17,6 +17,7 @@ import {
   DELETE_FROM_CART_INGRIDIENTS,
   updateCartList,
 } from "../../services/actions/ingredients";
+import { DELETE_ORDER_NUMBER } from "../../services/actions/order";
 
 import {
   UPDATE_ORDER_INGRIDIENTS_DELAILS,
@@ -41,17 +42,13 @@ function BurgerConstructor() {
   const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
 
   useEffect(() => {
-    console.log("order details changed", orderDetails);
-
-    // if (orderDetails.orderFailed) {
-    // on failure
-    // }
     if (
       orderDetails.orderNumber !== undefined &&
       orderDetails.orderNumber !== ""
     ) {
       const orderNumber = orderDetails.orderNumber;
 
+      dispatch({ type: DELETE_ORDER_NUMBER });
       history.push({
         pathname: `/feed/${orderNumber}`,
         state: {

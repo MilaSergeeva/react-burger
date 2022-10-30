@@ -7,6 +7,7 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
+export const DELETE_ORDER_NUMBER = "DELETE_ORDER_NUMBER";
 
 export function makeOrder(ingredients) {
   return async function (dispatch) {
