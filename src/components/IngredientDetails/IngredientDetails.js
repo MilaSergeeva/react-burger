@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
 
 function IngredientDetails() {
-  let { id } = useParams();
+  const { id } = useParams();
   const allProducts = useSelector((state) => state.ingredientReducer.items);
 
   const currentProduct = allProducts.find((el) => el._id === id);

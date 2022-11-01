@@ -8,9 +8,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 const Register = (props) => {
-  const [inputValue, setInputValue] = useState({
+  const { values, handleChange, setValues } = useForm({
     name: "",
     email: "",
     password: "",
@@ -22,16 +23,9 @@ const Register = (props) => {
     (state) => state.authReducer.auth.registerFailed
   );
 
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-    setInputValue({ ...inputValue, [name]: value });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(inputValue));
+    dispatch(register(values));
   };
 
   return (
@@ -48,19 +42,19 @@ const Register = (props) => {
           placeholder="Имя"
           type="text"
           name="name"
-          value={inputValue.name || ""}
+          value={values.name || ""}
           onChange={handleChange}
         />
         <Input
           placeholder="E-mail"
           type="email"
           name="email"
-          value={inputValue.email || ""}
+          value={values.email || ""}
           onChange={handleChange}
         />
         <PasswordInput
           name="password"
-          value={inputValue.password || ""}
+          value={values.password || ""}
           onChange={handleChange}
         />
 
@@ -70,7 +64,7 @@ const Register = (props) => {
           </p>
         )}
 
-        <Button type="primary" htmlType="button" size="large" disabled={false}>
+        <Button type="primary" htmlType="submit" size="large" disabled={false}>
           Зарегистрироватся
         </Button>
       </form>

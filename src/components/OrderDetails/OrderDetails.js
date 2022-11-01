@@ -4,7 +4,7 @@ import success from "../../images/success.png";
 import { useParams } from "react-router-dom";
 
 function OrderDetails() {
-  let { number } = useParams();
+  const { number } = useParams();
 
   return (
     <div className={PopupOrderDetailsStyle.contantContainier}>

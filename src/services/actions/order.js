@@ -33,13 +33,12 @@ export function makeOrder(ingredients) {
         });
 
         return res;
-      } else {
-        dispatch({
-          type: GET_ORDER_FAILED,
-        });
       }
     } catch (err) {
       console.log(err);
+      dispatch({
+        type: GET_ORDER_FAILED,
+      });
     }
   };
 }

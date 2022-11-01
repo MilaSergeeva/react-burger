@@ -8,9 +8,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { saveNewPassword } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 const ResetPassword = () => {
-  const [inputValue, setInputValue] = useState({
+  const { values, handleChange, setValues } = useForm({
     password: "",
     token: "",
   });
@@ -25,20 +26,13 @@ const ResetPassword = () => {
     return <Redirect to="/forgot-password" />;
   }
 
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-    setInputValue({ ...inputValue, [name]: value });
-  };
-
   const redirectToMainPage = () => {
     history.push("/");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(saveNewPassword(inputValue, redirectToMainPage));
+    dispatch(saveNewPassword(values, redirectToMainPage));
   };
 
   return (
@@ -54,7 +48,7 @@ const ResetPassword = () => {
 
         <PasswordInput
           name="password"
-          value={inputValue.password || ""}
+          value={values.password || ""}
           onChange={handleChange}
           size={"default"}
         />
@@ -62,7 +56,7 @@ const ResetPassword = () => {
           placeholder="Введите код из письма"
           type="text"
           name="token"
-          value={inputValue.token || ""}
+          value={values.token || ""}
           onChange={handleChange}
           size={"default"}
         />
@@ -73,7 +67,7 @@ const ResetPassword = () => {
           </p>
         )}
 
-        <Button type="primary" htmlType="button" size="large" disabled={false}>
+        <Button type="primary" htmlType="submit" size="large" disabled={false}>
           Сохранить
         </Button>
       </form>

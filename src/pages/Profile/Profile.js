@@ -17,6 +17,7 @@ import {
   updateUserInfo,
   getUserInfo,
 } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -31,31 +32,21 @@ const Profile = () => {
     (state) => state.authReducer.auth.updateUserFailed
   );
 
-  const [inputValue, setInputValue] = useState({
+  const { values, handleChange, setValues } = useForm({
     name: "",
     email: "",
     password: "",
   });
 
-  const historyName = name === inputValue.name ? false : true;
-  const historyEmail = email === inputValue.email ? false : true;
-  const historyPassword = inputValue.password.length === 0 ? false : true;
-
-  const handleChange = (event) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-
-    setInputValue({ ...inputValue, [name]: value });
-  };
+  const historyName = name === values.name ? false : true;
+  const historyEmail = email === values.email ? false : true;
+  const historyPassword = values.password.length === 0 ? false : true;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      updateUserInfo(inputValue.name, inputValue.email, inputValue.password)
-    );
-    setInputValue({
-      ...inputValue,
+    dispatch(updateUserInfo(values.name, values.email, values.password));
+    setValues({
+      ...values,
       password: "",
     });
   };
@@ -65,8 +56,8 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    setInputValue((inputValue) => {
-      return { ...inputValue, name: name, email: email };
+    setValues((values) => {
+      return { ...values, name: name, email: email };
     });
   }, [name, email]);
 
@@ -75,7 +66,7 @@ const Profile = () => {
   };
 
   const handleDecline = () => {
-    setInputValue({
+    setValues({
       name: name,
       email: email,
       password: "",
@@ -137,7 +128,7 @@ const Profile = () => {
                 type="text"
                 name="name"
                 icon="EditIcon"
-                value={inputValue.name || ""}
+                value={values.name || ""}
                 onChange={handleChange}
                 size={"default"}
               />
@@ -146,7 +137,7 @@ const Profile = () => {
                 type="email"
                 name="email"
                 icon="EditIcon"
-                value={inputValue.email || ""}
+                value={values.email || ""}
                 onChange={handleChange}
                 size={"default"}
               />
@@ -155,7 +146,7 @@ const Profile = () => {
                 type="password"
                 name="password"
                 icon="EditIcon"
-                value={inputValue.password || ""}
+                value={values.password || ""}
                 onChange={handleChange}
                 size={"default"}
               />
@@ -173,7 +164,7 @@ const Profile = () => {
                   onClick={handleDecline}
                   type="secondary"
                   size="medium"
-                  htmlType="button"
+                  htmlType="submit"
                 >
                   Отмена
                 </Button>
@@ -181,7 +172,7 @@ const Profile = () => {
                   onClick={handleSubmit}
                   type="primary"
                   size="small"
-                  htmlType="button"
+                  htmlType="submit"
                 >
                   Сохранить
                 </Button>

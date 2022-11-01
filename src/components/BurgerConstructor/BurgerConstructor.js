@@ -29,7 +29,7 @@ import { getCookie } from "../../utils/data";
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const location = useLocation();
-  let history = useHistory();
+  const history = useHistory();
 
   const cartBurgerFillings = useSelector(
     (state) => state.ingredientReducer.burgerConstructorList.fillings

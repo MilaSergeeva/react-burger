@@ -8,22 +8,19 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../services/actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 const Login = () => {
-  const [inputValue, setInputValue] = useState({ email: "", password: "" });
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+  });
+
   const history = useHistory();
 
   const formSubmit = useSelector((state) => state.authReducer.auth.loginFailed);
 
   const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    setInputValue({ ...inputValue, [name]: value });
-  };
 
   const redirectToProfile = () => {
     history.push("/");
@@ -31,7 +28,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(inputValue, redirectToProfile));
+    dispatch(login(values, redirectToProfile));
   };
 
   return (
@@ -48,12 +45,12 @@ const Login = () => {
           placeholder="E-mail"
           type="email"
           name="email"
-          value={inputValue.email || ""}
+          value={values.email || ""}
           onChange={handleChange}
         />
         <PasswordInput
           name="password"
-          value={inputValue.password || ""}
+          value={values.password || ""}
           onChange={handleChange}
         />
 

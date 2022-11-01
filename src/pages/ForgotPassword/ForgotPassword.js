@@ -11,22 +11,16 @@ import {
   FORGOT_PASSWORD_ERROR,
 } from "../../services/actions/auth";
 
+import { useForm } from "../../hooks/useForm";
+
 const ForgotPassword = () => {
-  const [inputValue, setInputValue] = useState({
-    email: "",
-  });
+  const { values, handleChange, setValues } = useForm({ email: "" });
+
   const history = useHistory();
   const dispatch = useDispatch();
   const formSubmit = useSelector(
     (state) => state.authReducer.auth.forgotFailed
   );
-
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-    setInputValue({ ...inputValue, [name]: value });
-  };
 
   const redirectToResetPassword = () => {
     history.push("/reset-password", { from: "forgot-password" });
@@ -36,8 +30,8 @@ const ForgotPassword = () => {
     e.preventDefault();
     const reg = /^\S+@\S+\.\S+$/;
 
-    if (inputValue.email.match(reg)) {
-      dispatch(getCodeToChangePassword(inputValue, redirectToResetPassword));
+    if (values.email.match(reg)) {
+      dispatch(getCodeToChangePassword(values, redirectToResetPassword));
     } else dispatch({ type: FORGOT_PASSWORD_ERROR });
   };
 
@@ -56,7 +50,7 @@ const ForgotPassword = () => {
           placeholder="Укажите e-mail"
           type="email"
           name="email"
-          value={inputValue.email || ""}
+          value={values.email || ""}
           onChange={handleChange}
         />
 
@@ -66,7 +60,7 @@ const ForgotPassword = () => {
           </p>
         )}
 
-        <Button type="primary" htmlType="button" size="large" disabled={false}>
+        <Button type="primary" htmlType="submit" size="large" disabled={false}>
           Восстановить
         </Button>
       </form>
