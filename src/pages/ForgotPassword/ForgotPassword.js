@@ -1,25 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import registrationStyle from "../auth_forms.module.css";
+import forgotPasswordStyle from "../auth_forms.module.css";
+import { Link, useHistory } from "react-router-dom";
 import {
   Button,
   Input,
-  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../../services/actions/auth";
+import {
+  getCodeToChangePassword,
+  FORGOT_PASSWORD_ERROR,
+} from "../../services/actions/auth";
 
-const Register = (props) => {
+const ForgotPassword = () => {
   const [inputValue, setInputValue] = useState({
-    name: "",
     email: "",
-    password: "",
   });
-
+  const history = useHistory();
   const dispatch = useDispatch();
-
   const formSubmit = useSelector(
-    (state) => state.authReducer.auth.registerFailed
+    (state) => state.authReducer.auth.forgotFailed
   );
 
   const handleChange = (e) => {
@@ -29,54 +28,51 @@ const Register = (props) => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
+  const redirectToResetPassword = () => {
+    history.push("/reset-password", { from: "forgot-password" });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(register(inputValue));
+    const reg = /^\S+@\S+\.\S+$/;
+
+    if (inputValue.email.match(reg)) {
+      dispatch(getCodeToChangePassword(inputValue, redirectToResetPassword));
+    } else dispatch({ type: FORGOT_PASSWORD_ERROR });
   };
 
   return (
-    <section className={registrationStyle.section}>
+    <section className={forgotPasswordStyle.section}>
       <form
         method="POST"
         name="user-info"
-        className={registrationStyle.form}
+        className={forgotPasswordStyle.form}
         onSubmit={handleSubmit}
         noValidate
       >
-        <h1 className={registrationStyle.formTitle}>Регистрация</h1>
+        <h1 className={forgotPasswordStyle.formTitle}>Восстановление пароля</h1>
+
         <Input
-          placeholder="Имя"
-          type="text"
-          name="name"
-          value={inputValue.name || ""}
-          onChange={handleChange}
-        />
-        <Input
-          placeholder="E-mail"
+          placeholder="Укажите e-mail"
           type="email"
           name="email"
           value={inputValue.email || ""}
           onChange={handleChange}
         />
-        <PasswordInput
-          name="password"
-          value={inputValue.password || ""}
-          onChange={handleChange}
-        />
 
         {formSubmit && (
-          <p className={registrationStyle.formError}>
+          <p className={forgotPasswordStyle.formError}>
             Что-то пошло не так, попробуйте еще раз.
           </p>
         )}
 
         <Button type="primary" htmlType="button" size="large" disabled={false}>
-          Зарегистрироватся
+          Восстановить
         </Button>
       </form>
-      <p className={registrationStyle.formText}>
-        Уже зарегистрированы?
-        <Link className={registrationStyle.link} to="/login">
+      <p className={forgotPasswordStyle.formText}>
+        Вспомнили пароль?
+        <Link className={forgotPasswordStyle.link} to="/login">
           {" "}
           Войти
         </Link>
@@ -85,4 +81,4 @@ const Register = (props) => {
   );
 };
 
-export default Register;
+export default ForgotPassword;

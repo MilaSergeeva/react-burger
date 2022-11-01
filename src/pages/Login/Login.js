@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../../services/actions/auth";
+import { login } from "../../services/actions/auth";
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({ email: "", password: "" });

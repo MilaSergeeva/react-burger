@@ -7,7 +7,7 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { saveNewPassword } from "../../../services/actions/auth";
+import { saveNewPassword } from "../../services/actions/auth";
 
 const ResetPassword = () => {
   const [inputValue, setInputValue] = useState({
