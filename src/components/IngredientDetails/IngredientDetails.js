@@ -1,52 +1,49 @@
 import React from "react";
 import PopupIngridientsStyle from "./IngredientDetails.module.css";
-import ModalOverlay from "../ModalOverlay/ModalOverlay";
-import { ingridientData } from "../../utils/data";
-import PropTypes from "prop-types";
-import Modal from "../Modal/Modal";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import appStyles from "../App/app.module.css";
 
-function IngredientDetails({ popupOpened, product, onClose }) {
+function IngredientDetails() {
+  const { id } = useParams();
+  const allProducts = useSelector((state) => state.ingredientReducer.items);
+
+  const currentProduct = allProducts.find((el) => el._id === id);
+
   return (
-    <Modal
-      isOpened={popupOpened}
-      header={"Детали ингридиента"}
-      onClose={onClose}
-    >
-      {product && (
-        <div className={PopupIngridientsStyle.productInfo}>
-          <img src={product.image_large} alt={product.name} />
-          <h2>{product.name}</h2>
-          <div className={PopupIngridientsStyle.productCompound}>
-            <p className={PopupIngridientsStyle.productCompoundText}>
+    <>
+      {currentProduct ? (
+        <div className={PopupIngridientsStyle.currentProductInfo}>
+          <img src={currentProduct.image_large} alt={currentProduct.name} />
+          <h2>{currentProduct.name}</h2>
+          <div className={PopupIngridientsStyle.currentProductCompound}>
+            <p className={PopupIngridientsStyle.currentProductCompoundText}>
               Калории,калл
               <br />
-              {product.calories}
+              <span>{currentProduct.calories}</span>
             </p>
-            <p className={PopupIngridientsStyle.productCompoundText}>
+            <p className={PopupIngridientsStyle.currentProductCompoundText}>
               Белки, г
               <br />
-              {product.proteins}
+              <span>{currentProduct.proteins}</span>
             </p>
-            <p className={PopupIngridientsStyle.productCompoundText}>
+            <p className={PopupIngridientsStyle.currentProductCompoundText}>
               Жиры, г
               <br />
-              {product.fat}
+              <span>{currentProduct.fat}</span>
             </p>
-            <p className={PopupIngridientsStyle.productCompoundText}>
+            <p className={PopupIngridientsStyle.currentProductCompoundText}>
               Углеводы, г
               <br />
-              {product.carbohydrates}
+              <span>{currentProduct.carbohydrates}</span>
             </p>
           </div>
         </div>
+      ) : (
+        <div className={appStyles.loader} />
       )}
-    </Modal>
+    </>
   );
 }
-
-IngredientDetails.propTypes = {
-  popupOpened: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 
 export default IngredientDetails;

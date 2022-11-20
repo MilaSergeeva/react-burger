@@ -6,37 +6,52 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { NavLink, useRouteMatch } from "react-router-dom";
 
 function AppHeader() {
+  const isFeed = useRouteMatch("/feed");
+  const isProfile = useRouteMatch("/profile");
+  const isConstructor = useRouteMatch({ path: "/", exact: "true" });
+
   return (
     <header className={appHeaderStyles.headerFlex}>
       <div className={appHeaderStyles.headerContainier}>
         <nav className={appHeaderStyles.nav}>
-          <button
-            className={`${appHeaderStyles.textWhite} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+          <NavLink
+            to="/"
+            className={`${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+            style={isConstructor && { color: "#fff" }}
           >
-            <BurgerIcon type="primary" />
+            <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
             {/* Constructor */}
             Конструктор
-          </button>
-          <button
-            className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+          </NavLink>
+          <NavLink
+            to="/feed"
+            className={` ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+            style={isFeed && { color: "#fff" }}
           >
-            <ListIcon type="secondary" />
+            <ListIcon
+              type={isFeed ? "primary" : "secondary"}
+              style={isFeed && `color: '#fff'`}
+            />
             {/* Order list */}
             Лента заказа
-          </button>
+          </NavLink>
         </nav>
-        <div className={appHeaderStyles.logoAlign}>
+        <NavLink to="/" className={appHeaderStyles.logoAlign}>
           <Logo />
-        </div>
-        <button
-          className={`${appHeaderStyles.textPurpul} ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+        </NavLink>
+
+        <NavLink
+          to="/profile"
+          className={` ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
+          style={isProfile && { color: "#fff" }}
         >
-          <ProfileIcon type="secondary" />
+          <ProfileIcon type={isProfile ? "primary" : "secondary"} />
           {/* Personal account */}
           Личный кабинет
-        </button>
+        </NavLink>
       </div>
     </header>
   );

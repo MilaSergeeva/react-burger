@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PortalReactDOM from "react-dom";
+import {
+  UPDATE_ORDER_INGRIDIENTS_DELAILS,
+  makeOrder,
+} from "../../services/actions/order";
 
 const modalRoot = document.getElementById("modals");
 
@@ -54,6 +58,7 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   header: PropTypes.string.isRequired,
   children: PropTypes.any.isRequired,
+  isOpened: PropTypes.bool.isRequired,
 };
 
 export default Modal;

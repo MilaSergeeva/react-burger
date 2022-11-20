@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import BurgerConstructorStyles from "./burgerConstructor.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -8,19 +8,93 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import { ingredients } from "../../utils/api";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
-import { DRAG_CART_INGREDIENT } from "../../services/actions/index";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory, useLocation } from "react-router-dom";
+import {
+  DRAG_CART_INGREDIENT,
+  DELETE_FROM_CART_INGRIDIENTS,
+  updateCartList,
+} from "../../services/actions/ingredients";
+import { DELETE_ORDER_NUMBER } from "../../services/actions/order";
 
-function BurgerConstructor({ onButtonClick, onDropHandler }) {
+import {
+  UPDATE_ORDER_INGRIDIENTS_DELAILS,
+  makeOrder,
+} from "../../services/actions/order";
+
+import { getCookie } from "../../utils/data";
+
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+
   const cartBurgerFillings = useSelector(
-    (state) => state.burgerConstructorList.fillings
+    (state) => state.ingredientReducer.burgerConstructorList.fillings
   );
 
-  const dispatch = useDispatch();
-  const cartBurgerBan = useSelector((state) => state.burgerConstructorList.bun);
+  const cartBurgerBuns = useSelector(
+    (state) => state.ingredientReducer.burgerConstructorList.bun
+  );
+
+  const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
+
+  useEffect(() => {
+    if (
+      orderDetails.orderNumber !== undefined &&
+      orderDetails.orderNumber !== ""
+    ) {
+      const orderNumber = orderDetails.orderNumber;
+
+      dispatch({ type: DELETE_ORDER_NUMBER });
+      history.push({
+        pathname: `/feed/${orderNumber}`,
+        state: {
+          background: location,
+        },
+      });
+
+      dispatch({
+        type: DELETE_FROM_CART_INGRIDIENTS,
+      });
+    }
+  }, [orderDetails]);
+
+  const cartBurgerBan = useSelector(
+    (state) => state.ingredientReducer.burgerConstructorList.bun
+  );
+
+  const hasUser = getCookie("accessToken");
+
+  ///////////////////////
+
+  const burgerIngredients = () => {
+    const ingridientsTotal = [];
+
+    cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
+    if (cartBurgerFillings.length >= 1) {
+      cartBurgerFillings.forEach((element) => {
+        ingridientsTotal.push(element._id);
+      });
+    }
+    dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
+    return ingridientsTotal;
+  };
+
+  const handleMakeAnOrder = async () => {
+    if (hasUser) {
+      await dispatch(makeOrder(burgerIngredients()));
+    } else {
+      history.push("/login");
+    }
+  };
+
+  const onDropHandler = (item) => {
+    dispatch(updateCartList(item));
+  };
+
   //расчет общей стоимости
   const priceTotalFillings = (arr) =>
     arr.reduce((acc, el) => acc + el.price, 0);
@@ -29,7 +103,7 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
     priceTotalFillings(cartBurgerFillings) +
     (cartBurgerBan === null ? 0 : cartBurgerBan.price * 2);
 
-  const [{ canDrop, isOver }, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "ingridients",
     drop(item) {
       const itemWithId = { ...item, uniqueId: uuidv4() };
@@ -109,12 +183,13 @@ function BurgerConstructor({ onButtonClick, onDropHandler }) {
         <Button
           type="primary"
           size="large"
+          htmlType="submit"
           disabled={
             cartBurgerBan === null || cartBurgerFillings.length < 1
               ? true
               : false
           }
-          onClick={onButtonClick}
+          onClick={handleMakeAnOrder}
         >
           {/* Place order */}
           Оформить заказ
