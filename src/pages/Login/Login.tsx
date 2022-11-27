@@ -18,7 +18,9 @@ const Login = () => {
 
   const history = useHistory();
 
-  const formSubmit = useSelector((state) => state.authReducer.auth.loginFailed);
+  const formSubmit = useSelector(
+    (state: any) => state.authReducer.auth.loginFailed
+  );
 
   const dispatch = useDispatch();
 

@@ -20,7 +20,7 @@ const Register: FC = (props) => {
   const dispatch = useDispatch();
 
   const formSubmit = useSelector(
-    (state) => state.authReducer.auth.registerFailed
+    (state: any) => state.authReducer.auth.registerFailed
   );
 
   const handleSubmit = (e: React.SyntheticEvent) => {

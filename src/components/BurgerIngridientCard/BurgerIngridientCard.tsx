@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { ingridientData } from "../../utils/data";
@@ -8,17 +8,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { ITypeOfIngredient } from '../../utils/types';
+import { ITypeOfIngredient } from "../../utils/types";
 
 type TCard<T> = {
-  el: T
-  };
+  el: T;
+};
 
 const BurgerIngridientCard: FC<TCard<ITypeOfIngredient>> = ({ el }) => {
   const location = useLocation();
 
   const { bun, counter } = useSelector(
-    (state) => state.ingredientReducer.burgerConstructorList
+    (state: any) => state.ingredientReducer.burgerConstructorList
   );
 
   const [, dragRef] = useDrag({
@@ -60,8 +60,6 @@ const BurgerIngridientCard: FC<TCard<ITypeOfIngredient>> = ({ el }) => {
     </Link>
     // )
   );
-}
-
-
+};
 
 export default BurgerIngridientCard;

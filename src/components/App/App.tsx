@@ -8,11 +8,11 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Profile from "../../pages/Profile/Profile";
-import Register from "../../pages/Register/Register.js";
-import Login from "../../pages/Login/Login.js";
+import Register from "../../pages/Register/Register";
+import Login from "../../pages/Login/Login";
 import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NotFound404 from "../NotFound404/NotFound404";
 import { useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
@@ -30,7 +30,7 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => dispatch(getItems()), [dispatch]);
+  useEffect((): any => dispatch(getItems()), [dispatch]);
 
   return (
     <div className={appStyles.appBlock}>

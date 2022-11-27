@@ -27,9 +27,9 @@ const Profile = () => {
     history.push("/login");
   };
 
-  const { name, email } = useSelector((state) => state.authReducer.user);
+  const { name, email } = useSelector((state: any) => state.authReducer.user);
   const userInfoUpdateErr = useSelector(
-    (state) => state.authReducer.auth.updateUserFailed
+    (state: any) => state.authReducer.auth.updateUserFailed
   );
 
   const { values, handleChange, setValues } = useForm({
@@ -44,7 +44,7 @@ const Profile = () => {
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    dispatch(updateUserInfo(values.name, values.email, values.password));
+    dispatch(updateUserInfo(values));
     setValues({
       ...values,
       password: "",

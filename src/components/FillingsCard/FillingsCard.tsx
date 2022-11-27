@@ -10,12 +10,15 @@ import {
   DELETE_FROM_CART_FILLING,
   DECREASE_FILLINGS_COUNTER,
 } from "../../services/actions/ingredients";
-import { TFillingsCardIngredientProps, TFillingsCardIngredientIndex } from './fillingsCardType';
-import { TIngredientWithUniqueId } from '../../utils/types';
+import {
+  TFillingsCardIngredientProps,
+  TFillingsCardIngredientIndex,
+} from "./fillingsCardType";
+import { TIngredientWithUniqueId } from "../../utils/types";
 
-const FillingsCard:FC<
-TFillingsCardIngredientProps<TIngredientWithUniqueId>
->  = ({ index, el, moveCard, id }) => {
+const FillingsCard: FC<
+  TFillingsCardIngredientProps<TIngredientWithUniqueId>
+> = ({ index, el, moveCard, id }) => {
   const dispatch = useDispatch();
 
   const ref = useRef<HTMLLIElement>(null);
@@ -71,7 +74,7 @@ TFillingsCardIngredientProps<TIngredientWithUniqueId>
 
   //удаление ингридиента
 
-  const handleDeleteFillingFromCart = (index, id) => {
+  const handleDeleteFillingFromCart = (index: number, id: string) => {
     dispatch({ type: DECREASE_FILLINGS_COUNTER, id });
     dispatch({ type: DELETE_FROM_CART_FILLING, index });
   };
@@ -93,7 +96,6 @@ TFillingsCardIngredientProps<TIngredientWithUniqueId>
       </div>
     </li>
   );
-}
-
+};
 
 export default FillingsCard;

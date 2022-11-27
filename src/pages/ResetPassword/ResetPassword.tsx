@@ -18,11 +18,13 @@ const ResetPassword = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const formSubmit = useSelector((state) => state.authReducer.auth.resetFailed);
+  const formSubmit = useSelector(
+    (state: any) => state.authReducer.auth.resetFailed
+  );
 
   if (history.location.state === undefined) {
     return <Redirect to="/forgot-password" />;
-  } else if (history.location.state.from !== "forgot-password") {
+  } else if (history.location?.state?.from !== "forgot-password") {
     return <Redirect to="/forgot-password" />;
   }
 

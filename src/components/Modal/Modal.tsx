@@ -3,10 +3,6 @@ import ModalStyle from "./Modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import PortalReactDOM from "react-dom";
-import {
-  UPDATE_ORDER_INGRIDIENTS_DELAILS,
-  makeOrder,
-} from "../../services/actions/order";
 import { TModal } from "./modalType";
 
 const modalRoot = document.getElementById("modals") as HTMLElement;

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
+import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard";
 import { useSelector } from "react-redux";
 import { ITypeOfIngredient } from "../../utils/types";
 
@@ -13,7 +13,9 @@ function BurgerIngredients() {
   const fillings = useRef() as React.MutableRefObject<HTMLInputElement>;
   const containier = useRef() as React.MutableRefObject<HTMLInputElement>;
 
-  const ingridients = useSelector((state) => state.ingredientReducer.items);
+  const ingridients = useSelector(
+    (state: any) => state.ingredientReducer.items
+  );
 
   const getProductCard = (type: string) => {
     const filterdProductsArray = ingridients.filter(

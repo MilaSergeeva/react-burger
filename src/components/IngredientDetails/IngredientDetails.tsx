@@ -9,7 +9,9 @@ function IngredientDetails() {
   const { id } = useParams() as {
     id: string;
   };
-  const allProducts = useSelector((state) => state.ingredientReducer.items);
+  const allProducts = useSelector(
+    (state: any) => state.ingredientReducer.items
+  );
 
   const currentProduct = allProducts.find(
     (el: ITypeOfIngredient) => el._id === id

@@ -1,4 +1,7 @@
-import { baseUrl, checkResponse } from "../../utils/api.ts";
+import { baseUrl, checkResponse } from "../../utils/api";
+import { ITypeOfIngredient } from "../../utils/types";
+import { Dispatch } from "react";
+
 
 //Получение и обновление номера заказа в модальном окне OrderDetails.
 export const GET_ORDER_NUMBER = "GET_ORDER_NUMBER";
@@ -9,7 +12,7 @@ export const UPDATE_ORDER_INGRIDIENTS_DELAILS =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
 export const DELETE_ORDER_NUMBER = "DELETE_ORDER_NUMBER";
 
-export function makeOrder(ingredients) {
+export const  makeOrder = (ingredients: string[]): Dispatch<any> => {
   return async function (dispatch) {
     try {
       const res = await fetch(`${baseUrl}/orders`, {

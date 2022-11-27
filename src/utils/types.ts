@@ -1,3 +1,5 @@
+
+
 export interface ITypeOfIngredient {
   fat: number;
   calories: number;
@@ -19,24 +21,23 @@ export type TIngredientWithUniqueId = ITypeOfIngredient & {
   uniqueId: string;
 };
 
-export type TResetPasswordApi = string;
 export type TFuncVoid = () => void;
 
 export type TNewPasswordApi = {
-  password: string;
-  token: string;
+  password: string | null;
+  token: string | null;
 };
 
 export type TLoginApi = {
-  email: string;
-  password: string;
+  email: string | null;
+  password: string | null;
 };
 
 
 export type TUserApi = {
-  name: string;
-  email: string;
-  password: string;
+  name: string | null;
+  email: string | null;
+  password: string | null;
 };
 
 

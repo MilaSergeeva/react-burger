@@ -19,7 +19,7 @@ const ForgotPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const formSubmit = useSelector(
-    (state) => state.authReducer.auth.forgotFailed
+    (state: any) => state.authReducer.auth.forgotFailed
   );
 
   const redirectToResetPassword = () => {
