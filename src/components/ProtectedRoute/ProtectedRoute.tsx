@@ -1,14 +1,22 @@
-import React from "react";
+import React, { FC } from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { getCookie } from "../../utils/data";
 import PropTypes from "prop-types";
+import { TProtectedRouteType } from "./protectedRouteType";
 
-const ProtectedRoute = ({ onlyForAuth, children, ...rest }) => {
+const ProtectedRoute: FC<TProtectedRouteType> = ({
+  onlyForAuth,
+  children,
+  ...rest
+}) => {
   const hasUser = getCookie("accessToken");
   const location = useLocation();
 
   if (!onlyForAuth && hasUser) {
-    const { from } = location.state || { from: { pathname: "/" } };
+    const { from } = (location.state || { from: { pathname: "/" } }) as {
+      from: string;
+    };
+
     return (
       <Route {...rest}>
         <Redirect to={from} />

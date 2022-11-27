@@ -1,4 +1,4 @@
-import { baseUrl, checkResponse } from "../../utils/api";
+import { baseUrl, checkResponse } from "../../utils/api.ts";
 
 import { setCookie, getCookie, unsetCookie } from "../../utils/data";
 

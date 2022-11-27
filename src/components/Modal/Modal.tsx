@@ -21,7 +21,7 @@ const Modal: FC<TModal> = ({ isOpened, children, header, onClose }) => {
     }
   }, [drawerRef, isOpened]);
 
-  const handleClickOutside = (e: SyntheticEvent) => {
+  const handleClickOutside = (e: React.SyntheticEvent): void => {
     const targetElement = e.target as Element;
     if (targetElement.classList.contains("popupOverlay")) {
       onClose();

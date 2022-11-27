@@ -6,12 +6,12 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink, useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch, RouteProps } from "react-router-dom";
 
 function AppHeader() {
   const isFeed = useRouteMatch("/feed");
   const isProfile = useRouteMatch("/profile");
-  const isConstructor = useRouteMatch({ path: "/", exact: "true" });
+  const isConstructor = useRouteMatch({ path: "/", exact: true });
 
   return (
     <header className={appHeaderStyles.headerFlex}>
@@ -19,8 +19,9 @@ function AppHeader() {
         <nav className={appHeaderStyles.nav}>
           <NavLink
             to="/"
-            className={`${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
-            style={isConstructor && { color: "#fff" }}
+            className={`${appHeaderStyles.buttonText} ${
+              appHeaderStyles.button
+            } ${isConstructor && appHeaderStyles.textWhite}`}
           >
             <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
             {/* Constructor */}
@@ -28,13 +29,11 @@ function AppHeader() {
           </NavLink>
           <NavLink
             to="/feed"
-            className={` ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
-            style={isFeed && { color: "#fff" }}
+            className={` ${appHeaderStyles.buttonText} ${
+              appHeaderStyles.button
+            } ${isFeed && appHeaderStyles.textWhite}`}
           >
-            <ListIcon
-              type={isFeed ? "primary" : "secondary"}
-              style={isFeed && `color: '#fff'`}
-            />
+            <ListIcon type={isFeed ? "primary" : "secondary"} />
             {/* Order list */}
             Лента заказа
           </NavLink>
@@ -45,8 +44,9 @@ function AppHeader() {
 
         <NavLink
           to="/profile"
-          className={` ${appHeaderStyles.buttonText} ${appHeaderStyles.button}`}
-          style={isProfile && { color: "#fff" }}
+          className={` ${appHeaderStyles.buttonText} ${
+            appHeaderStyles.button
+          } ${isProfile && appHeaderStyles.textWhite}`}
         >
           <ProfileIcon type={isProfile ? "primary" : "secondary"} />
           {/* Personal account */}

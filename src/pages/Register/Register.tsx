@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Link } from "react-router-dom";
 import registrationStyle from "../auth_forms.module.css";
 import {
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
 
-const Register = (props) => {
+const Register: FC = (props) => {
   const { values, handleChange, setValues } = useForm({
     name: "",
     email: "",
@@ -23,7 +23,7 @@ const Register = (props) => {
     (state) => state.authReducer.auth.registerFailed
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(register(values));
   };

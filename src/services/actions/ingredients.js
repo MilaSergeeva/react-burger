@@ -1,4 +1,4 @@
-import { baseUrl, checkResponse } from "../../utils/api";
+import { baseUrl, checkResponse } from "../../utils/api.ts";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";

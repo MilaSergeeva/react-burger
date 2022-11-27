@@ -4,20 +4,23 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
 import { useSelector } from "react-redux";
+import { ITypeOfIngredient } from "../../utils/types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
-  const buns = useRef();
-  const sauces = useRef();
-  const fillings = useRef();
-  const containier = useRef();
+  const buns = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const sauces = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const fillings = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const containier = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const ingridients = useSelector((state) => state.ingredientReducer.items);
 
   const getProductCard = (type: string) => {
-    const filterdProductsArray = ingridients.filter((el) => el.type === type);
+    const filterdProductsArray = ingridients.filter(
+      (el: ITypeOfIngredient) => el.type === type
+    );
 
-    return filterdProductsArray.map((el) => (
+    return filterdProductsArray.map((el: ITypeOfIngredient) => (
       <div key={el._id}>
         <BurgerIngridientCard el={el} />
       </div>

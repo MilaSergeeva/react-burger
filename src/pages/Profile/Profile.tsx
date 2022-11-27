@@ -42,7 +42,7 @@ const Profile = () => {
   const historyEmail = email === values.email ? false : true;
   const historyPassword = values.password.length === 0 ? false : true;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
     dispatch(updateUserInfo(values.name, values.email, values.password));
     setValues({
@@ -56,9 +56,11 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    setValues((values) => {
-      return { ...values, name: name, email: email };
-    });
+    setValues(
+      (values: { name?: string; email?: string; password?: string }) => {
+        return { ...values, name: name, email: email };
+      }
+    );
   }, [name, email]);
 
   const handleClick = () => {

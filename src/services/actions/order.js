@@ -1,4 +1,4 @@
-import { baseUrl, checkResponse } from "../../utils/api";
+import { baseUrl, checkResponse } from "../../utils/api.ts";
 
 //Получение и обновление номера заказа в модальном окне OrderDetails.
 export const GET_ORDER_NUMBER = "GET_ORDER_NUMBER";
