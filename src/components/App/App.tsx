@@ -18,10 +18,11 @@ import { useDispatch } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getItems } from "../../services/actions/ingredients";
+import { Location } from 'history'; 
 
 function App() {
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<{background: Location}>();
 
   const background = location.state && location.state.background;
 

@@ -14,7 +14,7 @@ function BurgerIngredients() {
 
   const ingridients = useSelector((state) => state.ingredientReducer.items);
 
-  const getProductCard = (type) => {
+  const getProductCard = (type: string) => {
     const filterdProductsArray = ingridients.filter((el) => el.type === type);
 
     return filterdProductsArray.map((el) => (
@@ -75,7 +75,7 @@ function BurgerIngredients() {
     };
   }, []);
 
-  const handleSmoothScroll = (value) => {
+  const handleSmoothScroll = (value: string) => {
     if (value === "fillings") {
       fillings.current.scrollIntoView({ behavior: "smooth" });
     } else if (value === "sauces") {
