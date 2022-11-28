@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     history.push("/reset-password", { from: "forgot-password" });
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const reg = /^\S+@\S+\.\S+$/;
 

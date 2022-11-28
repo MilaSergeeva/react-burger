@@ -23,7 +23,7 @@ const Register: FC = (props) => {
     (state: any) => state.authReducer.auth.registerFailed
   );
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register(values));
   };

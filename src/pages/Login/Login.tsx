@@ -28,7 +28,7 @@ const Login = () => {
     history.push("/");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(login(values, redirectToProfile));
   };

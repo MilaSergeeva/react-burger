@@ -25,7 +25,7 @@ import {
 } from "../../services/actions/order";
 
 import { getCookie } from "../../utils/data";
-import { ITypeOfIngredient } from "../../utils/types";
+import { ITypeOfIngredient, TIngredientWithUniqueId } from "../../utils/types";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -128,17 +128,20 @@ function BurgerConstructor() {
     });
   };
 
-  const renderFilling = useCallback((el, i) => {
-    return (
-      <FillingsCard
-        key={el.uniqueId}
-        moveCard={moveCard}
-        index={i}
-        el={el}
-        id={el.uniqueId}
-      />
-    );
-  }, []);
+  const renderFilling = useCallback(
+    (el: TIngredientWithUniqueId, i: number) => {
+      return (
+        <FillingsCard
+          key={el.uniqueId}
+          moveCard={moveCard}
+          index={i}
+          el={el}
+          id={el.uniqueId}
+        />
+      );
+    },
+    []
+  );
 
   return (
     <section className={BurgerConstructorStyles.flexItem}>
