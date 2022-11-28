@@ -1,14 +1,7 @@
 import { useState } from "react";
 
-interface IForm {
-  name?: string;
-  email?: string;
-  password?: string;
-  token?: string;
-}
-
-export function useForm(inputValues: IForm) {
-  const [values, setValues] = useState<IForm>(inputValues);
+export function useForm(inputValues: any) {
+  const [values, setValues] = useState(inputValues);
 
   const handleChange = (event: React.ChangeEvent) => {
     const { value, name } = event.target as HTMLInputElement;

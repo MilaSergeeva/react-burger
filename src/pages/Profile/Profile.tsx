@@ -40,7 +40,7 @@ const Profile = () => {
 
   const historyName = name === values.name ? false : true;
   const historyEmail = email === values.email ? false : true;
-  const historyPassword = values.password.length === 0 ? false : true;
+  const historyPassword = values.password?.length === 0 ? false : true;
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();

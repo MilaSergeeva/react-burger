@@ -30,7 +30,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     const reg = /^\S+@\S+\.\S+$/;
 
-    if (values.email.match(reg)) {
+    if (values.email?.match(reg)) {
       dispatch(getCodeToChangePassword(values, redirectToResetPassword));
     } else dispatch({ type: FORGOT_PASSWORD_ERROR });
   };

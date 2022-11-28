@@ -162,7 +162,7 @@ function BurgerConstructor() {
         </li>
         <DndProvider backend={HTML5Backend}>
           <ul className={BurgerConstructorStyles.listContainier}>
-            {cartBurgerFillings.map((el: ITypeOfIngredient, i: number) =>
+            {cartBurgerFillings.map((el: TIngredientWithUniqueId, i: number) =>
               renderFilling(el, i)
             )}
           </ul>
