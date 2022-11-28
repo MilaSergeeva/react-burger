@@ -35,9 +35,9 @@ export type TLoginApi = {
 
 
 export type TUserApi = {
-  name: string | null;
-  email: string | null;
-  password: string | null;
+  name?: string | null;
+  email?: string | null;
+  password?: string | null;
 };
 
 

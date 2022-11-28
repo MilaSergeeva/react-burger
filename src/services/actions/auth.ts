@@ -40,8 +40,6 @@ export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
 type TUserInfo = {
   name?: string | null;
   email?: string | null;
-  password?: string | null;
-  token?: string | null
 }
 
 function setUserInfoToLocalStore({ name, email } : TUserInfo) {
@@ -64,7 +62,7 @@ function getRequestHeaders(): Headers {
   return requestHeaders;
 }
 
-export const register = ({ email, password, name } : TUserInfo): Dispatch<any> => {
+export const register = ({ email, password, name } : TUserApi): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/register`, {
       headers: {
