@@ -5,7 +5,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import {
   getCodeToChangePassword,
   FORGOT_PASSWORD_ERROR,
