@@ -14,7 +14,7 @@ import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NotFound404 from "../NotFound404/NotFound404";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getItems } from "../../services/actions/ingredients";

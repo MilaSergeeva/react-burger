@@ -40,6 +40,29 @@ export type TUserApi = {
   password?: string | null;
 };
 
+export type TOrderData = {
+  name: string;
+  order: { number: number };
+  success: boolean;
+};
 
 
 
+export type TIngredientsCounter = {
+  [index: string]: number;
+};
+
+export type TUserInfo = {
+  name?: string | null;
+  email?: string | null;
+}
+
+export type TUserData = {
+  success: boolean;
+  user: TUserInfo;
+};
+
+export type TUserDataWithToken = TUserData & {
+  accessToken: string;
+  refreshToken: string;
+};

@@ -1,28 +1,35 @@
 import React from "react";
 // import ReactDOM from "react-dom/client";
-import { render } from 'react-dom';
+import { render } from "react-dom";
 import "./index.css";
 import App from "./components/App/App";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import { rootReducer } from './services/reducers/index.js'
-import { Provider } from 'react-redux';
-import { compose, createStore, applyMiddleware } from 'redux';
+import { rootReducer } from "./services/reducers/index.js";
+import { Provider } from "react-redux";
+import { compose, createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
-import thunk from 'redux-thunk';
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose; 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+// const composeEnhancers =
+//   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//     : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
-const store = createStore(rootReducer, enhancer); 
+export const store = createStore(rootReducer, enhancer);
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 
 render(
   <React.StrictMode>

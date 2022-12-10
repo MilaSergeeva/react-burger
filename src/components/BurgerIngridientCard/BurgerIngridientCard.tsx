@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { ITypeOfIngredient } from "../../utils/types";
+import { ITypeOfIngredient } from "../../services/types/types";
 
 type TCard<T> = {
   el: T;

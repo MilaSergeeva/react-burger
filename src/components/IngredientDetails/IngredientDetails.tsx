@@ -3,7 +3,7 @@ import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import appStyles from "../App/app.module.css";
-import { ITypeOfIngredient } from "../../utils/types";
+import { ITypeOfIngredient } from "../../services/types/types";
 
 function IngredientDetails() {
   const { id } = useParams() as {

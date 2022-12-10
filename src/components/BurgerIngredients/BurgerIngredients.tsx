@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard";
 import { useSelector } from "react-redux";
-import { ITypeOfIngredient } from "../../utils/types";
+import { ITypeOfIngredient } from "../../services/types/types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");

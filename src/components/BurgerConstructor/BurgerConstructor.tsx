@@ -25,7 +25,10 @@ import {
 } from "../../services/actions/order";
 
 import { getCookie } from "../../utils/data";
-import { ITypeOfIngredient, TIngredientWithUniqueId } from "../../utils/types";
+import {
+  ITypeOfIngredient,
+  TIngredientWithUniqueId,
+} from "../../services/types/types";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();

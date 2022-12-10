@@ -14,7 +14,7 @@ import {
   TFillingsCardIngredientProps,
   TFillingsCardIngredientIndex,
 } from "./fillingsCardType";
-import { TIngredientWithUniqueId } from "../../utils/types";
+import { TIngredientWithUniqueId } from "../../services/types/types";
 
 const FillingsCard: FC<
   TFillingsCardIngredientProps<TIngredientWithUniqueId>
