@@ -25,6 +25,7 @@ import {
 } from "../../services/actions/order";
 
 import { getCookie } from "../../utils/data";
+import { ITypeOfIngredient, TIngredientWithUniqueId } from "../../utils/types";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -32,14 +33,16 @@ function BurgerConstructor() {
   const history = useHistory();
 
   const cartBurgerFillings = useSelector(
-    (state) => state.ingredientReducer.burgerConstructorList.fillings
+    (state: any) => state.ingredientReducer.burgerConstructorList.fillings
   );
 
   const cartBurgerBuns = useSelector(
-    (state) => state.ingredientReducer.burgerConstructorList.bun
+    (state: any) => state.ingredientReducer.burgerConstructorList.bun
   );
 
-  const orderDetails = useSelector((state) => state.orderReducer.orderDetails);
+  const orderDetails = useSelector(
+    (state: any) => state.orderReducer.orderDetails
+  );
 
   useEffect(() => {
     if (
@@ -63,19 +66,19 @@ function BurgerConstructor() {
   }, [orderDetails]);
 
   const cartBurgerBan = useSelector(
-    (state) => state.ingredientReducer.burgerConstructorList.bun
+    (state: any) => state.ingredientReducer.burgerConstructorList.bun
   );
 
   const hasUser = getCookie("accessToken");
 
   ///////////////////////
 
-  const burgerIngredients = () => {
-    const ingridientsTotal = [];
+  const burgerIngredients = (): string[] => {
+    const ingridientsTotal: string[] = [];
 
     cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
     if (cartBurgerFillings.length >= 1) {
-      cartBurgerFillings.forEach((element) => {
+      cartBurgerFillings.forEach((element: ITypeOfIngredient) => {
         ingridientsTotal.push(element._id);
       });
     }
@@ -91,12 +94,12 @@ function BurgerConstructor() {
     }
   };
 
-  const onDropHandler = (item) => {
+  const onDropHandler = (item: ITypeOfIngredient) => {
     dispatch(updateCartList(item));
   };
 
   //расчет общей стоимости
-  const priceTotalFillings = (arr) =>
+  const priceTotalFillings = (arr: ITypeOfIngredient[]) =>
     arr.reduce((acc, el) => acc + el.price, 0);
 
   const totalPrice =
@@ -105,7 +108,7 @@ function BurgerConstructor() {
 
   const [, dropRef] = useDrop({
     accept: "ingridients",
-    drop(item) {
+    drop(item: ITypeOfIngredient) {
       const itemWithId = { ...item, uniqueId: uuidv4() };
       onDropHandler(itemWithId);
     },
@@ -117,7 +120,7 @@ function BurgerConstructor() {
     },
   });
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     dispatch({
       type: DRAG_CART_INGREDIENT,
       dragIndex: dragIndex,
@@ -125,17 +128,20 @@ function BurgerConstructor() {
     });
   };
 
-  const renderFilling = useCallback((el, i) => {
-    return (
-      <FillingsCard
-        key={el.uniqueId}
-        moveCard={moveCard}
-        index={i}
-        el={el}
-        id={el.uniqueId}
-      />
-    );
-  }, []);
+  const renderFilling = useCallback(
+    (el: TIngredientWithUniqueId, i: number) => {
+      return (
+        <FillingsCard
+          key={el.uniqueId}
+          moveCard={moveCard}
+          index={i}
+          el={el}
+          id={el.uniqueId}
+        />
+      );
+    },
+    []
+  );
 
   return (
     <section className={BurgerConstructorStyles.flexItem}>
@@ -156,7 +162,9 @@ function BurgerConstructor() {
         </li>
         <DndProvider backend={HTML5Backend}>
           <ul className={BurgerConstructorStyles.listContainier}>
-            {cartBurgerFillings.map((el, i) => renderFilling(el, i))}
+            {cartBurgerFillings.map((el: TIngredientWithUniqueId, i: number) =>
+              renderFilling(el, i)
+            )}
           </ul>
         </DndProvider>
         <li className={BurgerConstructorStyles.gridListBun}>

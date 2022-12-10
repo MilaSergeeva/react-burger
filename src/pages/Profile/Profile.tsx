@@ -27,9 +27,9 @@ const Profile = () => {
     history.push("/login");
   };
 
-  const { name, email } = useSelector((state) => state.authReducer.user);
+  const { name, email } = useSelector((state: any) => state.authReducer.user);
   const userInfoUpdateErr = useSelector(
-    (state) => state.authReducer.auth.updateUserFailed
+    (state: any) => state.authReducer.auth.updateUserFailed
   );
 
   const { values, handleChange, setValues } = useForm({
@@ -40,11 +40,11 @@ const Profile = () => {
 
   const historyName = name === values.name ? false : true;
   const historyEmail = email === values.email ? false : true;
-  const historyPassword = values.password.length === 0 ? false : true;
+  const historyPassword = values.password?.length === 0 ? false : true;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    dispatch(updateUserInfo(values.name, values.email, values.password));
+    dispatch(updateUserInfo(values));
     setValues({
       ...values,
       password: "",
@@ -56,9 +56,11 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    setValues((values) => {
-      return { ...values, name: name, email: email };
-    });
+    setValues(
+      (values: { name?: string; email?: string; password?: string }) => {
+        return { ...values, name: name, email: email };
+      }
+    );
   }, [name, email]);
 
   const handleClick = () => {

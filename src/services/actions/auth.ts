@@ -1,6 +1,7 @@
 import { baseUrl, checkResponse } from "../../utils/api";
-
+import { TNewPasswordApi, TFuncVoid, TLoginApi, TUserApi} from "../../utils/types";
 import { setCookie, getCookie, unsetCookie } from "../../utils/data";
+import { Dispatch } from "react";
 
 //Авторизация
 
@@ -36,7 +37,12 @@ export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
 export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
 
-function setUserInfoToLocalStore({ name, email }) {
+type TUserInfo = {
+  name?: string | null;
+  email?: string | null;
+}
+
+function setUserInfoToLocalStore({ name, email } : TUserInfo) {
   localStorage.setItem(
     "userInfo",
     JSON.stringify({
@@ -46,7 +52,17 @@ function setUserInfoToLocalStore({ name, email }) {
   );
 }
 
-export const register = ({ email, password, name }) => {
+function getRequestHeaders(): Headers { 
+  const requestHeaders: HeadersInit = new Headers();
+
+  requestHeaders.set("Accept", "application/json");
+  requestHeaders.set("Content-Type", "application/json");
+  requestHeaders.set("Authorization", getCookie("accessToken") || "");
+
+  return requestHeaders;
+}
+
+export const register = ({ email, password, name } : TUserApi): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/register`, {
       headers: {
@@ -85,7 +101,7 @@ export const register = ({ email, password, name }) => {
   };
 };
 
-export const login = ({ email, password }, redirectToProfile) => {
+export const login = ({ email, password } : TLoginApi, redirectToProfile: TFuncVoid): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/login`, {
       headers: {
@@ -131,7 +147,7 @@ export const login = ({ email, password }, redirectToProfile) => {
   };
 };
 
-export const logOut = (redirectToLogin) => {
+export const logOut = (redirectToLogin: TFuncVoid): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/logout`, {
       headers: {
@@ -170,12 +186,12 @@ export const logOut = (redirectToLogin) => {
   };
 };
 
-const saveTokens = (refreshToken, accessToken) => {
+const saveTokens = (refreshToken: string, accessToken: string) => {
   setCookie("accessToken", accessToken);
   localStorage.setItem("refreshToken", refreshToken);
 };
 
-export const refreshAccessToken = (afterRefresh) => {
+export const refreshAccessToken = (afterRefresh: TFuncVoid): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/token`, {
       headers: {
@@ -216,14 +232,10 @@ export const refreshAccessToken = (afterRefresh) => {
   };
 };
 
-export const getUserInfo = () => {
+export const getUserInfo = (): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/user`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: getCookie("accessToken"),
-      },
+      headers: getRequestHeaders(),
       method: "GET",
       mode: "cors",
       cache: "no-cache",
@@ -246,7 +258,7 @@ export const getUserInfo = () => {
       })
       .catch((err) => {
         if (err.message === "jwt expired") {
-          dispatch(refreshAccessToken(getUserInfo()));
+          dispatch(refreshAccessToken(getUserInfo() as TFuncVoid));
         } else {
           dispatch({ type: USER_ERROR });
         }
@@ -254,15 +266,11 @@ export const getUserInfo = () => {
   };
 };
 
-export const updateUserInfo = (name, email, password) => {
+export const updateUserInfo = ({name, email, password}: TUserApi): Dispatch<any>  => {
   return function (dispatch) {
     fetch(`${baseUrl}/auth/user`, {
       method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: getCookie("accessToken"),
-      },
+      headers: getRequestHeaders(),
       mode: "cors",
       cache: "no-cache",
       credentials: "same-origin",
@@ -292,8 +300,7 @@ export const updateUserInfo = (name, email, password) => {
         if (err.message === "jwt expired") {
           dispatch(
             refreshAccessToken(
-              // updateUserInfo({ name, email, password }, dispatch)
-              updateUserInfo(name, email, password)
+              updateUserInfo({name, email, password}) as TFuncVoid
             )
           );
         }
@@ -303,7 +310,7 @@ export const updateUserInfo = (name, email, password) => {
   };
 };
 
-export const getCodeToChangePassword = (email, redirectToResetPassword) => {
+export const getCodeToChangePassword = (email: string | null, redirectToResetPassword: TFuncVoid): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/password-reset`, {
       headers: {
@@ -339,7 +346,7 @@ export const getCodeToChangePassword = (email, redirectToResetPassword) => {
   };
 };
 
-export const saveNewPassword = ({ password, token }, redirectToMainPage) => {
+export const saveNewPassword = ({ password, token }: TNewPasswordApi, redirectToMainPage: TFuncVoid): Dispatch<any> => {
   return function (dispatch) {
     fetch(`${baseUrl}/password-reset/reset`, {
       headers: {

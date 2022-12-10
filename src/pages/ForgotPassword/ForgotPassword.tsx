@@ -19,18 +19,18 @@ const ForgotPassword = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const formSubmit = useSelector(
-    (state) => state.authReducer.auth.forgotFailed
+    (state: any) => state.authReducer.auth.forgotFailed
   );
 
   const redirectToResetPassword = () => {
     history.push("/reset-password", { from: "forgot-password" });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const reg = /^\S+@\S+\.\S+$/;
 
-    if (values.email.match(reg)) {
+    if (values.email?.match(reg)) {
       dispatch(getCodeToChangePassword(values, redirectToResetPassword));
     } else dispatch({ type: FORGOT_PASSWORD_ERROR });
   };

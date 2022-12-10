@@ -1,4 +1,6 @@
 import { baseUrl, checkResponse } from "../../utils/api";
+import { ITypeOfIngredient } from "../../utils/types";
+import { Dispatch } from "react";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
 export const GET_ITEMS_REQUEST = "GET_ITEMS_REQUEST";
@@ -35,7 +37,7 @@ export const DECREASE_BUNS_COUNTER = "DECREASE_BUNS_COUNTER";
 
 export const CLEAR_INGRIDIENTS_COUNTER = "CLEAR_INGRIDIENTS_COUNTER";
 
-export function getItems() {
+export const getItems = (): Dispatch<any>=> {
   return function (dispatch) {
     fetch(`${baseUrl}/ingredients`)
       .then(
@@ -62,7 +64,7 @@ export function getItems() {
   };
 }
 
-export function updateCartList(item) {
+export const updateCartList = (item: ITypeOfIngredient): Dispatch<any> => {
   return function (dispatch) {
     if (item.type !== "bun") {
       dispatch({

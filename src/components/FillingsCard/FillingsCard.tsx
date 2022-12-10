@@ -1,22 +1,27 @@
-import React, { useRef } from "react";
+import React, { useRef, FC } from "react";
 import BurgerConstructorStyles from "../BurgerConstructor/burgerConstructor.module.css";
 import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop, XYCoord } from "react-dnd";
 import { useDispatch } from "react-redux";
 import {
   DELETE_FROM_CART_FILLING,
   DECREASE_FILLINGS_COUNTER,
 } from "../../services/actions/ingredients";
-import { ingridientData } from "../../utils/data";
+import {
+  TFillingsCardIngredientProps,
+  TFillingsCardIngredientIndex,
+} from "./fillingsCardType";
+import { TIngredientWithUniqueId } from "../../utils/types";
 
-function FillingsCard({ index, el, moveCard, id }) {
+const FillingsCard: FC<
+  TFillingsCardIngredientProps<TIngredientWithUniqueId>
+> = ({ index, el, moveCard, id }) => {
   const dispatch = useDispatch();
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [{ isDragging }, drag] = useDrag({
     type: "fills",
@@ -36,7 +41,7 @@ function FillingsCard({ index, el, moveCard, id }) {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover: (item, monitor) => {
+    hover: (item: TFillingsCardIngredientIndex, monitor) => {
       if (!ref.current) {
         return;
       }
@@ -49,7 +54,7 @@ function FillingsCard({ index, el, moveCard, id }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -69,7 +74,7 @@ function FillingsCard({ index, el, moveCard, id }) {
 
   //удаление ингридиента
 
-  const handleDeleteFillingFromCart = (index, id) => {
+  const handleDeleteFillingFromCart = (index: number, id: string) => {
     dispatch({ type: DECREASE_FILLINGS_COUNTER, id });
     dispatch({ type: DELETE_FROM_CART_FILLING, index });
   };
@@ -91,13 +96,6 @@ function FillingsCard({ index, el, moveCard, id }) {
       </div>
     </li>
   );
-}
-
-FillingsCard.propTypes = {
-  el: ingridientData.isRequired,
-  moveCard: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
-  id: PropTypes.string.isRequired,
 };
 
 export default FillingsCard;

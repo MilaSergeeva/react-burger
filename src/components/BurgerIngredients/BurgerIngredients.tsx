@@ -2,22 +2,27 @@ import React, { useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard.js";
+import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard";
 import { useSelector } from "react-redux";
+import { ITypeOfIngredient } from "../../utils/types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
-  const buns = useRef();
-  const sauces = useRef();
-  const fillings = useRef();
-  const containier = useRef();
+  const buns = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const sauces = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const fillings = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const containier = useRef() as React.MutableRefObject<HTMLInputElement>;
 
-  const ingridients = useSelector((state) => state.ingredientReducer.items);
+  const ingridients = useSelector(
+    (state: any) => state.ingredientReducer.items
+  );
 
-  const getProductCard = (type) => {
-    const filterdProductsArray = ingridients.filter((el) => el.type === type);
+  const getProductCard = (type: string) => {
+    const filterdProductsArray = ingridients.filter(
+      (el: ITypeOfIngredient) => el.type === type
+    );
 
-    return filterdProductsArray.map((el) => (
+    return filterdProductsArray.map((el: ITypeOfIngredient) => (
       <div key={el._id}>
         <BurgerIngridientCard el={el} />
       </div>
@@ -75,7 +80,7 @@ function BurgerIngredients() {
     };
   }, []);
 
-  const handleSmoothScroll = (value) => {
+  const handleSmoothScroll = (value: string) => {
     if (value === "fillings") {
       fillings.current.scrollIntoView({ behavior: "smooth" });
     } else if (value === "sauces") {

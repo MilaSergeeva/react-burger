@@ -18,11 +18,15 @@ const ResetPassword = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const formSubmit = useSelector((state) => state.authReducer.auth.resetFailed);
+  const formSubmit = useSelector(
+    (state: any) => state.authReducer.auth.resetFailed
+  );
 
-  if (history.location.state === undefined) {
+  const state = history.location.state as { from: string };
+
+  if (state === undefined) {
     return <Redirect to="/forgot-password" />;
-  } else if (history.location.state.from !== "forgot-password") {
+  } else if (state.from !== "forgot-password") {
     return <Redirect to="/forgot-password" />;
   }
 
@@ -30,7 +34,7 @@ const ResetPassword = () => {
     history.push("/");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(saveNewPassword(values, redirectToMainPage));
   };

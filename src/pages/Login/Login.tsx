@@ -1,50 +1,48 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import registrationStyle from "../auth_forms.module.css";
+import loginStyle from "../auth_forms.module.css";
 import {
   Button,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../../services/actions/auth";
+import { login } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
 
-const Register = (props) => {
+const Login = () => {
   const { values, handleChange, setValues } = useForm({
-    name: "",
     email: "",
     password: "",
   });
 
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const formSubmit = useSelector(
-    (state) => state.authReducer.auth.registerFailed
+    (state: any) => state.authReducer.auth.loginFailed
   );
 
-  const handleSubmit = (e) => {
+  const dispatch = useDispatch();
+
+  const redirectToProfile = () => {
+    history.push("/");
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(register(values));
+    dispatch(login(values, redirectToProfile));
   };
 
   return (
-    <section className={registrationStyle.section}>
+    <section className={loginStyle.section}>
       <form
         method="POST"
         name="user-info"
-        className={registrationStyle.form}
+        className={loginStyle.form}
         onSubmit={handleSubmit}
         noValidate
       >
-        <h1 className={registrationStyle.formTitle}>Регистрация</h1>
-        <Input
-          placeholder="Имя"
-          type="text"
-          name="name"
-          value={values.name || ""}
-          onChange={handleChange}
-        />
+        <h1 className={loginStyle.formTitle}>Вход</h1>
         <Input
           placeholder="E-mail"
           type="email"
@@ -59,24 +57,31 @@ const Register = (props) => {
         />
 
         {formSubmit && (
-          <p className={registrationStyle.formError}>
+          <p className={loginStyle.formError}>
             Что-то пошло не так, попробуйте еще раз.
           </p>
         )}
 
         <Button type="primary" htmlType="submit" size="large" disabled={false}>
-          Зарегистрироватся
+          Войти
         </Button>
       </form>
-      <p className={registrationStyle.formText}>
-        Уже зарегистрированы?
-        <Link className={registrationStyle.link} to="/login">
+      <p className={loginStyle.formText}>
+        Вы - новый пользователь?
+        <Link className={loginStyle.link} to="/register">
           {" "}
-          Войти
+          Зарегистрироватся
+        </Link>
+      </p>
+      <p className={loginStyle.formText}>
+        Забыли пароль?
+        <Link className={loginStyle.link} to="/forgot-password">
+          {" "}
+          Восстановить пароль
         </Link>
       </p>
     </section>
   );
 };
 
-export default Register;
+export default Login;
