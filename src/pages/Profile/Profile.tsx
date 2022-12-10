@@ -11,7 +11,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import {
   logOut,
   updateUserInfo,

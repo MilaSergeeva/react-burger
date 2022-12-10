@@ -1,16 +1,16 @@
 import { baseUrl, checkResponse } from "../../utils/api";
 import { ITypeOfIngredient } from "../types/types";
 import { Dispatch } from "react";
-
+import { AppThunk, AppDispatch } from "../types/index";
 
 //Получение и обновление номера заказа в модальном окне OrderDetails.
-export const GET_ORDER_NUMBER:"GET_ORDER_NUMBER" = "GET_ORDER_NUMBER";
-export const UPDATE_ORDER_NUMBER:"UPDATE_ORDER_NUMBER" = "UPDATE_ORDER_NUMBER";
-export const GET_ORDER_FAILED:"GET_ORDER_FAILED" = "GET_ORDER_FAILED";
-export const GET_ORDER_REQUEST:"GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
-export const UPDATE_ORDER_INGRIDIENTS_DELAILS:"UPDATE_ORDER_INGRIDIENTS_DELAILS" =
+export const GET_ORDER_NUMBER: "GET_ORDER_NUMBER" = "GET_ORDER_NUMBER";
+export const UPDATE_ORDER_NUMBER: "UPDATE_ORDER_NUMBER" = "UPDATE_ORDER_NUMBER";
+export const GET_ORDER_FAILED: "GET_ORDER_FAILED" = "GET_ORDER_FAILED";
+export const GET_ORDER_REQUEST: "GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
+export const UPDATE_ORDER_INGRIDIENTS_DELAILS: "UPDATE_ORDER_INGRIDIENTS_DELAILS" =
   "UPDATE_ORDER_INGRIDIENTS_DELAILS";
-export const DELETE_ORDER_NUMBER:"DELETE_ORDER_NUMBER" = "DELETE_ORDER_NUMBER";
+export const DELETE_ORDER_NUMBER: "DELETE_ORDER_NUMBER" = "DELETE_ORDER_NUMBER";
 
 export interface IGetOrderNumber {
   readonly type: typeof GET_ORDER_NUMBER;
@@ -37,17 +37,15 @@ export interface IDeleteOrderNumber {
 }
 
 export type TOrderActions =
-| IGetOrderNumber
-| IUpdateOrderNumber
-| IGetOrderFailed
-| IGetOrderRequest
-| IUpdateOrderIngridientsDetails
-| IDeleteOrderNumber
+  | IGetOrderNumber
+  | IUpdateOrderNumber
+  | IGetOrderFailed
+  | IGetOrderRequest
+  | IUpdateOrderIngridientsDetails
+  | IDeleteOrderNumber;
 
-
-
-export const  makeOrder = (ingredients: string[]): Dispatch<any> => {
-  return async function (dispatch) {
+export const makeOrder: AppThunk = (ingredients: string[]): Dispatch<any> => {
+  return async function (dispatch: AppDispatch) {
     try {
       const res = await fetch(`${baseUrl}/orders`, {
         method: "POST",
@@ -56,11 +54,13 @@ export const  makeOrder = (ingredients: string[]): Dispatch<any> => {
         },
         body: JSON.stringify({ ingredients: ingredients }),
       })
-        .then(
+        .then((res) => {
           dispatch({
             type: GET_ORDER_REQUEST,
-          })
-        )
+          });
+
+          return res;
+        })
         .then(checkResponse);
 
       if (res && res.success) {
@@ -78,4 +78,4 @@ export const  makeOrder = (ingredients: string[]): Dispatch<any> => {
       });
     }
   };
-}
+};

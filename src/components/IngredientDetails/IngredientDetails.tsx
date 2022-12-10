@@ -1,7 +1,7 @@
 import React from "react";
 import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import appStyles from "../App/app.module.css";
 import { ITypeOfIngredient } from "../../services/types/types";
 

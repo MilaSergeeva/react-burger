@@ -7,7 +7,7 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
 import { v4 as uuidv4 } from "uuid";

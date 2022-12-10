@@ -5,7 +5,7 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop, XYCoord } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/hooks";
 import {
   DELETE_FROM_CART_FILLING,
   DECREASE_FILLINGS_COUNTER,
