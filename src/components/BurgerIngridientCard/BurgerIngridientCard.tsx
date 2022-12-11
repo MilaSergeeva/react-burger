@@ -8,13 +8,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { ITypeOfIngredient } from "../../services/types/types";
+import { IIngredient } from "../../services/types/types";
 
 type TCard<T> = {
   el: T;
 };
 
-const BurgerIngridientCard: FC<TCard<ITypeOfIngredient>> = ({ el }) => {
+const BurgerIngridientCard: FC<TCard<IIngredient>> = ({ el }) => {
   const location = useLocation();
 
   const { bun, counter } = useSelector(

@@ -12,7 +12,22 @@ import {
   DRAG_CART_INGREDIENT,
 } from "../actions/ingredients";
 
-const initialIngredientState = {
+import { IIngredient, TIngredientWithUniqueId } from "../types/types";
+import { TIngredientsActions } from "../actions/ingredients";
+
+type TInitIngredientState = {
+  items: IIngredient[];
+  itemsRequest: boolean;
+  itemsFailed: boolean;
+
+  burgerConstructorList: {
+    bun: string | null;
+    fillings: TIngredientWithUniqueId[];
+    counter: {};
+  };
+};
+
+const initialIngredientState: TInitIngredientState = {
   items: [],
   itemsRequest: false,
   itemsFailed: false,
@@ -24,7 +39,10 @@ const initialIngredientState = {
   },
 };
 
-export const ingredientReducer = (state = initialIngredientState, action) => {
+export const ingredientReducer = (
+  state = initialIngredientState,
+  action: TIngredientsActions
+) => {
   switch (action.type) {
     case GET_ITEMS_REQUEST: {
       return {

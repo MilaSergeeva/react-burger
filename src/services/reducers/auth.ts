@@ -1,3 +1,5 @@
+import { TAuthActions } from "../actions/auth";
+
 import {
   USER_REQUEST,
   USER_SUCCESS,
@@ -25,7 +27,40 @@ import {
   USER_UPDATE_ERROR,
 } from "../actions/auth";
 
-const initialAuthState = {
+type TInitAuthState = {
+  user: {
+    name: string,
+    email: string,
+  },
+
+  auth: {
+    userRequest: boolean,
+    userFailed: boolean,
+
+    updateUserRequest: boolean,
+    updateUserFailed: boolean,
+
+    tokenRequest: boolean,
+    tokenFailed: boolean,
+
+    logoutRequest: boolean,
+    logoutFailed: boolean,
+
+    registerRequest: boolean,
+    registerFailed: boolean,
+
+    loginRequest: boolean,
+    loginFailed: boolean,
+
+    forgotRequest: boolean,
+    forgotFailed: boolean,
+
+    resetRequest: boolean,
+    resetFailed: boolean,
+  },
+};
+
+const initialAuthState: TInitAuthState = {
   user: {
     name: "",
     email: "",
@@ -58,7 +93,7 @@ const initialAuthState = {
   },
 };
 
-export const authReducer = (state = initialAuthState, action) => {
+export const authReducer = (state = initialAuthState, action: TAuthActions) => {
   switch (action.type) {
     case USER_UPDATE_REQUEST: {
       return {

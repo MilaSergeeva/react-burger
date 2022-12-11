@@ -53,6 +53,7 @@ export interface IUserRequest {
 
 export interface IUserSuccess {
   readonly type: typeof USER_SUCCESS;
+  data: { user: { name: string; email: string } };
 }
 
 export interface IUserError {
@@ -65,6 +66,7 @@ export interface IUserUpdateRequest {
 
 export interface IUserUpdateSuccess {
   readonly type: typeof USER_UPDATE_SUCCESS;
+  data: { user: { name: string; email: string } };
 }
 
 export interface IUserUpdateError {
@@ -105,6 +107,7 @@ export interface IRegisterError {
 
 export interface IRegisterSuccess {
   readonly type: typeof REGISTER_SUCCESS;
+  data: { user: { name: string; email: string } };
 }
 
 export interface ILoginRequest {
@@ -117,6 +120,7 @@ export interface ILoginError {
 
 export interface ILoginSuccess {
   readonly type: typeof LOGIN_SUCCESS;
+  data: { user: { name: string; email: string } };
 }
 
 export interface IResetPasswordRequest {
@@ -404,7 +408,7 @@ export const getUserInfo: AppThunk = (): Dispatch<any> => {
       })
       .catch((err) => {
         if (err.message === "jwt expired") {
-          dispatch(refreshAccessToken(getUserInfo() as TFuncVoid));
+          dispatch(refreshAccessToken(getUserInfo() as TFuncVoid) as any);
         } else {
           dispatch({ type: USER_ERROR });
         }
@@ -454,7 +458,7 @@ export const updateUserInfo: AppThunk = ({
           dispatch(
             refreshAccessToken(
               updateUserInfo({ name, email, password }) as TFuncVoid
-            )
+            ) as any
           );
         }
 

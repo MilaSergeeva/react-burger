@@ -9,6 +9,9 @@ import { rootReducer } from "./services/reducers/index.js";
 import { Provider } from "react-redux";
 import { compose, createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { socketMiddleware } from "./services/middleware/webSocketMiddleware";
+import { WS_URL_ALL, WS_URL_OWNER } from "./utils/data";
+import { TWSActions } from "./services/actions/wsOrders";
 
 declare global {
   interface Window {
@@ -23,7 +26,13 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
 //     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunk));
+const enhancer = composeEnhancers(
+  applyMiddleware(
+    thunk,
+    socketMiddleware(WS_URL_OWNER, true),
+    socketMiddleware(WS_URL_ALL, false)
+  )
+);
 
 export const store = createStore(rootReducer, enhancer);
 

@@ -1,5 +1,5 @@
 import { baseUrl, checkResponse } from "../../utils/api";
-import { ITypeOfIngredient } from "../types/types";
+import { IIngredient } from "../types/types";
 import { Dispatch } from "react";
 import { AppThunk, AppDispatch } from "../types/index";
 
@@ -14,6 +14,7 @@ export const DELETE_ORDER_NUMBER: "DELETE_ORDER_NUMBER" = "DELETE_ORDER_NUMBER";
 
 export interface IGetOrderNumber {
   readonly type: typeof GET_ORDER_NUMBER;
+  readonly orderNumber: number;
 }
 
 export interface IUpdateOrderNumber {
@@ -30,6 +31,7 @@ export interface IGetOrderRequest {
 
 export interface IUpdateOrderIngridientsDetails {
   readonly type: typeof UPDATE_ORDER_INGRIDIENTS_DELAILS;
+  readonly ingridientsTotal: IIngredient[];
 }
 
 export interface IDeleteOrderNumber {

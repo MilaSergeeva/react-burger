@@ -26,7 +26,7 @@ import {
 
 import { getCookie } from "../../utils/data";
 import {
-  ITypeOfIngredient,
+  IIngredient,
   TIngredientWithUniqueId,
 } from "../../services/types/types";
 
@@ -56,7 +56,7 @@ function BurgerConstructor() {
 
       dispatch({ type: DELETE_ORDER_NUMBER });
       history.push({
-        pathname: `/feed/${orderNumber}`,
+        pathname: `/current-order/${orderNumber}`,
         state: {
           background: location,
         },
@@ -81,7 +81,7 @@ function BurgerConstructor() {
 
     cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
     if (cartBurgerFillings.length >= 1) {
-      cartBurgerFillings.forEach((element: ITypeOfIngredient) => {
+      cartBurgerFillings.forEach((element: IIngredient) => {
         ingridientsTotal.push(element._id);
       });
     }
@@ -97,12 +97,12 @@ function BurgerConstructor() {
     }
   };
 
-  const onDropHandler = (item: ITypeOfIngredient) => {
+  const onDropHandler = (item: IIngredient) => {
     dispatch(updateCartList(item));
   };
 
   //расчет общей стоимости
-  const priceTotalFillings = (arr: ITypeOfIngredient[]) =>
+  const priceTotalFillings = (arr: IIngredient[]) =>
     arr.reduce((acc, el) => acc + el.price, 0);
 
   const totalPrice =
@@ -111,7 +111,7 @@ function BurgerConstructor() {
 
   const [, dropRef] = useDrop({
     accept: "ingridients",
-    drop(item: ITypeOfIngredient) {
+    drop(item: IIngredient) {
       const itemWithId = { ...item, uniqueId: uuidv4() };
       onDropHandler(itemWithId);
     },

@@ -3,7 +3,7 @@ import PopupIngridientsStyle from "./IngredientDetails.module.css";
 import { useParams } from "react-router-dom";
 import { useSelector } from "../../services/types/hooks";
 import appStyles from "../App/app.module.css";
-import { ITypeOfIngredient } from "../../services/types/types";
+import { IIngredient } from "../../services/types/types";
 
 function IngredientDetails() {
   const { id } = useParams() as {
@@ -13,9 +13,7 @@ function IngredientDetails() {
     (state: any) => state.ingredientReducer.items
   );
 
-  const currentProduct = allProducts.find(
-    (el: ITypeOfIngredient) => el._id === id
-  );
+  const currentProduct = allProducts.find((el: IIngredient) => el._id === id);
 
   return (
     <>

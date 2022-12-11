@@ -1,5 +1,5 @@
 import { baseUrl, checkResponse } from "../../utils/api";
-import { ITypeOfIngredient } from "../types/types";
+import { IIngredient, TIngredientWithUniqueId } from "../types/types";
 import { AppThunk, AppDispatch } from "../types/index";
 
 //Получение списка ингредиентов от API. Используется в компоненте BurgerIngredients.
@@ -56,6 +56,7 @@ export interface IGetItemsRequest {
 
 export interface IGetItemsSuccess {
   readonly type: typeof GET_ITEMS_SUCCESS;
+  readonly items: IIngredient[];
 }
 
 export interface IGetItemsFailed {
@@ -84,10 +85,12 @@ export interface IDeleteCurIngrDetails {
 
 export interface IAddToCartFillings {
   readonly type: typeof ADD_TO_CART_FILLING;
+  readonly item: IIngredient;
 }
 
 export interface IAddToCartBun {
   readonly type: typeof ADD_TO_CART_BUN;
+  readonly item: IIngredient;
 }
 
 export interface IDeleteFromCartBun {
@@ -96,10 +99,13 @@ export interface IDeleteFromCartBun {
 
 export interface IDeleteFromCartFilling {
   readonly type: typeof DELETE_FROM_CART_FILLING;
+  readonly index: number;
 }
 
 export interface IDragCartIngredient {
   readonly type: typeof DRAG_CART_INGREDIENT;
+  readonly dragIndex: number;
+  readonly hoverIndex: number;
 }
 
 export interface IDeleteFromCartIngredients {
@@ -108,10 +114,12 @@ export interface IDeleteFromCartIngredients {
 
 export interface IIncreaseFillingsCounter {
   readonly type: typeof INCREASE_FILLINGS_COUNTER;
+  readonly item: IIngredient;
 }
 
 export interface IDecreaseFillingsCounter {
   readonly type: typeof DECREASE_FILLINGS_COUNTER;
+  readonly id: string;
 }
 
 export interface IIncreaseBunsCounter {
@@ -176,7 +184,7 @@ export const getItems: AppThunk = () => {
   };
 };
 
-export const updateCartList: AppThunk = (item: ITypeOfIngredient) => {
+export const updateCartList: AppThunk = (item: IIngredient) => {
   return function (dispatch: AppDispatch) {
     if (item.type !== "bun") {
       dispatch({
