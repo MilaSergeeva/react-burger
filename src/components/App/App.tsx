@@ -56,9 +56,9 @@ function App() {
         <ProtectedRoute onlyForAuth={false} path="/reset-password" exact>
           <ResetPassword />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth={true} path="/feed">
+        <Route path="/feed">
           <OrderFeed />
-        </ProtectedRoute>
+        </Route>
         <ProtectedRoute onlyForAuth={false} path="/feed/:id">
           <Order />
         </ProtectedRoute>

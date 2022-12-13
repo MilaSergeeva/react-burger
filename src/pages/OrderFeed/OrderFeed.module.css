@@ -1,6 +1,15 @@
 .section {
   position: relative;
+  display: block;
+  max-width: 1280px;
+  margin-top: 40px;
+  margin-right: auto;
+  margin-left:auto;
+}
+
+.orderListContainier {
+  margin-top: 20px;
   display: flex;
   flex-direction: row;
-  max-width: 1280px;
+  gap: 60px;
 }

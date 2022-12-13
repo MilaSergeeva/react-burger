@@ -2,6 +2,7 @@ import { baseUrl, checkResponse } from "../../utils/api";
 import { IIngredient } from "../types/types";
 import { Dispatch } from "react";
 import { AppThunk, AppDispatch } from "../types/index";
+import { getCookie } from "../../utils/data";
 
 //Получение и обновление номера заказа в модальном окне OrderDetails.
 export const GET_ORDER_NUMBER: "GET_ORDER_NUMBER" = "GET_ORDER_NUMBER";
@@ -53,6 +54,7 @@ export const makeOrder: AppThunk = (ingredients: string[]): Dispatch<any> => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `${getCookie("accessToken")}`,
         },
         body: JSON.stringify({ ingredients: ingredients }),
       })

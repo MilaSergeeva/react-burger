@@ -7,13 +7,12 @@ type TOrders = {
   orders: TOrder[];
 };
 
-const OrderCardList: FC<TOrders> = ({ orders }) => {
+const OrdersCardList: FC<TOrders> = ({ orders }) => {
   return (
-    orders && (
-      <section className={styleOrdersCardList.section}>
-        <h2 className="text text_type_main-large">Лента заказов</h2>
-        <ul className={styleOrdersCardList.list}>
-          {orders.map((order: any) => {
+    <section className={styleOrdersCardList.section}>
+      <ul className={styleOrdersCardList.list}>
+        {orders &&
+          orders.map((order: any) => {
             return (
               <li key={order._id}>
                 <OrderCard
@@ -25,10 +24,9 @@ const OrderCardList: FC<TOrders> = ({ orders }) => {
               </li>
             );
           })}
-        </ul>
-      </section>
-    )
+      </ul>
+    </section>
   );
 };
 
-export default memo(OrderCardList);
+export default OrdersCardList;

@@ -36,13 +36,13 @@ const Order: FC<any> = () => {
         ? { type: WS_CONNECTION_START_AUTH }
         : { type: WS_CONNECTION_START }
     );
-    return () => {
-      dispatch(
-        isProfile
-          ? { type: WS_CONNECTION_CLOSED_AUTH }
-          : { type: WS_CONNECTION_CLOSED }
-      );
-    };
+    // return () => {
+    //   dispatch(
+    //     isProfile
+    //       ? { type: WS_CONNECTION_CLOSED_AUTH }
+    //       : { type: WS_CONNECTION_CLOSED }
+    //   );
+    // };
   }, [dispatch, isProfile]);
 
   const { orders } = useSelector((state: any) =>

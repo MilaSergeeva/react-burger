@@ -308,7 +308,7 @@ export const logOut: AppThunk = (redirectToLogin: TFuncVoid): Dispatch<any> => {
     })
       .then((res) => {
         dispatch({
-          type: LOGIN_REQUEST,
+          type: LOGOUT_REQUEST,
         });
 
         return res;
@@ -317,7 +317,8 @@ export const logOut: AppThunk = (redirectToLogin: TFuncVoid): Dispatch<any> => {
 
       .then((res) => {
         if (res && res.success) {
-          localStorage.removeItem("refreshToken");
+          localStorage.getItem("refreshToken") !== null &&
+            localStorage.removeItem("refreshToken");
           unsetCookie("accessToken");
 
           dispatch({ type: LOGOUT_SUCCESS });
@@ -412,6 +413,7 @@ export const getUserInfo: AppThunk = (): Dispatch<any> => {
         } else {
           dispatch({ type: USER_ERROR });
         }
+        console.log(err);
       });
   };
 };

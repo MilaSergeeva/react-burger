@@ -47,9 +47,9 @@
   background-color: rgba(19, 19, 22, 1);
 }
 
-.listItem:not(:first-child) {
+/* .listItem:not(:first-child) {
   margin-left: -16px;
-}
+} */
 
 .img {
   height: 64px;

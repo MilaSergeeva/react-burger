@@ -11,35 +11,65 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
   const { orders } = data;
   const { done, pending } = getOrderNumbers(orders);
 
+  const divideDoneOrders = (array) => {
+    let size = 10; //размер подмассива
+    let subarray = [] as any; //массив в который будет выведен результат.
+    for (let i = 0; i < Math.ceil(array.length / size); i++) {
+      subarray[i] = array.slice(i * size, i * size + size);
+    }
+
+    return subarray;
+  };
+
+  divideDoneOrders(done);
+
   return (
     <section className={orderTotalStyle.section}>
       <div className={orderTotalStyle.boardContainer}>
         <div className="mr-9">
           <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
-          <ul className={orderTotalStyle.list}>
-            {done.map((item: number, index: number) => {
+          <div className={orderTotalStyle.doneOrdersCotaiier}>
+            {divideDoneOrders(done).map((array: [], index: number) => {
               return (
-                <li
-                  key={index}
-                  className={`text text_type_digits-default ${orderTotalStyle.listItem}`}
+                <ul
+                  className={orderTotalStyle.list}
+                  key={index + Math.random()}
                 >
-                  {item}
-                </li>
+                  {array.map((item: number, index: number) => {
+                    return (
+                      <li
+                        key={index + Math.random()}
+                        className={`text text_type_digits-default ${orderTotalStyle.listItem} ${orderTotalStyle.doneColor}`}
+                      >
+                        {item}
+                      </li>
+                    );
+                  })}
+                </ul>
               );
             })}
-          </ul>
+          </div>
         </div>
         <div>
           <h3 className="text text_type_main-medium mb-6">В работе:</h3>
-          <ul className={orderTotalStyle.list}>
-            {pending.map((item: number, index: number) => {
+          <div className={orderTotalStyle.doneOrdersCotaiier}>
+            {divideDoneOrders(pending).map((array: [], index: number) => {
               return (
-                <li key={index} className={`text text_type_digits-default`}>
-                  {item}
-                </li>
+                <ul className={orderTotalStyle.list}>
+                  {array.map((item: number, index: number) => {
+                    return (
+                      <li
+                        key={index}
+                        className={`text text_type_digits-default`}
+                      >
+                        {item}
+                      </li>
+                    );
+                  })}
+                </ul>
               );
             })}
-          </ul>
+          </div>
         </div>
       </div>
       <div className="mt-15 mb-15">
