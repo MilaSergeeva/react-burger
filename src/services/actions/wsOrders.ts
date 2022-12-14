@@ -21,6 +21,10 @@ export const WS_CONNECTION_CLOSED_AUTH: "WS_CONNECTION_CLOSED_AUTH" =
 export const WS_GET_MESSAGE_AUTH: "WS_GET_MESSAGE_AUTH" = "WS_GET_MESSAGE_AUTH";
 export const WS_SEND_MESSAGE_AUTH: "WS_SEND_MESSAGE_AUTH" =
   "WS_SEND_MESSAGE_AUTH";
+export const WS_CONNECTION_FINISHED_AUTH: "WS_CONNECTION_FINISHED_AUTH" =
+  "WS_CONNECTION_FINISHED_AUTH";
+export const WS_CONNECTION_FINISHED: "WS_CONNECTION_FINISHED" =
+  "WS_CONNECTION_FINISHED";
 
 export interface IWSStart {
   readonly type: typeof WS_CONNECTION_START;
@@ -38,6 +42,11 @@ export interface IWSError {
 
 export interface IWSClosed {
   readonly type: typeof WS_CONNECTION_CLOSED;
+  readonly payload: PayloadAction;
+}
+
+export interface IWSFinished {
+  readonly type: typeof WS_CONNECTION_FINISHED;
   readonly payload: PayloadAction;
 }
 
@@ -69,6 +78,11 @@ export interface IWSClosedAuth {
   readonly payload: PayloadAction;
 }
 
+export interface IWSFinishedAuth {
+  readonly type: typeof WS_CONNECTION_FINISHED_AUTH;
+  readonly payload: PayloadAction;
+}
+
 export interface IWSGetMessageAuth {
   readonly type: typeof WS_GET_MESSAGE_AUTH;
   readonly payload: TWSData;
@@ -90,4 +104,6 @@ export type TWSActions =
   | IWSErrorAuth
   | IWSClosedAuth
   | IWSGetMessageAuth
-  | IWSSendMessageAuth;
+  | IWSSendMessageAuth
+  | IWSFinishedAuth
+  | IWSFinished;

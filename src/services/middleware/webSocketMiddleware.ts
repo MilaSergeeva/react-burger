@@ -14,6 +14,8 @@ import {
   WS_CONNECTION_CLOSED_AUTH,
   WS_GET_MESSAGE_AUTH,
   WS_SEND_MESSAGE_AUTH,
+  WS_CONNECTION_FINISHED_AUTH,
+  WS_CONNECTION_FINISHED,
 } from "../actions/wsOrders";
 import { WS_URL_ALL, WS_URL_OWNER } from "../../utils/data";
 
@@ -21,13 +23,10 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
   let socket: WebSocket | null = null;
   let socketAuth: WebSocket | null = null;
 
-  let auth = false;
+  const auth = localStorage.getItem("refreshToken") !== null;
 
-  if (localStorage.getItem("refreshToken") !== null) {
-    auth = true;
-  } else {
-    auth = false;
-  }
+  console.log(auth);
+
   return (next: (item: AnyAction) => void) => (action: AnyAction) => {
     const { dispatch } = store;
     const { type, payload } = action;
@@ -58,7 +57,7 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
       };
 
       socket.onclose = (event) => {
-        dispatch({ type: WS_CONNECTION_CLOSED, payload: event });
+        dispatch({ type: WS_CONNECTION_FINISHED, payload: event });
       };
     }
 
@@ -83,7 +82,7 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
       };
 
       socketAuth.onclose = (event) => {
-        dispatch({ type: WS_CONNECTION_CLOSED_AUTH, payload: event });
+        dispatch({ type: WS_CONNECTION_FINISHED_AUTH, payload: event });
       };
     }
 

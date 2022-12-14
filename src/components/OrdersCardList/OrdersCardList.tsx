@@ -22,7 +22,7 @@ const OrdersCardList: FC<TOrders> = ({ orders }) => {
     return () => {
       isUserProfile && dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
     };
-  }, [dispatch]);
+  }, [dispatch, isUserProfile]);
 
   return (
     <section className={styleOrdersCardList.section}>

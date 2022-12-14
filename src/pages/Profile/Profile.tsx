@@ -18,7 +18,7 @@ import {
   getUserInfo,
 } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
-import OrdersCardList from "../../components/OrdersCardList/OrdersCardList";
+import OrdersHistoryList from "../../components/OrdesHistoryList/OrderHistoryList";
 import {
   WS_CONNECTION_START_AUTH,
   WS_CONNECTION_CLOSED_AUTH,
@@ -39,7 +39,7 @@ const Profile = () => {
   //   };
   // }, [dispatch]);
 
-  const wsAuthOrders = useSelector((state: any) => state.wsReducerAuth.data);
+  // const wsAuthOrders = useSelector((state: any) => state.wsReducerAuth.data);
 
   const { name, email } = useSelector((state: any) => state.authReducer.user);
   const userInfoUpdateErr = useSelector(
@@ -197,8 +197,7 @@ const Profile = () => {
           </div>
         </Route>
         <Route path="/profile/orders" exact>
-          <></>
-          <OrdersCardList orders={wsAuthOrders.orders} />
+          <OrdersHistoryList />
         </Route>
       </Switch>
     </section>
