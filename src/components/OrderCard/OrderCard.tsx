@@ -2,7 +2,6 @@ import { memo, FC } from "react";
 import styleOrderCard from "./OrderCard.module.css";
 import { useSelector } from "../../services/types/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-// import { ingredientSelectors } from "../../services/selectors";
 import {
   getOrderDate,
   getOrderIngredients,
@@ -28,10 +27,12 @@ const OrderCard: FC<TOrderCard> = ({
   order,
 }) => {
   const location = useLocation();
+
   const pathName =
     location.pathname === "/feed"
-      ? `/feed/${order?._id}`
+      ? `/feed/${order._id}`
       : `/profile/orders/${order._id}`;
+
   const ingredientsTotal: IIngredient[] = useSelector(
     (state: any) => state.ingredientReducer.items
   );
@@ -41,7 +42,7 @@ const OrderCard: FC<TOrderCard> = ({
     ingredientsTotal
   ).slice(0, 6);
 
-  const countIngredients = ingredients.length - 6;
+  const ingredientsCount = ingredients.length - 6;
 
   const orderStatus = status ? getOrderStatus(status, styleOrderCard) : null;
 
@@ -76,13 +77,8 @@ const OrderCard: FC<TOrderCard> = ({
         <div className={styleOrderCard.containerOrderImg}>
           <ul className={styleOrderCard.list}>
             {orderIngredients.map((item: IIngredient, index: number) => {
-              const zIndex = 6 - index;
               return (
-                <li
-                  className={styleOrderCard.listItem}
-                  key={index}
-                  style={{ zIndex }}
-                >
+                <li className={styleOrderCard.listItem} key={index}>
                   <img
                     src={item.image_large}
                     alt={item.name}
@@ -94,7 +90,7 @@ const OrderCard: FC<TOrderCard> = ({
             {ingredients.length > 6 && (
               <div className={styleOrderCard.overlay}>
                 {" "}
-                <span className="text text_type_main-default">{`+${countIngredients}`}</span>
+                <span className="text text_type_main-default">{`+${ingredientsCount}`}</span>
               </div>
             )}
           </ul>

@@ -1,4 +1,4 @@
-import { memo, useEffect, FC } from "react";
+import { useEffect, FC } from "react";
 import { useParams, useRouteMatch } from "react-router-dom";
 import appStyles from "../App/app.module.css";
 import { useDispatch, useSelector } from "../../services/types/hooks";
@@ -20,43 +20,47 @@ import {
   getOrderStatus,
 } from "../../utils/data";
 import { TOrder } from "../../services/types/types";
+import { useLocation } from "react-router-dom";
 
 const Order: FC<any> = () => {
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
-  const isProfile = !!useRouteMatch("/profile");
+  const isProfile = useRouteMatch("/profile");
+  const location = useLocation();
+
+  const pathName =
+    location.pathname === "/feed" ? `/feed/:id` : `/profile/orders/:id`;
 
   const ingridients = useSelector(
     (state: any) => state.ingredientReducer.items
   );
 
   useEffect(() => {
-    dispatch(
+    isProfile
+      ? dispatch({ type: WS_CONNECTION_START_AUTH })
+      : dispatch({ type: WS_CONNECTION_START });
+    return () => {
       isProfile
-        ? { type: WS_CONNECTION_START_AUTH }
-        : { type: WS_CONNECTION_START }
-    );
-    // return () => {
-    //   dispatch(
-    //     isProfile
-    //       ? { type: WS_CONNECTION_CLOSED_AUTH }
-    //       : { type: WS_CONNECTION_CLOSED }
-    //   );
-    // };
-  }, [dispatch, isProfile]);
+        ? dispatch({ type: WS_CONNECTION_CLOSED_AUTH })
+        : dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, [dispatch]);
 
   const { orders } = useSelector((state: any) =>
-    isProfile ? state.wsAuth.data : state.ws.data
+    isProfile ? state.wsReducerAuth.data : state.wsReducer.data
   );
 
   const wsConnected = useSelector((state: any) =>
-    isProfile ? state.wsAuth.wsConnected : state.ws.wsConnected
+    isProfile ? state.wsReducerAuth.wsConnected : state.wsReducer.wsConnected
   );
 
   const order = orders.find((i: TOrder) => i._id === id) as TOrder;
   const timeOrder = getOrderDate(order);
 
-  if (order && wsConnected) {
+  console.log(order, orders, wsConnected);
+
+  // if (order && wsConnected) {
+  if (order) {
     const numberOfIngredients = getQuantityIngredients(order.ingredients);
 
     const orderIngredients = getOrderIngredients(
@@ -71,6 +75,7 @@ const Order: FC<any> = () => {
     );
     const status = getOrderStatus(order.status, styleOrder);
     const render = () => {
+      console.log(order, wsConnected);
       return (
         <section className={styleOrder.section}>
           <span
@@ -111,8 +116,9 @@ const Order: FC<any> = () => {
     };
     return render();
   } else {
+    console.log(order, wsConnected);
     return <div className={appStyles.loader} />;
   }
 };
 
-export default memo(Order);
+export default Order;

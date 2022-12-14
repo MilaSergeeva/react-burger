@@ -20,8 +20,8 @@ import {
 import { useForm } from "../../hooks/useForm";
 import OrdersCardList from "../../components/OrdersCardList/OrdersCardList";
 import {
-  // WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START,
+  WS_CONNECTION_START_AUTH,
+  WS_CONNECTION_CLOSED_AUTH,
 } from "../../services/actions/wsOrders";
 
 const Profile = () => {
@@ -32,12 +32,12 @@ const Profile = () => {
     history.push("/login");
   };
 
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    // return () => {
-    //   dispatch({ type: WS_CONNECTION_CLOSED });
-    // };
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch({ type: WS_CONNECTION_START_AUTH });
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+  //   };
+  // }, [dispatch]);
 
   const wsAuthOrders = useSelector((state: any) => state.wsReducerAuth.data);
 

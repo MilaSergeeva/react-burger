@@ -306,6 +306,7 @@ export const logOut: AppThunk = (redirectToLogin: TFuncVoid): Dispatch<any> => {
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ token: localStorage.refreshToken }),
     })
+      .then(checkResponse)
       .then((res) => {
         dispatch({
           type: LOGOUT_REQUEST,
@@ -313,8 +314,6 @@ export const logOut: AppThunk = (redirectToLogin: TFuncVoid): Dispatch<any> => {
 
         return res;
       })
-      .then(checkResponse)
-
       .then((res) => {
         if (res && res.success) {
           localStorage.getItem("refreshToken") !== null &&
@@ -354,13 +353,14 @@ export const refreshAccessToken: AppThunk = (afterRefresh): Dispatch<any> => {
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
     })
+      .then(checkResponse)
       .then((res) => {
         dispatch({
           type: TOKEN_REQUEST,
         });
         return res;
       })
-      .then(checkResponse)
+
       .then((res) => {
         const { refreshToken, accessToken } = res;
 
@@ -392,13 +392,13 @@ export const getUserInfo: AppThunk = (): Dispatch<any> => {
       redirect: "follow",
       referrerPolicy: "no-referrer",
     })
+      .then(checkResponse)
       .then((res) => {
         dispatch({
           type: TOKEN_REQUEST,
         });
         return res;
       })
-      .then(checkResponse)
 
       .then((res) => {
         if (res && res.success) {

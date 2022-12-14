@@ -38,12 +38,13 @@ function App() {
     <div className={appStyles.appBlock}>
       <AppHeader />
       <Switch location={background || location}>
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id">
+          <Order />
+        </ProtectedRoute>
         <ProtectedRoute onlyForAuth={true} path="/profile">
           <Profile />
         </ProtectedRoute>
-        <ProtectedRoute onlyForAuth={true} path="/profile/order/:id">
-          <Order />
-        </ProtectedRoute>
+
         <ProtectedRoute onlyForAuth={false} path="/register" exact>
           <Register />
         </ProtectedRoute>
@@ -56,12 +57,13 @@ function App() {
         <ProtectedRoute onlyForAuth={false} path="/reset-password" exact>
           <ResetPassword />
         </ProtectedRoute>
+        <Route path="/feed/:id">
+          <Order />
+        </Route>
         <Route path="/feed">
           <OrderFeed />
         </Route>
-        <ProtectedRoute onlyForAuth={false} path="/feed/:id">
-          <Order />
-        </ProtectedRoute>
+
         <Route path="/ingridients/:id" exact>
           <div className={appStyles.ingridientDetailsContainier}>
             <h1>Детали ингридиента</h1>
