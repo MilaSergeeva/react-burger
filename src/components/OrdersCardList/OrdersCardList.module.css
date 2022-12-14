@@ -1,11 +1,8 @@
 
 
 .section {
-  /* width: 600px; */
   height: 100%;
   margin: 0;
-  /* padding-top: 40px; */
-  /* padding-left: 20px; */
   max-width: 640px;
   min-width: 50%;
 }
@@ -14,10 +11,10 @@
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  padding: 0;
   max-height: 756px;
   overflow-y: scroll;
   scrollbar-width: thin;
+  padding: 0;
 }
 
 ::-webkit-scrollbar {

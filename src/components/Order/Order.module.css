@@ -10,18 +10,6 @@
   text-align: center;
 }
 
-.doneColor {
-  color: rgba(0, 204, 204, 1);
-}
-
-.pendingColor {
-  color: rgba(242, 242, 243, 1);
-}
-
-.cancelledColor {
-  color: rgb(255, 0, 0);
-}
-
 .list {
   display: flex;
   flex-direction: column;
@@ -49,4 +37,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.done {
+  color: rgba(0, 204, 204, 1);
+}
+
+.pending {
+  color: rgba(242, 242, 243, 1);
+}
+
+.cancelled {
+  color: rgb(255, 0, 0);
 }

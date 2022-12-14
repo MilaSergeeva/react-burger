@@ -21,14 +21,14 @@ type TOrderCard = {
 
 const OrderCard: FC<TOrderCard> = ({
   name,
+  status,
   number,
   ingredients,
-  status,
   order,
 }) => {
   const location = useLocation();
 
-  const pathName =
+  const path =
     location.pathname === "/feed"
       ? `/feed/${order._id}`
       : `/profile/orders/${order._id}`;
@@ -42,9 +42,8 @@ const OrderCard: FC<TOrderCard> = ({
     ingredientsTotal
   ).slice(0, 6);
 
-  const ingredientsCount = ingredients.length - 6;
-
   const orderStatus = status ? getOrderStatus(status, styleOrderCard) : null;
+  const ingredientsCount = ingredients.length - 6;
 
   const price = getOrderPrice(
     getOrderIngredients(order.ingredients, ingredientsTotal)
@@ -55,7 +54,7 @@ const OrderCard: FC<TOrderCard> = ({
   return (
     <Link
       className={styleOrderCard.link}
-      to={{ pathname: pathName, state: { background: location } }}
+      to={{ pathname: path, state: { background: location } }}
     >
       <section className={styleOrderCard.section}>
         <div className={styleOrderCard.orderTime}>

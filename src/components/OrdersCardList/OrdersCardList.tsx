@@ -14,13 +14,13 @@ type TOrders = {
 };
 
 const OrdersCardList: FC<TOrders> = ({ orders }) => {
-  const isProfile = useRouteMatch("/profile");
   const dispatch = useDispatch();
+  const isUserProfile = useRouteMatch("/profile");
 
   useEffect(() => {
-    isProfile && dispatch({ type: WS_CONNECTION_START_AUTH });
+    isUserProfile && dispatch({ type: WS_CONNECTION_START_AUTH });
     return () => {
-      isProfile && dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+      isUserProfile && dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
     };
   }, [dispatch]);
 
@@ -32,10 +32,10 @@ const OrdersCardList: FC<TOrders> = ({ orders }) => {
             return (
               <li key={order._id}>
                 <OrderCard
-                  number={order.number}
-                  name={order.name}
                   ingredients={order.ingredients}
                   order={order}
+                  number={order.number}
+                  name={order.name}
                 />
               </li>
             );

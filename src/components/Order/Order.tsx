@@ -23,17 +23,14 @@ import { TOrder } from "../../services/types/types";
 import { useLocation } from "react-router-dom";
 
 const Order: FC<any> = () => {
-  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
   const isProfile = useRouteMatch("/profile");
-  const location = useLocation();
-
-  const pathName =
-    location.pathname === "/feed" ? `/feed/:id` : `/profile/orders/:id`;
 
   const ingridients = useSelector(
     (state: any) => state.ingredientReducer.items
   );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     isProfile
@@ -59,7 +56,6 @@ const Order: FC<any> = () => {
 
   console.log(order, orders, wsConnected);
 
-  // if (order && wsConnected) {
   if (order) {
     const numberOfIngredients = getQuantityIngredients(order.ingredients);
 
@@ -75,7 +71,6 @@ const Order: FC<any> = () => {
     );
     const status = getOrderStatus(order.status, styleOrder);
     const render = () => {
-      console.log(order, wsConnected);
       return (
         <section className={styleOrder.section}>
           <span
@@ -114,9 +109,9 @@ const Order: FC<any> = () => {
         </section>
       );
     };
+
     return render();
   } else {
-    console.log(order, wsConnected);
     return <div className={appStyles.loader} />;
   }
 };

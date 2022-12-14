@@ -173,11 +173,6 @@ export type TAuthActions =
   | IForgotPasswordError
   | IForgotPasswordSuccess;
 
-// type TUserInfo = {
-//   name?: string | null;
-//   email?: string | null;
-// }
-
 function setUserInfoToLocalStore({ name, email }: TUserInfo) {
   localStorage.setItem(
     "userInfo",
@@ -374,7 +369,7 @@ export const refreshAccessToken: AppThunk = (afterRefresh): Dispatch<any> => {
           dispatch({ type: TOKEN_ERROR });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         localStorage.removeItem("refreshToken");
         dispatch({ type: TOKEN_ERROR });
       });

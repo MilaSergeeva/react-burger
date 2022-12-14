@@ -86,6 +86,7 @@ function BurgerConstructor() {
       });
     }
     dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
+
     return ingridientsTotal;
   };
 
@@ -202,7 +203,6 @@ function BurgerConstructor() {
           }
           onClick={handleMakeAnOrder}
         >
-          {/* Place order */}
           Оформить заказ
         </Button>
       </div>

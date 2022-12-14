@@ -12,8 +12,8 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
   const { done, pending } = getOrderNumbers(orders);
 
   const divideDoneOrders = (array) => {
-    let size = 10; //размер подмассива
-    let subarray = [] as any; //массив в который будет выведен результат.
+    let size = 10;
+    let subarray = [] as any;
     for (let i = 0; i < Math.ceil(array.length / size); i++) {
       subarray[i] = array.slice(i * size, i * size + size);
     }
@@ -39,7 +39,7 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
                     return (
                       <li
                         key={index + Math.random()}
-                        className={`text text_type_digits-default ${orderTotalStyle.listItem} ${orderTotalStyle.doneColor}`}
+                        className={`text text_type_digits-default ${orderTotalStyle.listItem} ${orderTotalStyle.done}`}
                       >
                         {item}
                       </li>

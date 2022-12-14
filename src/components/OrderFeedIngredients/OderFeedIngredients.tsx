@@ -19,7 +19,7 @@ const OderFeedIngredients: FC<TOderFeedIngredients> = ({
 
   return (
     <section className={styleOrderFeedIngredients.section}>
-      <div className={styleOrderFeedIngredients.containerDiv}>
+      <div className={styleOrderFeedIngredients.container}>
         <img
           className={`mr-4 ${styleOrderFeedIngredients.img}`}
           src={ingredient.image}
@@ -31,8 +31,8 @@ const OderFeedIngredients: FC<TOderFeedIngredients> = ({
           {ingredient.name}
         </span>
       </div>
-      <div className={styleOrderFeedIngredients.containerDiv}>
-        <div className={styleOrderFeedIngredients.divPrice}>
+      <div className={styleOrderFeedIngredients.container}>
+        <div className={styleOrderFeedIngredients.containierPrice}>
           <span className="text text_type_digits-default">
             {ingredientPrice}
           </span>

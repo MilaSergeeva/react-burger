@@ -34,21 +34,11 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
 
     const token = auth ? getCookie("accessToken")?.slice(7) : null;
     if (type === WS_CONNECTION_START) {
-      // socketAuth = auth
-      //   ? new WebSocket(`${WS_URL_OWNER}?token=${token}`)
-      //   : null;
-
       socket = new WebSocket(`${WS_URL_ALL}`);
-
-      console.log("я тут");
     }
 
     if (type === WS_CONNECTION_START_AUTH) {
       socketAuth = new WebSocket(`${WS_URL_OWNER}?token=${token}`);
-
-      // socket = new WebSocket(`${WS_URL_ALL}`);
-
-      console.log("zzzzz");
     }
 
     if (socket) {
@@ -61,7 +51,6 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
       };
 
       socket.onmessage = (event) => {
-        console.log("и вот тут");
         const { data } = event;
         const parsedData = JSON.parse(data);
         const { success, ...restParsedData } = parsedData;
@@ -83,7 +72,6 @@ export const socketMiddleware = () => (store: MiddlewareAPI) => {
       };
 
       socketAuth.onmessage = (event) => {
-        console.log("а теперь тут");
         const { data } = event;
         const parsedData = JSON.parse(data);
         const { success, ...restParsedData } = parsedData;

@@ -39,10 +39,10 @@ function unsetCookie(name: string) {
 
 const getOrderStatus = (status: string, style: { [key: string]: string }) => {
   return status === "done"
-    ? { nameStatus: "Выполнен", colorStatus: style.doneColor }
+    ? { nameStatus: "Выполнен", colorStatus: style.done }
     : status === "pending"
-    ? { nameStatus: "Готовится", colorStatus: style.pendingColor }
-    : { nameStatus: "Отменён", colorStatus: style.cancelledColor };
+    ? { nameStatus: "Готовится", colorStatus: style.pending }
+    : { nameStatus: "Отменён", colorStatus: style.cancelled };
 };
 
 const getOrderIngredients = (
