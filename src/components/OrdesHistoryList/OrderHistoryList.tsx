@@ -1,10 +1,10 @@
 import React, { memo, useEffect } from "react";
+import { useDispatch, useSelector } from "../../services/types/hooks";
+import { TOrder } from "../../services/types/types";
 import {
   WS_CONNECTION_CLOSED_AUTH,
   WS_CONNECTION_START_AUTH,
 } from "../../services/actions/wsOrders";
-import { useDispatch, useSelector } from "../../services/types/hooks";
-import { TOrder } from "../../services/types/types";
 import OrderCard from "../OrderCard/OrderCard";
 import styleOrdersHistoryList from "./OrdersHistoryList.module.css";
 

@@ -16,6 +16,8 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NotFound404 from "../NotFound404/NotFound404";
 import OrderFeed from "../../pages/OrderFeed/OrderFeed";
 import Order from "../Order/Order";
+import ProfileOrderPage from "../../pages/ProfileOrderPage/ProfileOrderPage";
+import OrderCheck from "../../pages/OrderCheck/OrderCheck";
 import { useDispatch } from "../../services/types/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -39,7 +41,7 @@ function App() {
       <AppHeader />
       <Switch location={background || location}>
         <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id">
-          <Order />
+          <ProfileOrderPage />
         </ProtectedRoute>
         <ProtectedRoute onlyForAuth={true} path="/profile">
           <Profile />
@@ -58,7 +60,7 @@ function App() {
           <ResetPassword />
         </ProtectedRoute>
         <Route path="/feed/:id">
-          <Order />
+          <OrderCheck />
         </Route>
         <Route path="/feed">
           <OrderFeed />
