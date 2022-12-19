@@ -14,7 +14,11 @@ import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import NotFound404 from "../NotFound404/NotFound404";
-import { useDispatch } from "react-redux";
+import OrderFeed from "../../pages/OrderFeed/OrderFeed";
+import Order from "../Order/Order";
+import ProfileOrderPage from "../../pages/ProfileOrderPage/ProfileOrderPage";
+import OrderCheck from "../../pages/OrderCheck/OrderCheck";
+import { useDispatch } from "../../services/types/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getItems } from "../../services/actions/ingredients";
@@ -36,9 +40,13 @@ function App() {
     <div className={appStyles.appBlock}>
       <AppHeader />
       <Switch location={background || location}>
+        <ProtectedRoute onlyForAuth={true} path="/profile/orders/:id">
+          <ProfileOrderPage />
+        </ProtectedRoute>
         <ProtectedRoute onlyForAuth={true} path="/profile">
           <Profile />
         </ProtectedRoute>
+
         <ProtectedRoute onlyForAuth={false} path="/register" exact>
           <Register />
         </ProtectedRoute>
@@ -51,6 +59,13 @@ function App() {
         <ProtectedRoute onlyForAuth={false} path="/reset-password" exact>
           <ResetPassword />
         </ProtectedRoute>
+        <Route path="/feed/:id">
+          <OrderCheck />
+        </Route>
+        <Route path="/feed">
+          <OrderFeed />
+        </Route>
+
         <Route path="/ingridients/:id" exact>
           <div className={appStyles.ingridientDetailsContainier}>
             <h1>Детали ингридиента</h1>
@@ -81,7 +96,21 @@ function App() {
               <IngredientDetails />
             </Modal>
           </Route>
-          <Route path="/feed/:number">
+          <ProtectedRoute
+            onlyForAuth={true}
+            path="/profile/orders/:id"
+            exact={true}
+          >
+            <Modal isOpened={true} onClose={handleModalClose} header={""}>
+              <Order />
+            </Modal>
+          </ProtectedRoute>
+          <Route path="/feed/:id" exact={true}>
+            <Modal isOpened={true} onClose={handleModalClose} header={""}>
+              <Order />
+            </Modal>
+          </Route>
+          <Route path="/current-order/:number">
             <Modal isOpened={true} onClose={handleModalClose} header={""}>
               <OrderDetails />
             </Modal>

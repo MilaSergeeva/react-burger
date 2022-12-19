@@ -1,48 +1,179 @@
 import { baseUrl, checkResponse } from "../../utils/api";
-import { TNewPasswordApi, TFuncVoid, TLoginApi, TUserApi} from "../../utils/types";
+import {
+  TNewPasswordApi,
+  TFuncVoid,
+  TLoginApi,
+  TUserApi,
+  TUserInfo,
+} from "../types/types";
 import { setCookie, getCookie, unsetCookie } from "../../utils/data";
 import { Dispatch } from "react";
+import { AppThunk, AppDispatch } from "../types/index";
 
 //Авторизация
 
-export const USER_REQUEST = "USER_REQUEST";
-export const USER_SUCCESS = "USER_SUCCESS";
-export const USER_ERROR = "USER_ERROR";
+export const USER_REQUEST: "USER_REQUEST" = "USER_REQUEST";
+export const USER_SUCCESS: "USER_SUCCESS" = "USER_SUCCESS";
+export const USER_ERROR: "USER_ERROR" = "USER_ERROR";
 
-export const USER_UPDATE_REQUEST = "USER_UPDATE_REQUEST";
-export const USER_UPDATE_SUCCESS = "USER_UPDATE_SUCCESS";
-export const USER_UPDATE_ERROR = "USER_UPDATE_ERROR";
+export const USER_UPDATE_REQUEST: "USER_UPDATE_REQUEST" = "USER_UPDATE_REQUEST";
+export const USER_UPDATE_SUCCESS: "USER_UPDATE_SUCCESS" = "USER_UPDATE_SUCCESS";
+export const USER_UPDATE_ERROR: "USER_UPDATE_ERROR" = "USER_UPDATE_ERROR";
 
-export const TOKEN_REQUEST = "TOKEN_REQUEST";
-export const TOKEN_SUCCESS = "TOKEN_SUCCESS";
-export const TOKEN_ERROR = "TOKEN_ERROR";
+export const TOKEN_REQUEST: "TOKEN_REQUEST" = "TOKEN_REQUEST";
+export const TOKEN_SUCCESS: "TOKEN_SUCCESS" = "TOKEN_SUCCESS";
+export const TOKEN_ERROR: "TOKEN_ERROR" = "TOKEN_ERROR";
 
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_ERROR = "TOKEN_ERROR";
+export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+export const LOGOUT_ERROR: "LOGOUT_ERROR" = "LOGOUT_ERROR";
 
-export const REGISTER_REQUEST = "REGISTER_REQUEST";
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_ERROR = "REGISTER_ERROR";
+export const REGISTER_REQUEST: "REGISTER_REQUEST" = "REGISTER_REQUEST";
+export const REGISTER_SUCCESS: "REGISTER_SUCCESS" = "REGISTER_SUCCESS";
+export const REGISTER_ERROR: "REGISTER_ERROR" = "REGISTER_ERROR";
 
-export const LOGIN_REQUEST = "LOGIN_REQUEST";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGIN_REQUEST: "LOGIN_REQUEST" = "LOGIN_REQUEST";
+export const LOGIN_SUCCESS: "LOGIN_SUCCESS" = "LOGIN_SUCCESS";
+export const LOGIN_ERROR: "LOGIN_ERROR" = "LOGIN_ERROR";
 
 export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
 
-export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
-export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
-export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
+export const FORGOT_PASSWORD_REQUEST: "FORGOT_PASSWORD_REQUEST" =
+  "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS: "FORGOT_PASSWORD_SUCCESS" =
+  "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_ERROR: "FORGOT_PASSWORD_ERROR" =
+  "FORGOT_PASSWORD_ERROR";
 
-type TUserInfo = {
-  name?: string | null;
-  email?: string | null;
+export interface IUserRequest {
+  readonly type: typeof USER_REQUEST;
 }
 
-function setUserInfoToLocalStore({ name, email } : TUserInfo) {
+export interface IUserSuccess {
+  readonly type: typeof USER_SUCCESS;
+  data: { user: { name: string; email: string } };
+}
+
+export interface IUserError {
+  readonly type: typeof USER_ERROR;
+}
+
+export interface IUserUpdateRequest {
+  readonly type: typeof USER_UPDATE_REQUEST;
+}
+
+export interface IUserUpdateSuccess {
+  readonly type: typeof USER_UPDATE_SUCCESS;
+  data: { user: { name: string; email: string } };
+}
+
+export interface IUserUpdateError {
+  readonly type: typeof USER_UPDATE_ERROR;
+}
+
+export interface ITokenRequest {
+  readonly type: typeof TOKEN_REQUEST;
+}
+
+export interface ITokenError {
+  readonly type: typeof TOKEN_ERROR;
+}
+
+export interface ITokenSuccess {
+  readonly type: typeof TOKEN_SUCCESS;
+}
+
+export interface ILogoutRequest {
+  readonly type: typeof LOGOUT_REQUEST;
+}
+
+export interface ILogoutError {
+  readonly type: typeof LOGOUT_ERROR;
+}
+
+export interface ILogoutSuccess {
+  readonly type: typeof LOGOUT_SUCCESS;
+}
+
+export interface IRegisterRequest {
+  readonly type: typeof REGISTER_REQUEST;
+}
+
+export interface IRegisterError {
+  readonly type: typeof REGISTER_ERROR;
+}
+
+export interface IRegisterSuccess {
+  readonly type: typeof REGISTER_SUCCESS;
+  data: { user: { name: string; email: string } };
+}
+
+export interface ILoginRequest {
+  readonly type: typeof LOGIN_REQUEST;
+}
+
+export interface ILoginError {
+  readonly type: typeof LOGIN_ERROR;
+}
+
+export interface ILoginSuccess {
+  readonly type: typeof LOGIN_SUCCESS;
+  data: { user: { name: string; email: string } };
+}
+
+export interface IResetPasswordRequest {
+  readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+
+export interface IResetPasswordError {
+  readonly type: typeof RESET_PASSWORD_ERROR;
+}
+
+export interface IResetPasswordSuccess {
+  readonly type: typeof RESET_PASSWORD_SUCCESS;
+}
+
+export interface IForgotPasswordRequest {
+  readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
+
+export interface IForgotPasswordError {
+  readonly type: typeof FORGOT_PASSWORD_ERROR;
+}
+
+export interface IForgotPasswordSuccess {
+  readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+}
+
+export type TAuthActions =
+  | IUserRequest
+  | IUserSuccess
+  | IUserError
+  | IUserUpdateRequest
+  | IUserUpdateSuccess
+  | IUserUpdateError
+  | ITokenRequest
+  | ITokenError
+  | ITokenSuccess
+  | ILogoutRequest
+  | ILogoutError
+  | ILogoutSuccess
+  | IRegisterRequest
+  | IRegisterError
+  | IRegisterSuccess
+  | ILoginRequest
+  | ILoginError
+  | ILoginSuccess
+  | IResetPasswordRequest
+  | IResetPasswordError
+  | IResetPasswordSuccess
+  | IForgotPasswordRequest
+  | IForgotPasswordError
+  | IForgotPasswordSuccess;
+
+function setUserInfoToLocalStore({ name, email }: TUserInfo) {
   localStorage.setItem(
     "userInfo",
     JSON.stringify({
@@ -52,7 +183,7 @@ function setUserInfoToLocalStore({ name, email } : TUserInfo) {
   );
 }
 
-function getRequestHeaders(): Headers { 
+function getRequestHeaders(): Headers {
   const requestHeaders: HeadersInit = new Headers();
 
   requestHeaders.set("Accept", "application/json");
@@ -62,8 +193,8 @@ function getRequestHeaders(): Headers {
   return requestHeaders;
 }
 
-export const register = ({ email, password, name } : TUserApi): Dispatch<any> => {
-  return function (dispatch) {
+export const register: AppThunk = ({ email, password, name }: TUserApi) => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/register`, {
       headers: {
         Accept: "application/json",
@@ -77,12 +208,14 @@ export const register = ({ email, password, name } : TUserApi): Dispatch<any> =>
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ email, password, name }),
     })
-      .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: REGISTER_REQUEST,
-        })
-      )
+        });
+
+        return res;
+      })
+      .then(checkResponse)
       .then((res) => {
         const { accessToken, refreshToken } = res;
 
@@ -101,8 +234,11 @@ export const register = ({ email, password, name } : TUserApi): Dispatch<any> =>
   };
 };
 
-export const login = ({ email, password } : TLoginApi, redirectToProfile: TFuncVoid): Dispatch<any> => {
-  return function (dispatch) {
+export const login: AppThunk = (
+  { email, password }: TLoginApi,
+  redirectToProfile: TFuncVoid
+): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/login`, {
       headers: {
         Accept: "application/json",
@@ -116,12 +252,15 @@ export const login = ({ email, password } : TLoginApi, redirectToProfile: TFuncV
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ email, password }),
     })
-      .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: LOGIN_REQUEST,
-        })
-      )
+        });
+
+        return res;
+      })
+      .then(checkResponse)
+
       .then((res) => {
         const { refreshToken, accessToken } = res;
 
@@ -147,8 +286,8 @@ export const login = ({ email, password } : TLoginApi, redirectToProfile: TFuncV
   };
 };
 
-export const logOut = (redirectToLogin: TFuncVoid): Dispatch<any> => {
-  return function (dispatch) {
+export const logOut: AppThunk = (redirectToLogin: TFuncVoid): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/logout`, {
       headers: {
         Accept: "application/json",
@@ -163,14 +302,17 @@ export const logOut = (redirectToLogin: TFuncVoid): Dispatch<any> => {
       body: JSON.stringify({ token: localStorage.refreshToken }),
     })
       .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
-          type: LOGIN_REQUEST,
-        })
-      )
+          type: LOGOUT_REQUEST,
+        });
+
+        return res;
+      })
       .then((res) => {
         if (res && res.success) {
-          localStorage.removeItem("refreshToken");
+          localStorage.getItem("refreshToken") !== null &&
+            localStorage.removeItem("refreshToken");
           unsetCookie("accessToken");
 
           dispatch({ type: LOGOUT_SUCCESS });
@@ -191,8 +333,8 @@ const saveTokens = (refreshToken: string, accessToken: string) => {
   localStorage.setItem("refreshToken", refreshToken);
 };
 
-export const refreshAccessToken = (afterRefresh: TFuncVoid): Dispatch<any> => {
-  return function (dispatch) {
+export const refreshAccessToken: AppThunk = (afterRefresh): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/token`, {
       headers: {
         Accept: "application/json",
@@ -207,11 +349,13 @@ export const refreshAccessToken = (afterRefresh: TFuncVoid): Dispatch<any> => {
       body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
     })
       .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: TOKEN_REQUEST,
-        })
-      )
+        });
+        return res;
+      })
+
       .then((res) => {
         const { refreshToken, accessToken } = res;
 
@@ -225,15 +369,15 @@ export const refreshAccessToken = (afterRefresh: TFuncVoid): Dispatch<any> => {
           dispatch({ type: TOKEN_ERROR });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         localStorage.removeItem("refreshToken");
         dispatch({ type: TOKEN_ERROR });
       });
   };
 };
 
-export const getUserInfo = (): Dispatch<any> => {
-  return function (dispatch) {
+export const getUserInfo: AppThunk = (): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/user`, {
       headers: getRequestHeaders(),
       method: "GET",
@@ -244,11 +388,13 @@ export const getUserInfo = (): Dispatch<any> => {
       referrerPolicy: "no-referrer",
     })
       .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: TOKEN_REQUEST,
-        })
-      )
+        });
+        return res;
+      })
+
       .then((res) => {
         if (res && res.success) {
           dispatch({ type: USER_SUCCESS, data: res });
@@ -258,16 +404,21 @@ export const getUserInfo = (): Dispatch<any> => {
       })
       .catch((err) => {
         if (err.message === "jwt expired") {
-          dispatch(refreshAccessToken(getUserInfo() as TFuncVoid));
+          dispatch(refreshAccessToken(getUserInfo() as TFuncVoid) as any);
         } else {
           dispatch({ type: USER_ERROR });
         }
+        console.log(err);
       });
   };
 };
 
-export const updateUserInfo = ({name, email, password}: TUserApi): Dispatch<any>  => {
-  return function (dispatch) {
+export const updateUserInfo: AppThunk = ({
+  name,
+  email,
+  password,
+}: TUserApi): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/auth/user`, {
       method: "PATCH",
       headers: getRequestHeaders(),
@@ -278,12 +429,15 @@ export const updateUserInfo = ({name, email, password}: TUserApi): Dispatch<any>
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ name, email, password }),
     })
-      .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: USER_UPDATE_REQUEST,
-        })
-      )
+        });
+
+        return res;
+      })
+      .then(checkResponse)
+
       .then((res) => {
         if (res && res.success) {
           setUserInfoToLocalStore({
@@ -300,8 +454,8 @@ export const updateUserInfo = ({name, email, password}: TUserApi): Dispatch<any>
         if (err.message === "jwt expired") {
           dispatch(
             refreshAccessToken(
-              updateUserInfo({name, email, password}) as TFuncVoid
-            )
+              updateUserInfo({ name, email, password }) as TFuncVoid
+            ) as any
           );
         }
 
@@ -310,8 +464,11 @@ export const updateUserInfo = ({name, email, password}: TUserApi): Dispatch<any>
   };
 };
 
-export const getCodeToChangePassword = (email: string | null, redirectToResetPassword: TFuncVoid): Dispatch<any> => {
-  return function (dispatch) {
+export const getCodeToChangePassword: AppThunk = (
+  email: string | null,
+  redirectToResetPassword: TFuncVoid
+): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/password-reset`, {
       headers: {
         Accept: "application/json",
@@ -325,12 +482,15 @@ export const getCodeToChangePassword = (email: string | null, redirectToResetPas
       referrerPolicy: "no-referrer",
       body: JSON.stringify(email),
     })
-      .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: FORGOT_PASSWORD_REQUEST,
-        })
-      )
+        });
+
+        return res;
+      })
+      .then(checkResponse)
+
       .then((res) => {
         if (res && res.success) {
           dispatch({ type: FORGOT_PASSWORD_SUCCESS });
@@ -346,8 +506,11 @@ export const getCodeToChangePassword = (email: string | null, redirectToResetPas
   };
 };
 
-export const saveNewPassword = ({ password, token }: TNewPasswordApi, redirectToMainPage: TFuncVoid): Dispatch<any> => {
-  return function (dispatch) {
+export const saveNewPassword: AppThunk = (
+  { password, token }: TNewPasswordApi,
+  redirectToMainPage: TFuncVoid
+): Dispatch<any> => {
+  return function (dispatch: AppDispatch) {
     fetch(`${baseUrl}/password-reset/reset`, {
       headers: {
         Accept: "application/json",
@@ -361,12 +524,15 @@ export const saveNewPassword = ({ password, token }: TNewPasswordApi, redirectTo
       referrerPolicy: "no-referrer",
       body: JSON.stringify({ password, token }),
     })
-      .then(checkResponse)
-      .then(
+      .then((res) => {
         dispatch({
           type: FORGOT_PASSWORD_REQUEST,
-        })
-      )
+        });
+
+        return res;
+      })
+      .then(checkResponse)
+
       .then((res) => {
         if (res && res.success) {
           dispatch({ type: RESET_PASSWORD_SUCCESS });

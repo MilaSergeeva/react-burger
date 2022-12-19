@@ -7,7 +7,7 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { useDrop } from "react-dnd";
 import FillingsCard from "../FillingsCard/FillingsCard";
 import { v4 as uuidv4 } from "uuid";
@@ -25,7 +25,10 @@ import {
 } from "../../services/actions/order";
 
 import { getCookie } from "../../utils/data";
-import { ITypeOfIngredient, TIngredientWithUniqueId } from "../../utils/types";
+import {
+  IIngredient,
+  TIngredientWithUniqueId,
+} from "../../services/types/types";
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -53,7 +56,7 @@ function BurgerConstructor() {
 
       dispatch({ type: DELETE_ORDER_NUMBER });
       history.push({
-        pathname: `/feed/${orderNumber}`,
+        pathname: `/current-order/${orderNumber}`,
         state: {
           background: location,
         },
@@ -78,11 +81,12 @@ function BurgerConstructor() {
 
     cartBurgerBuns !== null && ingridientsTotal.push(cartBurgerBuns._id);
     if (cartBurgerFillings.length >= 1) {
-      cartBurgerFillings.forEach((element: ITypeOfIngredient) => {
+      cartBurgerFillings.forEach((element: IIngredient) => {
         ingridientsTotal.push(element._id);
       });
     }
     dispatch({ type: UPDATE_ORDER_INGRIDIENTS_DELAILS, ingridientsTotal });
+
     return ingridientsTotal;
   };
 
@@ -94,12 +98,12 @@ function BurgerConstructor() {
     }
   };
 
-  const onDropHandler = (item: ITypeOfIngredient) => {
+  const onDropHandler = (item: IIngredient) => {
     dispatch(updateCartList(item));
   };
 
   //расчет общей стоимости
-  const priceTotalFillings = (arr: ITypeOfIngredient[]) =>
+  const priceTotalFillings = (arr: IIngredient[]) =>
     arr.reduce((acc, el) => acc + el.price, 0);
 
   const totalPrice =
@@ -108,7 +112,7 @@ function BurgerConstructor() {
 
   const [, dropRef] = useDrop({
     accept: "ingridients",
-    drop(item: ITypeOfIngredient) {
+    drop(item: IIngredient) {
       const itemWithId = { ...item, uniqueId: uuidv4() };
       onDropHandler(itemWithId);
     },
@@ -199,7 +203,6 @@ function BurgerConstructor() {
           }
           onClick={handleMakeAnOrder}
         >
-          {/* Place order */}
           Оформить заказ
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import { useDrag } from "react-dnd";
 import { ingridientData } from "../../utils/data";
 import {
@@ -8,13 +8,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientsStyles from "../BurgerIngredients/burgerIngredients.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { ITypeOfIngredient } from "../../utils/types";
+import { IIngredient } from "../../services/types/types";
 
 type TCard<T> = {
   el: T;
 };
 
-const BurgerIngridientCard: FC<TCard<ITypeOfIngredient>> = ({ el }) => {
+const BurgerIngridientCard: FC<TCard<IIngredient>> = ({ el }) => {
   const location = useLocation();
 
   const { bun, counter } = useSelector(

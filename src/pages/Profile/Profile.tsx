@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import profileStyle from "./profile.module.css";
 import {
   Button,
@@ -11,13 +11,18 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import {
   logOut,
   updateUserInfo,
   getUserInfo,
 } from "../../services/actions/auth";
 import { useForm } from "../../hooks/useForm";
+import OrdersHistoryList from "../../components/OrdesHistoryList/OrderHistoryList";
+import {
+  WS_CONNECTION_START_AUTH,
+  WS_CONNECTION_CLOSED_AUTH,
+} from "../../services/actions/wsOrders";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -26,6 +31,15 @@ const Profile = () => {
   const redirectToLogin = () => {
     history.push("/login");
   };
+
+  // useEffect(() => {
+  //   dispatch({ type: WS_CONNECTION_START_AUTH });
+  //   return () => {
+  //     dispatch({ type: WS_CONNECTION_CLOSED_AUTH });
+  //   };
+  // }, [dispatch]);
+
+  // const wsAuthOrders = useSelector((state: any) => state.wsReducerAuth.data);
 
   const { name, email } = useSelector((state: any) => state.authReducer.user);
   const userInfoUpdateErr = useSelector(
@@ -183,7 +197,7 @@ const Profile = () => {
           </div>
         </Route>
         <Route path="/profile/orders" exact>
-          <></>
+          <OrdersHistoryList />
         </Route>
       </Switch>
     </section>

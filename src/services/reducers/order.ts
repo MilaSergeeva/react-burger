@@ -6,7 +6,19 @@ import {
   DELETE_ORDER_NUMBER,
 } from "../actions/order";
 
-const initialOrderState = {
+import { IIngredient } from "../types/types";
+import { TOrderActions } from "../actions/order";
+
+type TInitOrderState = {
+  orderDetails: {
+    ingridients: IIngredient[];
+    orderFailed: boolean;
+    orderRequest: boolean;
+    orderNumber: string;
+  };
+};
+
+const initialOrderState: TInitOrderState = {
   orderDetails: {
     ingridients: [],
     orderFailed: false,
@@ -15,7 +27,10 @@ const initialOrderState = {
   },
 };
 
-export const orderReducer = (state = initialOrderState, action) => {
+export const orderReducer = (
+  state = initialOrderState,
+  action: TOrderActions
+) => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

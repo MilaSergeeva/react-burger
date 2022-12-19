@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import BurgerIngridientCard from "../BurgerIngridientCard/BurgerIngridientCard";
 import { useSelector } from "react-redux";
-import { ITypeOfIngredient } from "../../utils/types";
+import { IIngredient } from "../../services/types/types";
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState("buns");
@@ -19,10 +19,10 @@ function BurgerIngredients() {
 
   const getProductCard = (type: string) => {
     const filterdProductsArray = ingridients.filter(
-      (el: ITypeOfIngredient) => el.type === type
+      (el: IIngredient) => el.type === type
     );
 
-    return filterdProductsArray.map((el: ITypeOfIngredient) => (
+    return filterdProductsArray.map((el: IIngredient) => (
       <div key={el._id}>
         <BurgerIngridientCard el={el} />
       </div>
