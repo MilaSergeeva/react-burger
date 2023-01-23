@@ -134,6 +134,7 @@ function BurgerConstructor() {
 
   const renderFilling = useCallback(
     (el: TIngredientWithUniqueId, i: number) => {
+      console.log(el.uniqueId);
       return (
         <FillingsCard
           key={el.uniqueId}
@@ -144,6 +145,7 @@ function BurgerConstructor() {
         />
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
