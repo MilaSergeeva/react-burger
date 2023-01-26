@@ -29,35 +29,35 @@ import {
 
 type TInitAuthState = {
   user: {
-    name: string,
-    email: string,
-  },
+    name: string;
+    email: string;
+  };
 
   auth: {
-    userRequest: boolean,
-    userFailed: boolean,
+    userRequest: boolean;
+    userFailed: boolean;
 
-    updateUserRequest: boolean,
-    updateUserFailed: boolean,
+    updateUserRequest: boolean;
+    updateUserFailed: boolean;
 
-    tokenRequest: boolean,
-    tokenFailed: boolean,
+    tokenRequest: boolean;
+    tokenFailed: boolean;
 
-    logoutRequest: boolean,
-    logoutFailed: boolean,
+    logoutRequest: boolean;
+    logoutFailed: boolean;
 
-    registerRequest: boolean,
-    registerFailed: boolean,
+    registerRequest: boolean;
+    registerFailed: boolean;
 
-    loginRequest: boolean,
-    loginFailed: boolean,
+    loginRequest: boolean;
+    loginFailed: boolean;
 
-    forgotRequest: boolean,
-    forgotFailed: boolean,
+    forgotRequest: boolean;
+    forgotFailed: boolean;
 
-    resetRequest: boolean,
-    resetFailed: boolean,
-  },
+    resetRequest: boolean;
+    resetFailed: boolean;
+  };
 };
 
 const initialAuthState: TInitAuthState = {
@@ -107,12 +107,14 @@ export const authReducer = (state = initialAuthState, action: TAuthActions) => {
     case USER_UPDATE_SUCCESS: {
       return {
         ...state,
+        user: {
+          name: action.data.user.name,
+          email: action.data.user.email,
+        },
         auth: {
           ...state.auth,
           updateUserRequest: false,
           updateUserFailed: false,
-          name: action.data.user.name,
-          email: action.data.user.email,
         },
       };
     }

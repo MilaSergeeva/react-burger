@@ -8,7 +8,6 @@ import {
   TWSActions,
   WS_CONNECTION_FINISHED,
 } from "../actions/wsOrders";
-// import { TWSActions } from '../actions/wsActions';
 
 type TInitialSocketState = {
   wsConnected: boolean;

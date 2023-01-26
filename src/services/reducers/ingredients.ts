@@ -115,20 +115,24 @@ export const ingredientReducer = (
     }
 
     case INCREASE_FILLINGS_COUNTER: {
-      return {
+      const counter = state.burgerConstructorList.fillings.reduce(function (
+        prev,
+        cur: any
+      ) {
+        prev[cur._id] = (prev[cur._id] || 0) + 1;
+        return prev;
+      },
+      {});
+
+      const result = {
         ...state,
         burgerConstructorList: {
           ...state.burgerConstructorList,
-          counter: {
-            ...state.burgerConstructorList.counter,
-            [action.item._id]: [...state.burgerConstructorList.fillings].filter(
-              (i) => {
-                return i._id === action.item._id;
-              }
-            ).length,
-          },
+          counter,
         },
       };
+
+      return result;
     }
 
     case DECREASE_FILLINGS_COUNTER: {

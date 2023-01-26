@@ -35,14 +35,17 @@ const Modal: FC<TModal> = ({ isOpened, children, header, onClose }) => {
     return PortalReactDOM.createPortal(
       <div
         style={isOpened ? { display: "flex" } : { display: "none" }}
-        className={`${ModalStyle.popupContainier} popup`}
+        className={`popup ${ModalStyle.popupContainier} `}
         ref={drawerRef}
         onKeyDown={handleCloseByEsc}
         tabIndex={-1}
       >
-        <div className={ModalStyle.procuctCardContainier}>
+        <div className={`popupContainer ${ModalStyle.procuctCardContainier}`}>
           <h1 className="text text_type_main-large">{header}</h1>
-          <button onClick={onClose} className={ModalStyle.closeButton}>
+          <button
+            onClick={onClose}
+            className={`closeIcon ${ModalStyle.closeButton}`}
+          >
             <CloseIcon type="primary" />
           </button>
           {children}
