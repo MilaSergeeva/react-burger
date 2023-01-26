@@ -23,7 +23,7 @@ function BurgerIngredients() {
     );
 
     return filterdProductsArray.map((el: IIngredient) => (
-      <div key={el._id}>
+      <div key={el._id} className="burgerIngridientCard">
         <BurgerIngridientCard el={el} />
       </div>
     ));

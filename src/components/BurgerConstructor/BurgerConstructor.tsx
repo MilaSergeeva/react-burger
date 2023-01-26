@@ -151,7 +151,10 @@ function BurgerConstructor() {
 
   return (
     <section className={BurgerConstructorStyles.flexItem}>
-      <ul className={BurgerConstructorStyles.burgerList} ref={dropRef}>
+      <ul
+        className={`burgerConstractor ${BurgerConstructorStyles.burgerList}`}
+        ref={dropRef}
+      >
         <li className={BurgerConstructorStyles.gridListBun}>
           <div className={BurgerConstructorStyles.flexContainier}>
             <p></p>

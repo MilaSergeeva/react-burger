@@ -295,6 +295,8 @@ describe("ingredientReducer", () => {
           counter: {
             ...initialIngredientState.burgerConstructorList.counter,
             "60d3b41abdacab0026a733cd": 2,
+            "60d3b41abdacab0026a733fv": 1,
+            "60d3b41abdacab0026a733nh": 1,
           },
         },
       })

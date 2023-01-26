@@ -50,3 +50,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 To run tests:
 
 npm run test
+
+# NPX:
+
+npx cypress open
