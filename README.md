@@ -54,3 +54,7 @@ npm run test
 # NPX:
 
 npx cypress open
+
+# GH Pages:
+
+https://MilaSergeeva.github.io/react-burger
