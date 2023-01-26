@@ -3,7 +3,7 @@ import React from "react";
 import { render } from "react-dom";
 import "./index.css";
 import App from "./components/App/App";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { rootReducer } from "./services/reducers/index.js";
 import { Provider } from "react-redux";
@@ -36,11 +36,11 @@ const root = document.getElementById("root");
 
 render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Provider store={store}>
         <App />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
   root
 );
