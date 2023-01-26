@@ -119,18 +119,20 @@ export const ingredientReducer = (
         prev,
         cur: any
       ) {
-        prev[cur] = (prev[cur] || 0) + 1;
+        prev[cur._id] = (prev[cur._id] || 0) + 1;
         return prev;
       },
       {});
 
-      return {
+      const result = {
         ...state,
         burgerConstructorList: {
           ...state.burgerConstructorList,
           counter,
         },
       };
+
+      return result;
     }
 
     case DECREASE_FILLINGS_COUNTER: {

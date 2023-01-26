@@ -253,10 +253,10 @@ describe("ingredientReducer", () => {
           burgerConstructorList: {
             ...initialIngredientState.burgerConstructorList,
             fillings: [
-              "60d3b41abdacab0026a733cd",
-              "60d3b41abdacab0026a733cd",
-              "60d3b41abdacab0026a733fv",
-              "60d3b41abdacab0026a733nh",
+              { _id: "60d3b41abdacab0026a733cd" },
+              { _id: "60d3b41abdacab0026a733cd" },
+              { _id: "60d3b41abdacab0026a733fv" },
+              { _id: "60d3b41abdacab0026a733nh" },
             ],
           },
         },
@@ -287,10 +287,10 @@ describe("ingredientReducer", () => {
         burgerConstructorList: {
           ...initialIngredientState.burgerConstructorList,
           fillings: [
-            "60d3b41abdacab0026a733cd",
-            "60d3b41abdacab0026a733cd",
-            "60d3b41abdacab0026a733fv",
-            "60d3b41abdacab0026a733nh",
+            { _id: "60d3b41abdacab0026a733cd" },
+            { _id: "60d3b41abdacab0026a733cd" },
+            { _id: "60d3b41abdacab0026a733fv" },
+            { _id: "60d3b41abdacab0026a733nh" },
           ],
           counter: {
             ...initialIngredientState.burgerConstructorList.counter,

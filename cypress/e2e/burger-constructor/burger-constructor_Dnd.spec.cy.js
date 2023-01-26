@@ -7,7 +7,7 @@ function fillUpConstructor() {
 }
 
 describe("when on menu page", () => {
-  before(function () {
+  beforeEach(function () {
     cy.visit("http://localhost:3000");
   });
 
@@ -41,7 +41,7 @@ describe("when on menu page", () => {
 
   describe("when elements are in constructor", () => {
     beforeEach(() => {
-      setTimeout(() => fillUpConstructor(), 3000);
+      fillUpConstructor();
     });
 
     it("button is active", () => {
@@ -51,7 +51,7 @@ describe("when on menu page", () => {
 
   describe("when constructor has order elements", () => {
     beforeEach(() => {
-      setTimeout(() => fillUpConstructor(), 3000);
+      fillUpConstructor();
     });
 
     describe("when user is unauthorised", () => {
@@ -63,15 +63,25 @@ describe("when on menu page", () => {
 
     describe("when user is authorised", () => {
       beforeEach(() => {
+        cy.visit("http://localhost:3000/login");
         cy.get('input[name="email"]').type("test@gmail.com");
         cy.get('input[name="password"]').type("123456");
         cy.get("button").contains("Войти").click();
         cy.url().should("eq", "http://localhost:3000/");
+        fillUpConstructor();
       });
 
-      it("when press order button it should send order payload to server", () => {
+      it.only("when press order button it should send order payload to server", () => {
         cy.get("button").contains("Оформить заказ").click();
-        cy.get("[class^=popup]").as("modal").should("exist");
+
+        cy.wait("@responseRole").then(({ request, response }) => {
+          console.log("here", request.body);
+          console.log(response.body);
+        });
+
+        cy.get("[class^=popup]", { timeout: 15000 })
+          .as("modal")
+          .should("exist");
         cy.get("@modal").contains("Ваш заказ начали готовить");
         cy.get("@modal").contains(
           "Дождитесь готовности на орбитальной станции"
@@ -84,7 +94,7 @@ describe("when on menu page", () => {
   });
 });
 
-/// other file
+/// other file for login
 // describe.only("login page", () => {
 //   describe("when submit valid params", () => {
 //     it("receives auth and refresh tokens", () => {});
