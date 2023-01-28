@@ -93,7 +93,7 @@ function BurgerIngredients() {
   return (
     <section className={BurgerIngredientsStyles.flexSection}>
       <div>
-        <h1 className={BurgerIngredientsStyles.title}>Соберите бургер</h1>
+        <h1 className={BurgerIngredientsStyles.title}>Construct your burger</h1>
 
         <div className={BurgerIngredientsStyles.tabsBlock}>
           <Tab
@@ -101,41 +101,44 @@ function BurgerIngredients() {
             active={current === "buns"}
             onClick={() => handleSmoothScroll("buns")}
           >
-            Булки
+            Buns
+            {/* Булки */}
           </Tab>
           <Tab
             value="sauces"
             active={current === "sauces"}
             onClick={() => handleSmoothScroll("sauces")}
           >
-            Соусы
+            Sausec
+            {/* Соусы */}
           </Tab>
           <Tab
             value="fillings"
             active={current === "fillings"}
             onClick={() => handleSmoothScroll("fillings")}
           >
-            Начинки
+            Fillings
+            {/* Начинки */}
           </Tab>
         </div>
       </div>
 
       <div ref={containier} className={BurgerIngredientsStyles.productsMenu}>
         <div ref={buns}>
-          <h2>Булки</h2>
+          <h2>Buns</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
             {getProductCard("bun")}
           </div>
         </div>
 
         <div ref={sauces}>
-          <h2>Соусы</h2>
+          <h2>Sausec</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
             {getProductCard("sauce")}
           </div>
         </div>
         <div ref={fillings}>
-          <h2>Начинки</h2>
+          <h2>Fillings</h2>
           <div className={BurgerIngredientsStyles.typeProductSection}>
             {getProductCard("main")}
           </div>
