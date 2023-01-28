@@ -208,7 +208,8 @@ function BurgerConstructor() {
           }
           onClick={handleMakeAnOrder}
         >
-          Оформить заказ
+          Сheckout
+          {/* Оформить заказ */}
         </Button>
       </div>
     </section>
