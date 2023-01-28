@@ -24,8 +24,7 @@ function AppHeader() {
             } ${isConstructor && appHeaderStyles.textWhite}`}
           >
             <BurgerIcon type={isConstructor ? "primary" : "secondary"} />
-            {/* Constructor */}
-            Конструктор
+            Constructor
           </NavLink>
           <NavLink
             to="/feed"
@@ -34,8 +33,8 @@ function AppHeader() {
             } ${isFeed && appHeaderStyles.textWhite}`}
           >
             <ListIcon type={isFeed ? "primary" : "secondary"} />
-            {/* Order list */}
-            Лента заказа
+            Order list
+            {/* Лента заказа */}
           </NavLink>
         </nav>
         <NavLink to="/" className={appHeaderStyles.logoAlign}>
@@ -49,8 +48,8 @@ function AppHeader() {
           } ${isProfile && appHeaderStyles.textWhite}`}
         >
           <ProfileIcon type={isProfile ? "primary" : "secondary"} />
-          {/* Personal account */}
-          Личный кабинет
+          Personal account
+          {/* Личный кабинет */}
         </NavLink>
       </div>
     </header>
