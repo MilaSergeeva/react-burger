@@ -99,7 +99,7 @@ const Profile = () => {
             className={`${profileStyle.navLink}`}
             activeClassName={profileStyle.navLinkActiv}
           >
-            Профиль
+            Profile
           </NavLink>
           <NavLink
             to="/profile/orders"
@@ -107,7 +107,7 @@ const Profile = () => {
             className={profileStyle.navLink}
             activeClassName={profileStyle.navLinkActiv}
           >
-            История заказов
+            Order history
           </NavLink>
           <NavLink
             to="/login"
@@ -116,17 +116,17 @@ const Profile = () => {
             onClick={handleClick}
             activeClassName={profileStyle.navLinkActiv}
           >
-            Выход
+            Sign out
           </NavLink>
         </nav>
         {pathname === "/profile" && (
           <span className={profileStyle.sidebarMenuText}>
-            В этом разделе вы можете изменить свои персональные данные
+            In this section, you can update your personal information
           </span>
         )}
         {pathname === "/profile/orders" && (
           <span className={profileStyle.sidebarMenuText}>
-            В этом разделе вы можете просмотреть свою историю заказов{" "}
+            In this section, you can view your order history{" "}
           </span>
         )}
       </div>
@@ -169,7 +169,7 @@ const Profile = () => {
 
               {userInfoUpdateErr && (
                 <p className={profileStyle.formError}>
-                  Что-то пошло не так, попробуйте еще раз.
+                  Something went wrong, please try again.
                 </p>
               )}
             </form>
@@ -182,7 +182,7 @@ const Profile = () => {
                   size="medium"
                   htmlType="submit"
                 >
-                  Отмена
+                  Cancel
                 </Button>
                 <Button
                   onClick={handleSubmit}
@@ -190,7 +190,7 @@ const Profile = () => {
                   size="small"
                   htmlType="submit"
                 >
-                  Сохранить
+                  Save
                 </Button>
               </div>
             )}

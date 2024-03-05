@@ -12,7 +12,7 @@ function OrderDetails() {
       <p
         className={` ${PopupOrderDetailsStyle.textId} text text_type_main-medium`}
       >
-        идентификатор заказа
+        order ID
       </p>
       <img
         src={success}
@@ -22,12 +22,12 @@ function OrderDetails() {
       <p
         className={` ${PopupOrderDetailsStyle.textOrderStatus} text text_type_main-default`}
       >
-        Ваш заказ начали готовить
+        We are preparing your order
       </p>
       <p
         className={` ${PopupOrderDetailsStyle.textInfo} text text_type_main-default`}
       >
-        Дождитесь готовности на орбитальной станции
+        Wait for completion on the orbital station
       </p>
     </div>
   );

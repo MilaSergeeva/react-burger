@@ -44,7 +44,7 @@ const ForgotPassword = () => {
         onSubmit={handleSubmit}
         noValidate
       >
-        <h1 className={forgotPasswordStyle.formTitle}>Восстановление пароля</h1>
+        <h1 className={forgotPasswordStyle.formTitle}>Password recovery</h1>
 
         <Input
           placeholder="Укажите e-mail"
@@ -56,19 +56,19 @@ const ForgotPassword = () => {
 
         {formSubmit && (
           <p className={forgotPasswordStyle.formError}>
-            Что-то пошло не так, попробуйте еще раз.
+            Something went wrong, please try again.
           </p>
         )}
 
         <Button type="primary" htmlType="submit" size="large" disabled={false}>
-          Восстановить
+          Restore
         </Button>
       </form>
       <p className={forgotPasswordStyle.formText}>
-        Вспомнили пароль?
+        Remembered your password?
         <Link className={forgotPasswordStyle.link} to="/login">
           {" "}
-          Войти
+          Login
         </Link>
       </p>
     </section>

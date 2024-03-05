@@ -68,7 +68,7 @@ function App() {
 
         <Route path="/ingridients/:id" exact>
           <div className={appStyles.ingridientDetailsContainier}>
-            <h1>Детали ингридиента</h1>
+            <h1>Ingredient Details</h1>
             <IngredientDetails />
           </div>
         </Route>
@@ -91,7 +91,7 @@ function App() {
             <Modal
               isOpened={true}
               onClose={handleModalClose}
-              header={"Детали ингридиента"}
+              header={"Ingredient Details"}
             >
               <IngredientDetails />
             </Modal>

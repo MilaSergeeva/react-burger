@@ -37,7 +37,7 @@ const Register: FC = (props) => {
         onSubmit={handleSubmit}
         noValidate
       >
-        <h1 className={registrationStyle.formTitle}>Регистрация</h1>
+        <h1 className={registrationStyle.formTitle}>Registration</h1>
         <Input
           placeholder="Имя"
           type="text"
@@ -60,19 +60,19 @@ const Register: FC = (props) => {
 
         {formSubmit && (
           <p className={registrationStyle.formError}>
-            Что-то пошло не так, попробуйте еще раз.
+            Something went wrong, please try again.
           </p>
         )}
 
         <Button type="primary" htmlType="submit" size="large" disabled={false}>
-          Зарегистрироватся
+          Sign in
         </Button>
       </form>
       <p className={registrationStyle.formText}>
-        Уже зарегистрированы?
+        Are you already registered?
         <Link className={registrationStyle.link} to="/login">
           {" "}
-          Войти
+          Login
         </Link>
       </p>
     </section>

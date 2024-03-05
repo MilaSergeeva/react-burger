@@ -22,7 +22,7 @@ const OrderFeed = () => {
 
   return (
     <section className={styleOrderFeed.section}>
-      <h2 className="text text_type_main-large">Лента заказов</h2>
+      <h2 className="text text_type_main-large">Order feed</h2>
       <div className={styleOrderFeed.orderListContainier}>
         <OrderCardList orders={wsOrders.orders} />
         <OrdersTotal data={wsOrders} />
