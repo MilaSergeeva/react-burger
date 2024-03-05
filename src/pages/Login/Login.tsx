@@ -42,7 +42,7 @@ const Login = () => {
         onSubmit={handleSubmit}
         noValidate
       >
-        <h1 className={loginStyle.formTitle}>Вход</h1>
+        <h1 className={loginStyle.formTitle}>Login</h1>
         <Input
           placeholder="E-mail"
           type="email"
@@ -58,26 +58,26 @@ const Login = () => {
 
         {formSubmit && (
           <p className={loginStyle.formError}>
-            Что-то пошло не так, попробуйте еще раз.
+            Something went wrong, please try again.
           </p>
         )}
 
         <Button type="primary" htmlType="submit" size="large" disabled={false}>
-          Войти
+          Login
         </Button>
       </form>
       <p className={loginStyle.formText}>
-        Вы - новый пользователь?
+        Are you a new user?
         <Link className={loginStyle.link} to="/register">
           {" "}
-          Зарегистрироватся
+          Register
         </Link>
       </p>
       <p className={loginStyle.formText}>
-        Забыли пароль?
+        Forgot your password?
         <Link className={loginStyle.link} to="/forgot-password">
           {" "}
-          Восстановить пароль
+          Reset password
         </Link>
       </p>
     </section>

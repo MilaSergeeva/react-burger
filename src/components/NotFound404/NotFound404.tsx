@@ -4,7 +4,7 @@ const NotFound404 = () => {
   return (
     <section className="profile">
       {" "}
-      <h1>Нет такой страницы</h1>{" "}
+      <h1>Not Found</h1>{" "}
     </section>
   );
 };

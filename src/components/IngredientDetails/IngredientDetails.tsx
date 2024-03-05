@@ -23,22 +23,22 @@ function IngredientDetails() {
           <h2>{currentProduct.name}</h2>
           <div className={PopupIngridientsStyle.currentProductCompound}>
             <p className={PopupIngridientsStyle.currentProductCompoundText}>
-              Калории,калл
+              Calories, kcal
               <br />
               <span>{currentProduct.calories}</span>
             </p>
             <p className={PopupIngridientsStyle.currentProductCompoundText}>
-              Белки, г
+              Protein, g
               <br />
               <span>{currentProduct.proteins}</span>
             </p>
             <p className={PopupIngridientsStyle.currentProductCompoundText}>
-              Жиры, г
+              Fat, g
               <br />
               <span>{currentProduct.fat}</span>
             </p>
             <p className={PopupIngridientsStyle.currentProductCompoundText}>
-              Углеводы, г
+              Carbohydrate, g
               <br />
               <span>{currentProduct.carbohydrates}</span>
             </p>

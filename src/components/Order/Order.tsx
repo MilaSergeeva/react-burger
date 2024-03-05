@@ -58,7 +58,7 @@ const Order: FC<any> = () => {
           >
             {status.nameStatus}
           </span>
-          <p className="text text_type_main-medium mb-4">Состав:</p>
+          <p className="text text_type_main-medium mb-4">Ingredients:</p>
           <ul className={styleOrder.list}>
             {orderIngredients.map((ingredient: IIngredient, index: number) => {
               return (

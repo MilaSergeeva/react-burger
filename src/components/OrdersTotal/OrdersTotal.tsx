@@ -27,7 +27,7 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
     <section className={orderTotalStyle.section}>
       <div className={orderTotalStyle.boardContainer}>
         <div className="mr-9">
-          <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
+          <h3 className="text text_type_main-medium mb-6">Ready:</h3>
           <div className={orderTotalStyle.doneOrdersCotaiier}>
             {divideDoneOrders(done).map((array: [], index: number) => {
               return (
@@ -51,7 +51,7 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
           </div>
         </div>
         <div>
-          <h3 className="text text_type_main-medium mb-6">В работе:</h3>
+          <h3 className="text text_type_main-medium mb-6">In progress:</h3>
           <div className={orderTotalStyle.doneOrdersCotaiier}>
             {divideDoneOrders(pending).map((array: [], index: number) => {
               return (
@@ -73,7 +73,7 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
         </div>
       </div>
       <div className="mt-15 mb-15">
-        <h3 className="text text_type_main-medium">Выполнено за все время:</h3>
+        <h3 className="text text_type_main-medium">Completed overall:</h3>
         <span
           className={`text text_type_digits-large ${orderTotalStyle.numberOrder}`}
         >
@@ -81,7 +81,7 @@ const OrderTotal: FC<TOrders> = ({ data }) => {
         </span>
       </div>
       <div>
-        <h3 className="text text_type_main-medium">Выполнено за сегодня:</h3>
+        <h3 className="text text_type_main-medium">Completed today:</h3>
         <span
           className={`text text_type_digits-large ${orderTotalStyle.numberOrder}`}
         >
